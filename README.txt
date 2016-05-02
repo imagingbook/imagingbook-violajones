@@ -1,0 +1,1 @@
+Wilbur's ImageJ implementation  of the Viola-Jones face detector.
