@@ -1,8 +1,6 @@
 package violajones.lib;
 
 
-import ij.IJ;
-
 import java.io.File;
 import java.io.InputStream;
 import java.util.LinkedList;

@@ -3,8 +3,8 @@ package violajones.lib;
 import java.util.LinkedList;
 import java.util.List;
 
-import violajones.iimg.IntegralImage;
-//import imagingbook.lib.image.IntegralImage;
+//import violajones.iimg.IntegralImage;
+import imagingbook.lib.image.IntegralImage;
 
 /**
  * A stage of the detector. Each stage consists of several trees and a

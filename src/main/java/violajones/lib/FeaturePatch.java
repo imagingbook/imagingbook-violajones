@@ -1,7 +1,9 @@
 package violajones.lib;
 
 
-/** A simple class describing a rectangle, along with a weight. */
+/** 
+ * Represents a rectangle, along with a weight. 
+ */
 public class FeaturePatch extends Rectangle {
 
 	public final double weight;
@@ -10,7 +12,6 @@ public class FeaturePatch extends Rectangle {
 		super(x, y, w, h);
 		this.weight = weight;
 	}
-
 
 	public static FeaturePatch fromString(String text) {
 		String[] tab = text.split(" ");

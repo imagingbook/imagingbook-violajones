@@ -8,8 +8,8 @@ import ij.process.ImageProcessor;
 import java.awt.Color;
 import java.util.List;
 
-import violajones.lib.Detector;
-import violajones.lib.Detector.Parameters;
+import violajones.lib.FaceDetector;
+import violajones.lib.FaceDetector.Parameters;
 import violajones.lib.FaceRegion;
 import violajones.resources.xml.HaarTrainingSet;
 
@@ -33,7 +33,7 @@ public class Find_Faces implements PlugInFilter {
 		params.baseScale = 1.5;
 		params.scaleStep = 1.05;
 		
-		Detector detector = Detector.create(trainingSet.getStream(), params);
+		FaceDetector detector = FaceDetector.create(trainingSet.getStream(), params);
 		
 		List<FaceRegion> res = detector.getFaces(ip.convertToByteProcessor());
 		IJ.log(res.size() + " faces found!");
@@ -44,7 +44,6 @@ public class Find_Faces implements PlugInFilter {
 			draw(r, cp);
 		}
 		new ImagePlus("faces", cp).show();
-		
 		
 		if (extractFaceImages && !res.isEmpty()) {
 //			int w = res.get(0).width;
@@ -60,9 +59,7 @@ public class Find_Faces implements PlugInFilter {
 			//new ImagePlus("FaceStack", faceStack).show();
 		}
 
-		
 	}
-
 
 	private void draw(FaceRegion f, ImageProcessor cp) {
 		cp.setColor(Color.green);

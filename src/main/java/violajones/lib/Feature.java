@@ -3,8 +3,8 @@ package violajones.lib;
 import java.util.LinkedList;
 import java.util.List;
 
-import violajones.iimg.IntegralImage;
-//import imagingbook.lib.image.IntegralImage;
+//import violajones.iimg.IntegralImage;
+import imagingbook.lib.image.IntegralImage;
 import violajones.lib.FeatureTree.Direction;
 
 //-------------------------------------------------------------------------------
@@ -52,28 +52,31 @@ public class Feature {
 	 */
 	protected Direction getLeftOrRight(IntegralImage II, int u, int v, double scale) {
 		// calculate the area of the search window:
-		final int w = (int) Math.round(scale * width);	// TODO: could be precalculated?
-		final int h = (int) Math.round(scale * height);
+		final int w = (int) Math.round(scale * this.width);	// TODO: could be pre-calculated?
+		final int h = (int) Math.round(scale * this.height);
 		final double winArea = w * h;
 		
 		//double winMean  = II.getMean(u, v, u + w, v + h); 		 //total1 / winArea;
 
 		// calculate weighted sum over all rectangles of this feature
 		double sum = 0.0;
-		for (FeaturePatch rect : this.rectangles) {
+		for (FeaturePatch patch : this.rectangles) {
 			// scale the rectangle
-			final int u0 = u + (int) Math.round(scale *  rect.x);
-			final int u1 = u + (int) Math.round(scale * (rect.x + rect.width));
-			final int v0 = v + (int) Math.round(scale *  rect.y);
-			final int v1 = v + (int) Math.round(scale * (rect.y + rect.height));
+			final int u0 = u + (int) Math.round(scale *  patch.x);
+			final int u1 = u + (int) Math.round(scale * (patch.x + patch.width));
+			final int v0 = v + (int) Math.round(scale *  patch.y);
+			final int v1 = v + (int) Math.round(scale * (patch.y + patch.height));
+			
 			// get rectangle's sum and apply the assigned weight (pos/neg)
-			sum = sum + II.getBlockSum1(u0, v0, u1, v1) * rect.weight;
+			//sum = sum + II.getBlockSum1(u0, v0, u1, v1) * patch.weight;	// old
+			sum = sum + II.getBlockSum1(u0, v0, u1 - 1, v1 - 1) * patch.weight;	// new (for imagingbook.lib)
 		}
 		// normalize result by the window's area:
 		double sumNorm = sum / winArea;
 		
 		// calculate variance (std. deviation) for the current window
-		double winVariance = II.getVariance(u, v, u + w, v + h); // total2 / winArea - winMean * winMean;
+		//double winVariance = II.getVariance(u, v, u + w, v + h); // total2 / winArea - winMean * winMean;  // old
+		double winVariance = II.getVariance(u, v, u + w - 1, v + h - 1); // total2 / winArea - winMean * winMean;  // new (for imagingbook.lib)
 		double winStdDev = (winVariance > 1) ? Math.sqrt(winVariance) : 1.0;
 		
 		// return LEFT or RIGHT depending on how the total sum compares to threshold

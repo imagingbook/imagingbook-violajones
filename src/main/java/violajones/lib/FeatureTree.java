@@ -3,8 +3,8 @@ package violajones.lib;
 import java.util.ArrayList;
 import java.util.List;
 
-import violajones.iimg.IntegralImage;
-//import imagingbook.lib.image.IntegralImage;
+//import violajones.iimg.IntegralImage;
+import imagingbook.lib.image.IntegralImage;
 import violajones.lib.Feature;
 
 /**
