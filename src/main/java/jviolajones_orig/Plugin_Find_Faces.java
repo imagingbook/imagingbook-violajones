@@ -48,14 +48,14 @@ public class Plugin_Find_Faces implements PlugInFilter {
 		params.scaleStep = 1.05;
 		params.winShiftFraction = 0.1;
 		params.minNeighbors = 1;
-		params.doCannyPruning = false;		
+		params.doGradientPruning = false;		
 		
 		List<Rectangle> res = detector.getFaces(bi, 
 				(float) params.baseScale, 
 				(float) params.scaleStep, 
 				(float) params.winShiftFraction, 
 				params.minNeighbors, 
-				params.doCannyPruning);
+				params.doGradientPruning);
 
 		IJ.log(res.size() + " faces found!");
 		

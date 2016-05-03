@@ -1,17 +1,19 @@
 package imagingbook.violajones.lib; // MODIFIED from version in violajones0
 
-import ij.IJ;
-import ij.process.ByteProcessor;
-
-import imagingbook.lib.image.IntegralImage;
-//import imagingbook.violajones.lib.integralIB.IntegralImage;
-//import imagingbook.violajones.lib.integral1.IntegralImage;
-//import imagingbook.violajones.lib.integral2.IntegralImage;
-
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
+import ij.IJ;
+import ij.process.ByteProcessor;
+import imagingbook.lib.image.IntegralImage;
+
+/**
+ * The core class.
+ * TODO: change constructors to use the source image, precalculate everything.
+ * @author W. Burger
+ *
+ */
 public class FaceDetector {
 	
 	/**
@@ -27,8 +29,15 @@ public class FaceDetector {
 		/** The minimum number of rectangles needed for the corresponding detection to be kept */
 		public int minNeighbors = 1;
 		/** Flag indicating if Canny pruning should be applied. */
-		public boolean doCannyPruning = false;
+		public boolean doGradientPruning = false;
+		/** The min. percentage of overlap for merging two regions. */
 		public double minMergeRegionOverlap = 0.2;
+		/** The width of the Gaussian blur applied before gradient calculation. */
+		public double gradientSigma = 2.0;
+		/** The minimum (normalized) gradient magnitude if pruning is on. */
+		public double minGradientMagnitude = 20;
+		/** The maximum (normalized) gradient magnitude if pruning is on. */
+		public double maxGradientMagnitude = 100;
 	}
 	
 	private final Parameters params;
@@ -84,9 +93,11 @@ public class FaceDetector {
 		IntegralImage II = new IntegralImage(I);
 
 		// precalculate Canny edges if option is on
-		int[][] canny = null;
-		if (params.doCannyPruning) {
-			canny = CannyPruner.getIntegralCanny(I);
+		//int[][] canny = null;
+		IntegralImage canny = null;
+		if (params.doGradientPruning) {
+			//canny = CannyPruner.getIntegralCanny(I);
+			canny = Gradient.makeGradientIntegral(I, params.gradientSigma);
 		}
 
 		// apply the detector at each scale:
@@ -108,15 +119,16 @@ public class FaceDetector {
 					 * skip the region.
 					 * WB: weird!!
 					 */
-					if (params.doCannyPruning) {
-						int edges_density = canny[u + curW][v + curH] + canny[u][v] - canny[u][v + curH] - canny[u + curW][v];
-						int d = edges_density / curW / curH;
-						if (d < 20 || d > 100)
+					if (params.doGradientPruning) {
+						//int edges_density = canny[u + curW][v + curH] + canny[u][v] - canny[u][v + curH] - canny[u + curW][v];
+						double gradientMag = canny.getBlockSum1(u, v, u + curW - 1, v + curH - 1);
+						double d = gradientMag / (curW * curH);
+						if (d < params.minGradientMagnitude || d > params.maxGradientMagnitude)
 							continue;
-					}			
+					}
+					
 					// apply each detector stage to the current window, reject if one stage fails
 					boolean pass = true;
-
 					for (Stage stage : cascade.getStages()) {
 						if (!stage.pass(II, u, v, scale)) {
 							pass = false;
@@ -140,7 +152,7 @@ public class FaceDetector {
 	
 	
 
-
+	
 	/**
 	 * Merge the raw detections resulting from the detection step to avoid
 	 * multiple detections of the same object. A threshold on the minimum

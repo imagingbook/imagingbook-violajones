@@ -38,7 +38,12 @@ public class Find_Faces implements PlugInFilter {
 		params.scaleStep = 1.05;
 		params.winShiftFraction = 0.1;
 		params.minNeighbors = 1;
-		params.doCannyPruning = false;
+		
+		params.doGradientPruning = true;
+		params.gradientSigma = 2.0;
+		params.minGradientMagnitude = 5;
+		params.maxGradientMagnitude = 100;
+		
 		params.minMergeRegionOverlap = 0.2;
 		
 		

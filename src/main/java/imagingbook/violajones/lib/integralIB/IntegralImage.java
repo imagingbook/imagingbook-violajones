@@ -18,9 +18,11 @@ import ij.process.ByteProcessor;
  * as described in the book (see 2nd English ed. 2016, Sec. 3.8).
  * Currently only implemented for images of type {@link ByteProcessor}.
  * 
+ * Same as in imagingbook!
+ * 
  * @author W. Burger
  * @version 2015/11/15
- *
+ * @deprecated
  */
 public class IntegralImage {
 	

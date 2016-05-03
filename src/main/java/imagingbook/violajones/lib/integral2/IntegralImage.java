@@ -9,7 +9,7 @@ import ij.process.ByteProcessor;
  * TODO: adapt to book description
  * 
  * @author W. Burger
- *
+ * @deprecated
  */
 public class IntegralImage {
 	
