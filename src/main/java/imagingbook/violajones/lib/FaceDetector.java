@@ -41,7 +41,7 @@ public class FaceDetector {
 	}
 	
 	private final Parameters params;
-	protected final HaarCascadeDescriptor cascade;
+	private final HaarCascadeDescriptor cascade;
 
 	/**
 	 * Factory method. Builds a detector from an XML file.
@@ -88,7 +88,7 @@ public class FaceDetector {
 				(double) imgW / cascade.getWidth(),
 				(double) imgH / cascade.getHeight());
 		
-		IJ.log("maxScale = " + maxScale);
+		//IJ.log("maxScale = " + maxScale);
 
 		IntegralImage II = new IntegralImage(I);
 
@@ -103,7 +103,7 @@ public class FaceDetector {
 		// apply the detector at each scale:
 		double scale = params.baseScale;
 		while (scale < maxScale) {
-			IJ.log("scale = " + scale);
+			//IJ.log("scale = " + scale);
 			// calculate the sliding step of the window in each direction:
 			final int uStep = (int) Math.round(scale * cascade.getWidth() * params.winShiftFraction);
 			final int vStep = (int) Math.round(scale * cascade.getHeight() * params.winShiftFraction);
@@ -144,7 +144,7 @@ public class FaceDetector {
 			scale = scale * params.scaleStep;
 		}
 		
-		IJ.log("before merge: length = " + facelist.size());
+		//IJ.log("before merge: length = " + facelist.size());
 
 		return merge(facelist.toArray(new FaceRegion[0]), 
 				params.minNeighbors, params.minMergeRegionOverlap);
