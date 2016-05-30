@@ -1,6 +1,6 @@
-# Java/ImageJ implementation of Zhang's camera calibration algorithm #
+# Java/ImageJ implementation of Viola-Jones face detection #
 
-This Java library implements the geometric part of Zhang's camera calibration algorithm. 
+This Java library implements the face detection algorithm proposed by Viola and Jones. 
 It does not include interest point detection and point correspondence calculations.
 See this extensive [**report**](https://www.researchgate.net/publication/303233579_Zhang%27s_Camera_Calibration_Algorithm_In-Depth_Tutorial_and_Implementation) for details.
 
