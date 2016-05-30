@@ -1,8 +1,6 @@
 package imagingbook.violajones.lib;
 
-import ij.plugin.filter.Convolver;
 import ij.process.FloatProcessor;
-import ij.process.ImageProcessor;
 import imagingbook.lib.image.IntegralImage;
 import imagingbook.pub.color.edge.CannyEdgeDetector;
 

@@ -1,4 +1,4 @@
-package imagingbook;
+package violajones_plugins;
 
 import java.awt.Color;
 import java.util.List;

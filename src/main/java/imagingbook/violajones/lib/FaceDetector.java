@@ -4,7 +4,6 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
-import ij.IJ;
 import ij.process.ByteProcessor;
 import imagingbook.lib.image.IntegralImage;
 

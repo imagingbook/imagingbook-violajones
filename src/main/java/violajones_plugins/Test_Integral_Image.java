@@ -1,4 +1,4 @@
-package imagingbook;
+package violajones_plugins;
 
 import ij.ImagePlus;
 import ij.plugin.filter.PlugInFilter;

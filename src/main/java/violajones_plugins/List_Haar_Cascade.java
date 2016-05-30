@@ -1,4 +1,4 @@
-package imagingbook;
+package violajones_plugins;
 
 import ij.IJ;
 import ij.io.OpenDialog;
