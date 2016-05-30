@@ -6,4 +6,4 @@ This Java library implements the face detection algorithm proposed by Viola and 
 
 **Author:** Wilhelm Burger
 
-**Dependencies:** ImageJ, Apache Commons Math, imagingbook-common, jdom2.
+**Dependencies:** ImageJ, imagingbook-common, jdom2.
