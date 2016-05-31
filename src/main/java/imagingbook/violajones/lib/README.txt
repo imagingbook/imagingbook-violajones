@@ -5,9 +5,7 @@ Original implementation by "unknown" at http://jviolajones.googlecode.com/
 http://jviolajones.googlecode.com/svn/trunk/src
 http://code.google.com/p/jviolajones/
 
-Refactored and adapted to ImageJ by Wilbur.
+Refactored and adapted to ImageJ by W. Burger.
 
 
-
-Remarks:
 

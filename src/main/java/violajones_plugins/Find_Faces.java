@@ -1,4 +1,4 @@
-package violajones_plugins;
+package Violajones_Plugins;
 
 import java.awt.Color;
 import java.util.List;
@@ -7,7 +7,6 @@ import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
 import ij.plugin.filter.PlugInFilter;
-import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
 import imagingbook.lib.ij.IjUtils;
 import imagingbook.lib.util.Enums;
