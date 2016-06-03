@@ -12,7 +12,7 @@ public class Test_OpenDialog implements PlugIn {
 		
 		/* use option JFileChooser in ImageJ, otherwise default directory is ignored */
 		
-		String xmlRoot = FileUtils.getResourcePath(Data.class, "xml");
+		String xmlRoot = FileUtils.getResourcePath(Data.class, "xml").toString();
 		IJ.log("xmlRoot = " + xmlRoot);
 		
 		String p = this.getClass().getResource("").getPath();

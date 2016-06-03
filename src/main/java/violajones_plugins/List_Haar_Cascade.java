@@ -18,8 +18,7 @@ public class List_Haar_Cascade implements PlugIn {
 
 
 	public void run(String arg) {
-
-		String xmlRoot = FileUtils.getResourcePath(Data.class, "xml");
+		String xmlRoot = FileUtils.getResourcePath(Data.class, "xml").toString();
 		OpenDialog od = new OpenDialog("Select XML file", xmlRoot, "");
 		String xmlPath = od.getPath();
 		if (xmlPath == null) return;
