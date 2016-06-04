@@ -1,8 +1,8 @@
 package imagingbook.violajones.resources;
 
-import imagingbook.lib.util.FileUtils;
-
 import java.net.URL;
+
+import imagingbook.lib.util.ResourceUtils;
 
 
 public class DataTest {
@@ -27,9 +27,9 @@ public class DataTest {
 		System.out.println("Location of resources:" + DataTest.getLocalResourcePath("images/"));
 		
 		//preferred:
-		System.out.println("Location of resources (FileUtils):" + FileUtils.getResourcePath(Data.class, "images/"));
-		System.out.println("Location of resources (FileUtils):" + FileUtils.getResourcePath(Data.class, "images/bishops1.jpg"));
-		System.out.println("Location of resources (FileUtils):" + FileUtils.getResourcePath(Data.class, "xml/haarcascade_eye.xml"));
+		System.out.println("Location of resources (FileUtils):" + ResourceUtils.getResourcePath(Data.class, "images/"));
+		System.out.println("Location of resources (FileUtils):" + ResourceUtils.getResourcePath(Data.class, "images/bishops1.jpg"));
+		System.out.println("Location of resources (FileUtils):" + ResourceUtils.getResourcePath(Data.class, "xml/haarcascade_eye.xml"));
 		
 		{
 			System.out.println("Resource test 1 (direct):");

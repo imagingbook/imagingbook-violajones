@@ -2,7 +2,7 @@ package violajones_plugins;
 
 import ij.IJ;
 import ij.plugin.PlugIn;
-import imagingbook.lib.util.FileUtils;
+import imagingbook.lib.util.ResourceUtils;
 import imagingbook.violajones.resources.Data;
 import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
@@ -11,9 +11,9 @@ public class List_Xml_File_Resources implements PlugIn {
 	
 	public void run(String arg0) {
 		
-		String xml1 = FileUtils.getResourcePath(Data.class, "xml/haarcascade_eye.xml").toString();
-		String xml2 = FileUtils.getResourcePath(Data.class, "xml/haarcascade_frontalface_alt2.xml").toString();
-		String xml3 = FileUtils.getResourcePath(Data.class, "xml/haarcascade_frontalface_default.xml").toString();
+		String xml1 = ResourceUtils.getResourcePath(Data.class, "xml/haarcascade_eye.xml").toString();
+		String xml2 = ResourceUtils.getResourcePath(Data.class, "xml/haarcascade_frontalface_alt2.xml").toString();
+		String xml3 = ResourceUtils.getResourcePath(Data.class, "xml/haarcascade_frontalface_default.xml").toString();
 		
 		IJ.log("xml1 = " + xml1);
 		IJ.log("xml2 = " + xml2);
