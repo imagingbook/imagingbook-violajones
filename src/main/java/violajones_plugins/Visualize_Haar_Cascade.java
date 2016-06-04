@@ -1,4 +1,4 @@
-package Violajones_Plugins;
+package violajones_plugins;
 
 import ij.IJ;
 import ij.ImagePlus;

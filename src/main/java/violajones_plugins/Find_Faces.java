@@ -1,4 +1,4 @@
-package Violajones_Plugins;
+package violajones_plugins;
 
 import java.awt.Color;
 import java.util.List;
