@@ -1,4 +1,4 @@
-package violajones_plugins;
+package Violajones_Plugins;
 
 import java.io.InputStream;
 
