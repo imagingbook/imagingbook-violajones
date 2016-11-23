@@ -67,7 +67,6 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 		}
 
 		
-		
 		Overlay oly = new Overlay();
 		int sliceNo = 1;
 		for (Stage stage : stages) {
