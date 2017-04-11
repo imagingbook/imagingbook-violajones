@@ -36,7 +36,7 @@ public class Plugin_Find_Faces implements PlugInFilter {
 		Detector detector = Detector.create(XMLFile);
 		BufferedImage bi = ip.getBufferedImage();
 		
-									// original values (in Test.java)
+		// original values (in Test.java)
 //		float baseScale = 1.5f;		// 1.0f
 //		float scale_inc = 1.05f;	// 1.25f
 //		float increment = 0.1f;		// 0.1f

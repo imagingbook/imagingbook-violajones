@@ -47,7 +47,6 @@ public class Find_Faces implements PlugInFilter {
 		params.minGradientMagnitude = 5;
 		params.maxGradientMagnitude = 100;
 		
-		
 		if (!setParameters(params)) return;
 			
 		FaceDetector detector = FaceDetector.create(trainingSet.getStream(), params);
