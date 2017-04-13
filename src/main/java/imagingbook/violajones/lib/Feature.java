@@ -28,7 +28,7 @@ public class Feature {
 	final int width, height;
 
 	public Feature(int width, int height, double threshold, double leVal, int leNode, double riVal, int riNode) {
-		patches = new LinkedList<FeaturePatch>();
+		this.patches = new LinkedList<FeaturePatch>();
 		this.width = width;
 		this.height = height;
 		this.threshold = threshold;
@@ -52,16 +52,19 @@ public class Feature {
 	 */
 	protected Direction getLeftOrRight(IntegralImage II, int u, int v, double scale) {
 		// calculate the area of the search window:
-		final int w = (int) Math.round(scale * this.width);
-		final int h = (int) Math.round(scale * this.height);
-
-		final double searchWinArea = w * h;
+		final int w = (int) Math.round(scale * width);
+		final int h = (int) Math.round(scale * height);
+		final double area = w * h;
+		
+		// calculate variance (std. deviation) for the current search window:
+		double variance = II.getVariance(u, v, u + w - 1, v + h - 1);
+		double stdDev = (variance > 1) ? Math.sqrt(variance) : 1.0;
 		
 		//double winMean  = II.getMean(u, v, u + w, v + h); 		 //total1 / winArea;
 
-		// calculate weighted sum over all rectangles of this feature
+		// calculate weighted sum over all rectangles (patches) of this feature
 		double patchSum = 0.0;
-		for (FeaturePatch patch : this.patches) {
+		for (FeaturePatch patch : patches) {
 			// scale the patch's relative position and size
 			final int ua = u + (int) Math.round(scale *  patch.x);
 			final int va = v + (int) Math.round(scale *  patch.y);
@@ -72,14 +75,10 @@ public class Feature {
 			patchSum = patchSum + II.getBlockSum1(ua, va, ub, vb) * patch.weight;
 		}
 		// normalize the sum of all patches by the window's area:
-		double patchSumNorm = patchSum / searchWinArea;
-		
-		// calculate variance (std. deviation) for the current search window:
-		double searchWinVar = II.getVariance(u, v, u + w - 1, v + h - 1);
-		double searchWinStdDev = (searchWinVar > 1) ? Math.sqrt(searchWinVar) : 1.0;
-		
+		double patchSumNorm = patchSum / area;
+			
 		// return LEFT or RIGHT depending on how the normalized patch sum compares to the threshold
-		return (patchSumNorm < threshold * searchWinStdDev) ? Direction.LEFT : Direction.RIGHT;
+		return (patchSumNorm < threshold * stdDev) ? Direction.LEFT : Direction.RIGHT;
 	}
 
 	protected void add(FeaturePatch r) {

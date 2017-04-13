@@ -11,7 +11,6 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
-
 /**
  * This class represents a trained Haar cascade classifier. Training results were obtained
  * from OpenCV's 'opencv_haartraining' application (now obsolete, see 
@@ -23,7 +22,8 @@ import org.jdom2.input.SAXBuilder;
  */
 public class HaarCascadeDescriptor {
 	
-	static final String XML_TYPE_ID = "opencv-haar-classifier";
+	static final String XML_TYPE_ID1 = "opencv-haar-classifier";		// OpenCV "old style"
+	static final String XML_TYPE_ID2 = "opencv-cascade-classifier";		// OpenCV new style?
 	
 	private int width = 0;
 	private int height = 0;
@@ -37,6 +37,13 @@ public class HaarCascadeDescriptor {
 	
 	// --- static factory methods -------------------
 	
+	/**
+	 * Creates a Haar cascade from the specification given in a
+	 * XML file.
+	 * 
+	 * @param xmlFilename path to the XML file
+	 * @return a new Haar cascade object
+	 */
 	public static HaarCascadeDescriptor createFrom(String xmlFilename) {
 		HaarCascadeDescriptor hc = null;
 		try {
@@ -50,9 +57,11 @@ public class HaarCascadeDescriptor {
 	}
 	
 	/**
-	 * XML input from an input stream. To be used when reading from
-	 * Java resources.
-	 * @param xmlStrm
+	 * Creates a Haar cascade from the specification given in a
+	 * XML stream.
+	 * 
+	 * @param xmlStrm input stream providing XML content
+	 * @return a new Haar cascade object
 	 */
 	public static HaarCascadeDescriptor createFrom(InputStream xmlStrm) {
 		HaarCascadeDescriptor hc = null;
@@ -68,14 +77,26 @@ public class HaarCascadeDescriptor {
 
 	// --- getters and setters ------------------------
 	
+	/**
+	 * Returns the width of this Haar cascade.
+	 * @return the width of this Haar cascade (in pixels units)
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
+	/**
+	 * Returns the height of this Haar cascade.
+	 * @return the height of this Haar cascade (in pixels units)
+	 */
 	public int getHeight() {
 		return height;
 	}
 	
+	/**
+	 * Returns the number of stages in this Haar cascade.
+	 * @return the number of stages this Haar cascade
+	 */
 	public List<Stage> getStages() {
 		return stages;
 	}
@@ -92,13 +113,14 @@ public class HaarCascadeDescriptor {
 		 * representing the object.
 		 */
 		
-		Element root = (Element) xmlDoc.getRootElement().getChildren().get(0);
+		Element root = xmlDoc.getRootElement().getChildren().get(0);
 		
 		// added by WB, TODO: different readers may be needed for other OpenCV training files
 		String type_id = root.getAttributeValue("type_id");
 		//IJ.log("root attribute =" + type_id);
-		if (!XML_TYPE_ID.equals(type_id)) {
-			throw new Exception("XML file of type " + XML_TYPE_ID + " expected.");
+
+		if (!type_id.equals(XML_TYPE_ID1)) {
+			throw new Exception("XML file of type " + XML_TYPE_ID1 + " expected.");
 		}
 		
 		/* Read the size (in pixels) of the detector. */
@@ -170,6 +192,5 @@ public class HaarCascadeDescriptor {
 		}
 	}
 	
-
 
 }

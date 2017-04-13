@@ -3,20 +3,25 @@ package imagingbook.violajones.lib;
 import ij.process.FloatProcessor;
 import imagingbook.lib.image.IntegralImage;
 import imagingbook.pub.color.edge.CannyEdgeDetector;
+import imagingbook.pub.color.edge.CannyEdgeDetector.Parameters;
 
 /**
  * Used to calculate the gradient magnitude inside a given
  * rectangular region.
+ * TODO: make more efficient
+ * 
  * @author W. Burger
  *
  */
 public class Gradient {
 	
-	public static IntegralImage makeGradientIntegral(int[][] I, double sigma) {
-		CannyEdgeDetector.Parameters par = new CannyEdgeDetector.Parameters(); 
-		par.gSigma = sigma; // sigma of Gaussian
+	protected static IntegralImage makeGradientIntegral(int[][] I, double sigma) {
+		
+		Parameters params = new Parameters();
+		params.gSigma = sigma;
+		params.normGradMag = false;
 
-		CannyEdgeDetector detector = new CannyEdgeDetector(new FloatProcessor(I), par); 
+		CannyEdgeDetector detector = new CannyEdgeDetector(new FloatProcessor(I), params); 
 		FloatProcessor Em = detector.getEdgeMagnitude();
 		
 //		Em.resetMinAndMax();

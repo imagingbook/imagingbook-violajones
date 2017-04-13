@@ -21,20 +21,28 @@ public class FaceDetector {
 	public static class Parameters {
 		/** The initial ratio between the window size and the Haar classifier size (default 2). */
 		public double baseScale = 2.00;
+		
 		/** The scale increment of the window size, at each step (default 1.25). */
 		public double scaleStep = 1.25;
+		
 		/** The shift of the window at each sub-step, in terms of percentage of the window size. */
 		public double winShiftFraction = 0.1;
+		
 		/** The minimum number of rectangles needed for the corresponding detection to be kept */
 		public int minNeighbors = 1;
+		
 		/** Flag indicating if Canny pruning should be applied. */
 		public boolean doGradientPruning = false;
+		
 		/** The min. percentage of overlap for merging two regions. */
 		public double minMergeRegionOverlap = 0.2;
+		
 		/** The width of the Gaussian blur applied before gradient calculation. */
 		public double gradientSigma = 2.0;
+		
 		/** The minimum (normalized) gradient magnitude if pruning is on. */
 		public double minGradientMagnitude = 20;
+		
 		/** The maximum (normalized) gradient magnitude if pruning is on. */
 		public double maxGradientMagnitude = 100;
 	}
@@ -68,10 +76,9 @@ public class FaceDetector {
 	}
 
 	/**
-	 * New version by Wilbur:
-	 * @param ip
-	 * @return the list of rectangles containing searched objects, expressed in
-	 *         pixels.
+	 * Detects faces in the supplied image.
+	 * @param ip the input image
+	 * @return the list of rectangles containing searched objects
 	 */
 	public List<FaceRegion> findFaces(ByteProcessor ip) {
 		return findFaces(ip.getIntArray());
@@ -116,14 +123,13 @@ public class FaceDetector {
 					 * If Canny pruning is on, compute the edge density of the
 					 * zone. If it is too low, the object should not be there so
 					 * skip the region.
-					 * WB: weird!!
 					 */
 					if (params.doGradientPruning) {
 						//int edges_density = canny[u + curW][v + curH] + canny[u][v] - canny[u][v + curH] - canny[u + curW][v];
 						double gradientMag = canny.getBlockSum1(u, v, u + curW - 1, v + curH - 1);
 						double d = gradientMag / (curW * curH);
 						if (d < params.minGradientMagnitude || d > params.maxGradientMagnitude)
-							continue;
+							continue;	// skip this region
 					}
 					
 					// apply each detector stage to the current window, reject if one stage fails
@@ -142,10 +148,8 @@ public class FaceDetector {
 			}
 			scale = scale * params.scaleStep;
 		}
-		
-		//IJ.log("before merge: length = " + facelist.size());
 
-		return merge(facelist.toArray(new FaceRegion[0]), 
+		return merge(facelist.toArray(new FaceRegion[0]),
 				params.minNeighbors, params.minMergeRegionOverlap);
 	}
 	

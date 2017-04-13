@@ -19,12 +19,12 @@ import imagingbook.violajones.resources.xml.HaarTrainingSet;
 /**
  * Face detection plugin using the new implementation.
  * @author W. Burger
- * @version 2016/05/04
+ * @version 2017/04/13
  */
 public class Find_Faces implements PlugInFilter {
 	
 	static boolean extractFaceImages = false;
-	static HaarTrainingSet trainingSet = HaarTrainingSet.FACE2;
+	static HaarTrainingSet trainingSet = HaarTrainingSet.frontalface_alt2;
 	
 	ImagePlus im = null;
 
@@ -42,37 +42,34 @@ public class Find_Faces implements PlugInFilter {
 		params.minNeighbors = 1;
 		params.minMergeRegionOverlap = 0.2;
 		
-		params.doGradientPruning = true;
+		params.doGradientPruning = false;
 		params.gradientSigma = 1.0;
 		params.minGradientMagnitude = 5;
 		params.maxGradientMagnitude = 100;
 		
 		if (!setParameters(params)) return;
-			
-		FaceDetector detector = FaceDetector.create(trainingSet.getStream(), params);
+		
+		//IJ.log("Using cascade decriptor " + trainingSet.getPath());
+		
 		IjUtils.setRgbConversionWeights(ip);
-		List<FaceRegion> res = detector.findFaces(ip.convertToByteProcessor());
-		IJ.log(res.size() + " faces found!");
+		FaceDetector detector = FaceDetector.create(trainingSet.getStream(), params);
+		List<FaceRegion> faces = detector.findFaces(ip.convertToByteProcessor());
+		IJ.log(faces.size() + " faces found!");
 		
 		// show results
 		ImageProcessor cp = ip.convertToColorProcessor();
-		for (FaceRegion r : res) {
+		for (FaceRegion r : faces) {
 			draw(r, cp);
 		}
 		new ImagePlus(this.getClass().getSimpleName() + ": results", cp).show();
 		
-		if (extractFaceImages && !res.isEmpty()) {
-//			int w = res.get(0).width;
-//			int h =  res.get(0).height;
-			//ImageStack faceStack = new ImageStack(w, h);
+		if (extractFaceImages && !faces.isEmpty()) {
 			int faceCtr = 0;
-			for (FaceRegion r : res) {
+			for (FaceRegion r : faces) {
 				ip.setRoi(r.x, r.y, r.width, r.height);
 				new ImagePlus("Face " + faceCtr, ip.crop()).show();
-				//faceStack.addSlice(ip.crop());
 				faceCtr++;
 			}
-			//new ImagePlus("FaceStack", faceStack).show();
 		}
 
 	}

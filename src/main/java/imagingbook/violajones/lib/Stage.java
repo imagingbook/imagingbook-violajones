@@ -9,11 +9,10 @@ import imagingbook.lib.image.IntegralImage;
 //import imagingbook.violajones.lib.integral2.IntegralImage;
 
 /**
- * A stage of the detector. Each stage consists of several trees and a
+ * A single stage of the cascade. Each stage consists of several trees and a
  * threshold. When using the detector on a window, each tree returns a value. If
  * the sum of these values exceeds the threshold, the stage succeeds, else it
  * fails (and the window is not the object looked for).
- *
  */
 public class Stage {
 	
@@ -44,16 +43,22 @@ public class Stage {
 		}
 	}
 	
-
-	protected boolean pass(IntegralImage II, int u, int v, double scale) {
-		// sum up the values returned by each tree of this stage:
+	/**
+	 * Sum up the values returned by each tree of this stage.
+	 */
+	protected double sum(IntegralImage II, int u, int v, double scale) {
 		double sum = 0;
 		for (FeatureTree tree : getTrees()) {
 			sum = sum + tree.getVal(II, u, v, scale);
 		}
-		// stage succeeds only if the sum exceeds the stage threshold:
-		//IJ.log("sum = " + sum + " " + ( sum > this.threshold));
-		return sum > this.threshold;
+		return sum;
+	}
+	
+	/**
+	 * Stage succeeds only if the sum exceeds the stage threshold.
+	 */
+	protected boolean pass(IntegralImage II, int u, int v, double scale) {
+		return sum(II, u, v, scale) > threshold;
 	}
 
 }

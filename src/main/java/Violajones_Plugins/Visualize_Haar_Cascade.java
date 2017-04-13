@@ -21,6 +21,15 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Visualizes the evaluation sequence for the selected Haar cascade.
+ * The current image is scaled to the size of the cascade shown in
+ * the background. The result is an image stack, with one slice for
+ * each decision step.
+ * 
+ * @author WB
+ *
+ */
 public class Visualize_Haar_Cascade implements PlugInFilter {
 
 	public int setup(String arg0, ImagePlus im) {
@@ -29,18 +38,16 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 
 	public void run(ImageProcessor ip) {
 	
-		HaarTrainingSet desc = HaarTrainingSet.FACE2;
+		HaarTrainingSet desc = HaarTrainingSet.frontalface_alt2;
 		InputStream strm = desc.getStream();
 		if (strm == null) {
-			IJ.log("could not open stream");
+			IJ.log("could not open training set");
 			return;
 		}
 		
 		HaarCascadeDescriptor cascade = HaarCascadeDescriptor.createFrom(strm);
 		int w = cascade.getWidth();
 		int h = cascade.getHeight();
-		
-		
 		
 		List<Stage> stages = cascade.getStages();
 		
@@ -53,8 +60,9 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 			int treeCtr = 0;
 			for (FeatureTree tree : stage.getTrees()) {
 				int featureCtr = 0;
-				for (@SuppressWarnings("unused") Feature feature : tree.getFeatures()) {
-					ImageProcessor sp = sp1.duplicate();
+				for (@SuppressWarnings("unused") 
+						Feature feature : tree.getFeatures()) {
+					ImageProcessor sp = sp1; //sp1.duplicate();
 //					sp.setColor(Color.gray);
 //					sp.fill();
 //					draw(sp, feature);

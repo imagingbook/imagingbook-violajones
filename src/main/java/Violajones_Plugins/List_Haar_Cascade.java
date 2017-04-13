@@ -1,5 +1,6 @@
 package Violajones_Plugins;
 
+import java.io.File;
 import java.io.InputStream;
 
 import ij.IJ;
@@ -9,7 +10,17 @@ import imagingbook.lib.ij.IjLogStream;
 import imagingbook.lib.util.ResourceUtils;
 import imagingbook.violajones.lib.HaarCascadeDescriptor;
 import imagingbook.violajones.resources.Data;
+import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
+
+/**
+ * This plugin lists the available OpenCV cascade descriptor files.
+ * Currently only "old style" XML files (of type "opencv-haar-classifier")
+ * can be read.
+ * 
+ * @author WB
+ *
+ */
 public class List_Haar_Cascade implements PlugIn {
 	
 	static {
@@ -19,6 +30,7 @@ public class List_Haar_Cascade implements PlugIn {
 
 	public void run(String arg) {
 		String xmlRoot = ResourceUtils.getResourcePath(Data.class, "xml").toString();
+		//String xmlRoot = ResourceUtils.getResourcePath(HaarTrainingSet.class, "").toString();
 		OpenDialog od = new OpenDialog("Select XML file", xmlRoot, "");
 		String xmlPath = od.getPath();
 		if (xmlPath == null) return;
@@ -27,18 +39,26 @@ public class List_Haar_Cascade implements PlugIn {
 			return;
 		}
 
-		System.out.println("XML-file: " + xmlPath);
+		System.out.println("XML path: " + xmlPath);
+		
+		File file = new File(xmlPath);
+		String name = file.getName();
+		System.out.println("XML file: " + name);
 				
 //		InputStream strm = ResourceUtils.getResourceStream(Data.class, "xml/haarcascade_frontalface_alt2.xml");
-		InputStream strm = Data.class.getResourceAsStream("xml/haarcascade_frontalface_alt2.xml");
+//		InputStream strm = Data.class.getResourceAsStream("xml/haarcascade_frontalface_alt2.xml");
+//		
+		InputStream strm = HaarTrainingSet.class.getResourceAsStream(name);
 		if (strm == null) {
-			IJ.log("could not open stream");
+			IJ.log("could not open XML stream for " + xmlPath);
 			return;
 		}
 
+		IJ.log("Reading XML stream ...");
 		HaarCascadeDescriptor hc = HaarCascadeDescriptor.createFrom(strm);
 		hc.print();
-		
+
+		IJ.log("done.");
 	}
 
 

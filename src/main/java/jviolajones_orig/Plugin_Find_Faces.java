@@ -19,6 +19,7 @@ import imagingbook.violajones.resources.xml.HaarTrainingSet;
  */
 public class Plugin_Find_Faces implements PlugInFilter {
 	
+	static HaarTrainingSet trainingSet = HaarTrainingSet.frontalface_alt2;
 	static boolean extractFaceImages = false;
 	
 	ImagePlus im = null;
@@ -29,8 +30,15 @@ public class Plugin_Find_Faces implements PlugInFilter {
 	}
 	
 	public void run(ImageProcessor ip) {
+		
+		Parameters params = new Parameters();
+		params.baseScale = 1.5;
+		params.scaleStep = 1.05;
+		params.winShiftFraction = 0.1;
+		params.minNeighbors = 1;
+		params.doGradientPruning = false;
 				
-		String XMLFile = HaarTrainingSet.FACE2.getPath();
+		String XMLFile = trainingSet.getPath();
 		IJ.log("XML = " + XMLFile);
 	
 		Detector detector = Detector.create(XMLFile);
@@ -43,15 +51,9 @@ public class Plugin_Find_Faces implements PlugInFilter {
 //		int min_neighbors = 1;		// 1
 //		boolean doCannyPruning = true;
 		
-		Parameters params = new Parameters();
-		params.baseScale = 1.5;
-		params.scaleStep = 1.05;
-		params.winShiftFraction = 0.1;
-		params.minNeighbors = 1;
-		params.doGradientPruning = false;		
 		
 		List<Rectangle> res = detector.getFaces(bi, 
-				(float) params.baseScale, 
+				(float) params.baseScale,
 				(float) params.scaleStep, 
 				(float) params.winShiftFraction, 
 				params.minNeighbors, 
@@ -59,7 +61,7 @@ public class Plugin_Find_Faces implements PlugInFilter {
 
 		IJ.log(res.size() + " faces found!");
 		
-//		// show results
+		// show results
 		ImageProcessor cp = ip.convertToColorProcessor();
 		for (Rectangle r : res) {
 			draw(r, cp);
