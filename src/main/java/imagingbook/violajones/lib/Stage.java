@@ -38,8 +38,11 @@ public class Stage {
 
 	public void print() {
 		System.out.format("   threshold = %.4f\n", threshold);
+		int treeCnt = 0;
 		for (FeatureTree tree : trees) {
+			System.out.format("   tree = %d\n", treeCnt);
 			tree.print();
+			treeCnt++;
 		}
 	}
 	
@@ -48,7 +51,7 @@ public class Stage {
 	 */
 	protected double sum(IntegralImage II, int u, int v, double scale) {
 		double sum = 0;
-		for (FeatureTree tree : getTrees()) {
+		for (FeatureTree tree : trees) {
 			sum = sum + tree.getVal(II, u, v, scale);
 		}
 		return sum;

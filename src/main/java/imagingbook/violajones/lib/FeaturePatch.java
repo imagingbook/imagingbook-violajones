@@ -25,7 +25,9 @@ public class FeaturePatch extends Rectangle {
 			int h = java.lang.Integer.parseInt(tab[3]);
 			double weight = java.lang.Double.parseDouble(tab[4]);
 			fp = new FeaturePatch(x, y, w, h, weight);
-		} catch (NumberFormatException e) {}
+		} catch (NumberFormatException e) {
+			System.out.println(FeaturePatch.class.getSimpleName() + ": NumberFormatException");
+		}
 		return fp;
 	}
 }

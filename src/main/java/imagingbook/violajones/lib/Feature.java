@@ -85,9 +85,9 @@ public class Feature {
 		patches.add(r);
 	}
 
-	public void print() {
-		System.out.format("     feature: w=%d h=%d leVal=%.4f riVal=%.4f th=%.4f rects=%d\n", 
-				width, height, leVal, riVal, threshold, patches.size());
+	public void print(int featureCnt) {
+		System.out.format("     feature %d: w=%d h=%d leVal=%.4f riVal=%.4f leNode=%d riNode=%d th=%.4f rects=%d\n", 
+				featureCnt, width, height, leVal, riVal, leNode, riNode, threshold, patches.size());
 		
 	}
 }
