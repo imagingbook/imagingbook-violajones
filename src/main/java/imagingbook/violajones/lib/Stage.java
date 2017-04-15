@@ -52,7 +52,7 @@ public class Stage {
 	protected double sum(IntegralImage II, int u, int v, double scale) {
 		double sum = 0;
 		for (FeatureTree tree : trees) {
-			sum = sum + tree.getVal(II, u, v, scale);
+			sum = sum + tree.eval(II, u, v, scale);
 		}
 		return sum;
 	}
