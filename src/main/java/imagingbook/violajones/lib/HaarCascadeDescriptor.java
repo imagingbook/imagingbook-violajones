@@ -171,13 +171,11 @@ public class HaarCascadeDescriptor {
 					for (Element rectElem : featureElem.getChild("feature").getChild("rects").getChildren("_")) {
 						String s = rectElem.getText().trim();
 						FeaturePatch r = FeaturePatch.fromString(s);
-						//node.add(r);
 						patches.add(r);
 					}
 					
 					FeatureNode node = new FeatureNode(width, height, featureThreshold, valL, childL, valR, childR, 
 														patches.toArray(new FeaturePatch[0]));
-					//tree.addFeature(node);
 					nodes.add(node);
 				}
 				

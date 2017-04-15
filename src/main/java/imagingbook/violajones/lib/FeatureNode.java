@@ -1,25 +1,22 @@
 package imagingbook.violajones.lib;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import imagingbook.lib.image.IntegralImage;
 
 
 /**
  * Represents a Haar feature, usually composed of multiple rectangular
- * patches.
+ * patches (of type {@link FeaturePatch}). Instances of this class make
+ * the nodes of a {@link FeatureTree}.
  * 
  * @author WB
  *
  */
 public class FeatureNode {
 	
-	public static final int LEFT = 0;
-	public static final int RIGHT = 1;
-	
-	public static final double NO_VALUE = Double.NaN;
-	public static final int NO_CHILD = -1;
+	protected static final double NO_VALUE = Double.NaN;
+	protected static final int NO_CHILD = -1;
+	protected static final int LEFT = 0;
+	protected static final int RIGHT = 1;
 
 	private final int width, height;
 	private final double threshold;
@@ -59,19 +56,19 @@ public class FeatureNode {
 	}
 
 	/**
-	 * Evaluates this feature node.
-	 * @param II
-	 * @param u
-	 * @param v
-	 * @param scale
+	 * Evaluates this feature node by applying its rectangular patches.
+	 * @param II input image (as an integral image) 
+	 * @param u left position of the candidate subimage
+	 * @param v top position of the candidate subimage
+	 * @param scale the current scale to be applied
 	 * @return
 	 */
-	protected int eval(IntegralImage II, int u, int v, double scale) {
-		// calculate the area of the search window:
+	public int eval(IntegralImage II, int u, int v, double scale) {
+		// calculate the area of the subimage:	TODO: w,h never change, make more efficient
 		final int w = (int) Math.round(scale * width);
 		final int h = (int) Math.round(scale * height);
 		
-		// calculate variance (std. deviation) for the current search window:
+		// calculate variance (std. deviation) for the complete subimage: TODO: do only once for the subimage?
 		double variance = II.getVariance(u, v, u + w - 1, v + h - 1);
 		double stdDev = (variance > 1) ? Math.sqrt(variance) : 1.0;
 
