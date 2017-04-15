@@ -1,14 +1,6 @@
 package imagingbook.violajones.lib;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import imagingbook.violajones.lib.Feature;
-
 import imagingbook.lib.image.IntegralImage;
-//import imagingbook.violajones.lib.integralIB.IntegralImage;
-//import imagingbook.violajones.lib.integral1.IntegralImage;
-//import imagingbook.violajones.lib.integral2.IntegralImage;
 
 /**
  * A binary tree for detection. At each node of the tree, a test (feature) is
@@ -18,55 +10,36 @@ import imagingbook.lib.image.IntegralImage;
  */
 public class FeatureTree {
 	
-	protected enum Direction {
-		LEFT, RIGHT;
-	}
+	//private final List<FeatureNode> nodes;
+	private final FeatureNode[] nodes;
 
-	final List<Feature> features;
-
-	protected FeatureTree() {
-		features = new ArrayList<Feature>();
+	protected FeatureTree(FeatureNode[] nodes) {
+		this.nodes = nodes;
 	}
 	
-	public List<Feature> getFeatures() {
-		return features;
-	}
-
-	protected void addFeature(Feature f) {
-		features.add(f);
+	public FeatureNode[] getFeatures() {
+		return nodes;
 	}
 
 	protected double getVal(IntegralImage II, int u, int v, double scale) {
-		Feature curFeature = features.get(0); // start at root of this tree
+		FeatureNode curFeature = nodes[0]; //nodes.get(0); // start at root of this tree
 		while (true) {
-			// evaluate the current feature to decide where to proceed:
-			Direction dir = curFeature.getLeftOrRight(II, u, v, scale);
-			if (dir == Direction.LEFT) {
-				// if the left child has a value, return it:
-				if (!Double.isNaN(curFeature.leVal)) { // (cur_node.hasLeVal)
-					return curFeature.leVal;
-				}
-				// else move to the left child node
-				else {
-					curFeature = features.get(curFeature.leNode);
-				}
-			} 
+			// evaluate the current feature node to decide where to proceed:
+			int dir = curFeature.eval(II, u, v, scale);
+			// if the current node has a value for 'dir', return it:
+			if (curFeature.hasValue(dir)) {
+				return curFeature.getValue(dir);
+			}
+			// otherwise continue with the child node for 'dir'
 			else {
-				// if the right child has a value, return it:
-				if (!Double.isNaN(curFeature.riVal)) { // (cur_node.hasRiVal)
-					return curFeature.riVal;
-				}
-				// else move to the right child node:
-				else {
-					curFeature = features.get(curFeature.riNode);
-				}
+				curFeature = nodes[curFeature.getChild(dir)];
 			}
 		}
 	}
 
 	public void print() {
 		int featureCnt = 0;
-		for (Feature f : features) {
+		for (FeatureNode f : nodes) {
 			f.print(featureCnt);
 			featureCnt++;
 		}

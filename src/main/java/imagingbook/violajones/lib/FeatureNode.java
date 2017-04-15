@@ -4,42 +4,55 @@ import java.util.LinkedList;
 import java.util.List;
 
 import imagingbook.lib.image.IntegralImage;
-import imagingbook.violajones.lib.FeatureTree.Direction;
 
-//import imagingbook.violajones.lib.integralIB.IntegralImage;
-//import imagingbook.violajones.lib.integral1.IntegralImage;
-//import imagingbook.violajones.lib.integral2.IntegralImage;
 
-//-------------------------------------------------------------------------------
-/**
- * Made a non-static nested class, such that width, height are inherited from the enclosing 
- * HaarCascade instance.
- * @author WB
- *
- */
-public class Feature {
+// TODO: Make a non-static inner class, such that width, height are inherited from the enclosing HaarCascade instance.
 
-	private final List<FeaturePatch> patches;
+public class FeatureNode {
+	
+	public static final int LEFT = 0;
+	public static final int RIGHT = 1;
+	
+	public static final double NO_VALUE = Double.NaN;
+	public static final int NO_CHILD = -1;
+
+	private final int width, height;
 	private final double threshold;
-	final double leVal;
-	final double riVal;
-	final int leNode;
-	final int riNode;
-	final int width, height;
+	private final double[] values;	// terminal values
+	private final int[] children;		// indexes of child nodes
+	private final List<FeaturePatch> patches;
 
-	public Feature(int width, int height, double threshold, double leVal, int leNode, double riVal, int riNode) {
-		this.patches = new LinkedList<FeaturePatch>();
+	public FeatureNode(int width, int height, double threshold, double leVal, int leNode, double riVal, int riNode) {
 		this.width = width;
 		this.height = height;
 		this.threshold = threshold;
-		this.leVal = leVal;
-		this.leNode = leNode;
-		this.riVal = riVal;	
-		this.riNode = riNode;
+		this.values = new double[] {leVal, riVal};
+		this.children = new int[] {leNode, riNode};
+		this.patches = new LinkedList<FeaturePatch>();
+	}
+	
+	public double getValue(int dir) {
+		return values[dir];
+	}
+	
+	public boolean hasValue(int dir) {
+		return !Double.isNaN(values[dir]);
+	}
+	
+	public int getChild(int dir) {
+		return children[dir];
+	}
+	
+	public boolean hasChild(int dir) {
+		return children[dir] != NO_CHILD;
 	}
 	
 	public List<FeaturePatch> getRectangles() {
 		return patches;
+	}
+	
+	protected void add(FeaturePatch r) {
+		patches.add(r);
 	}
 
 	/**
@@ -50,7 +63,7 @@ public class Feature {
 	 * @param scale
 	 * @return
 	 */
-	protected Direction getLeftOrRight(IntegralImage II, int u, int v, double scale) {
+	protected int eval(IntegralImage II, int u, int v, double scale) {
 		// calculate the area of the search window:
 		final int w = (int) Math.round(scale * width);
 		final int h = (int) Math.round(scale * height);
@@ -78,16 +91,13 @@ public class Feature {
 		double patchSumNorm = patchSum / area;
 			
 		// return LEFT or RIGHT depending on how the normalized patch sum compares to the threshold
-		return (patchSumNorm < threshold * stdDev) ? Direction.LEFT : Direction.RIGHT;
-	}
-
-	protected void add(FeaturePatch r) {
-		patches.add(r);
+		return (patchSumNorm < threshold * stdDev) ? LEFT : RIGHT;
 	}
 
 	public void print(int featureCnt) {
 		System.out.format("     feature %d: w=%d h=%d leVal=%.4f riVal=%.4f leNode=%d riNode=%d th=%.4f rects=%d\n", 
-				featureCnt, width, height, leVal, riVal, leNode, riNode, threshold, patches.size());
+				featureCnt, width, height, getValue(LEFT), getValue(RIGHT), getChild(LEFT), getChild(RIGHT), 
+				threshold, patches.size());
 		
 	}
 }

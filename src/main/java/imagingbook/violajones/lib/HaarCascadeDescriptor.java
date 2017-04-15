@@ -134,45 +134,50 @@ public class HaarCascadeDescriptor {
 		/* Iterate over the stages nodes to read the stages. */
 		for (Element stageElem : root.getChild("stages").getChildren("_")) {
 			// read the stage threshold:
-			double thres = Float.parseFloat(stageElem.getChild("stage_threshold").getText());
-			Stage stage = new Stage(thres);
+			double stageThreshold = Float.parseFloat(stageElem.getChild("stage_threshold").getText());
+			Stage stage = new Stage(stageThreshold);
 			
 			// read all trees of this stage:
 			for (Element treeElem : stageElem.getChild("trees").getChildren("_")) {
-				FeatureTree tree = new FeatureTree();	
+				
+				//FeatureTree tree = new FeatureTree();
+				List<FeatureNode> nodes = new LinkedList<>();
 				
 				// read all features contained in this tree:
-				for (Element node : treeElem.getChildren("_")) {
-					double thres2 = Double.parseDouble(node.getChild("threshold").getText());
+				for (Element featureElem : treeElem.getChildren("_")) {
+					double featureThreshold = Double.parseDouble(featureElem.getChild("threshold").getText());
 
-					int leNode = -1;
-					double leVal = Double.NaN;
-					Element el = node.getChild("left_val");
+					int leNode = FeatureNode.NO_CHILD; // -1;
+					double leVal = FeatureNode.NO_VALUE; //Double.NaN;
+					Element el = featureElem.getChild("left_val");
 					if (el != null) {
 						leVal = Double.parseDouble(el.getText());
 					} else {
-						leNode = Integer.parseInt(node.getChild("left_node").getText());
+						leNode = Integer.parseInt(featureElem.getChild("left_node").getText());
 					}
 
-					int riNode = -1;
-					double riVal = Double.NaN;
-					Element er = node.getChild("right_val");
+					int riNode = FeatureNode.NO_CHILD; // -1;
+					double riVal = FeatureNode.NO_VALUE; //Double.NaN;
+					Element er = featureElem.getChild("right_val");
 					if (er != null) {
 						riVal = Double.parseDouble(er.getText());
 					} else {
-						riVal = Double.NaN;
-						riNode = Integer.parseInt(node.getChild("right_node").getText());
+						riNode = Integer.parseInt(featureElem.getChild("right_node").getText());
 					}
-					Feature feature = new Feature(width, height, thres2, leVal, leNode, riVal, riNode);
+					FeatureNode node = new FeatureNode(width, height, featureThreshold, leVal, leNode, riVal, riNode);
 					
 					// read rectangles of this feature and add:
-					for (Element rectElem : node.getChild("feature").getChild("rects").getChildren("_")) {
+					for (Element rectElem : featureElem.getChild("feature").getChild("rects").getChildren("_")) {
 						String s = rectElem.getText().trim();
 						FeaturePatch r = FeaturePatch.fromString(s);
-						feature.add(r);
+						node.add(r);
 					}
-					tree.addFeature(feature);
+					
+					//tree.addFeature(node);
+					nodes.add(node);
 				}
+				
+				FeatureTree tree = new FeatureTree(nodes.toArray(new FeatureNode[0]));
 				stage.addTree(tree);
 			}
 			stages.add(stage);

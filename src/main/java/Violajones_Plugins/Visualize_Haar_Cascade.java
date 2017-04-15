@@ -9,7 +9,7 @@ import ij.gui.Roi;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.violajones.lib.FaceRegion;
-import imagingbook.violajones.lib.Feature;
+import imagingbook.violajones.lib.FeatureNode;
 import imagingbook.violajones.lib.FeaturePatch;
 import imagingbook.violajones.lib.FeatureTree;
 import imagingbook.violajones.lib.HaarCascadeDescriptor;
@@ -61,7 +61,7 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 			for (FeatureTree tree : stage.getTrees()) {
 				int featureCtr = 0;
 				for (@SuppressWarnings("unused") 
-						Feature feature : tree.getFeatures()) {
+						FeatureNode feature : tree.getFeatures()) {
 					ImageProcessor sp = sp1; //sp1.duplicate();
 //					sp.setColor(Color.gray);
 //					sp.fill();
@@ -79,7 +79,7 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 		int sliceNo = 1;
 		for (Stage stage : stages) {
 			for (FeatureTree tree : stage.getTrees()) {
-				for (Feature feature : tree.getFeatures()) {
+				for (FeatureNode feature : tree.getFeatures()) {
 					for (FeaturePatch r : feature.getRectangles()) {
 						Color col = (r.weight > 0) ? Color.green : Color.red;
 						Roi box = new Roi(r.x, r.y, r.width, r.height);
@@ -102,7 +102,7 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 		
 	}
 	
-	List<Roi> getRectangles(Feature feature) {
+	List<Roi> getRectangles(FeatureNode feature) {
 		List<Roi> rectRois = new ArrayList<Roi>();
 		for (FeaturePatch r : feature.getRectangles()) {
 			rectRois.add(new Roi(r.x, r.y, r.width, r.height));
@@ -111,7 +111,7 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 	}
 
 	@SuppressWarnings("unused")
-	private void draw(ImageProcessor sp, Feature feature) {
+	private void draw(ImageProcessor sp, FeatureNode feature) {
 		for (FeaturePatch r : feature.getRectangles()) {
 			Color col = (r.weight > 0) ? Color.green : Color.red;
 			sp.setColor(col);
