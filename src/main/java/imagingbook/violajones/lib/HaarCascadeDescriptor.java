@@ -140,39 +140,43 @@ public class HaarCascadeDescriptor {
 			// read all trees of this stage:
 			for (Element treeElem : stageElem.getChild("trees").getChildren("_")) {
 				
-				//FeatureTree tree = new FeatureTree();
+				// collect the features contained in this tree:
 				List<FeatureNode> nodes = new LinkedList<>();
-				
-				// read all features contained in this tree:
 				for (Element featureElem : treeElem.getChildren("_")) {
 					double featureThreshold = Double.parseDouble(featureElem.getChild("threshold").getText());
-
-					int leNode = FeatureNode.NO_CHILD; // -1;
-					double leVal = FeatureNode.NO_VALUE; //Double.NaN;
+					
+					// get the LEFT value OR child (one of them is empty)
+					int childL = FeatureNode.NO_CHILD;
+					double valL = FeatureNode.NO_VALUE;
 					Element el = featureElem.getChild("left_val");
 					if (el != null) {
-						leVal = Double.parseDouble(el.getText());
+						valL = Double.parseDouble(el.getText());
 					} else {
-						leNode = Integer.parseInt(featureElem.getChild("left_node").getText());
+						childL = Integer.parseInt(featureElem.getChild("left_node").getText());
 					}
 
-					int riNode = FeatureNode.NO_CHILD; // -1;
-					double riVal = FeatureNode.NO_VALUE; //Double.NaN;
+					// get the RIGHT value OR child (one of them is empty)
+					int childR = FeatureNode.NO_CHILD;
+					double valR = FeatureNode.NO_VALUE;
 					Element er = featureElem.getChild("right_val");
 					if (er != null) {
-						riVal = Double.parseDouble(er.getText());
+						valR = Double.parseDouble(er.getText());
 					} else {
-						riNode = Integer.parseInt(featureElem.getChild("right_node").getText());
+						childR = Integer.parseInt(featureElem.getChild("right_node").getText());
 					}
-					FeatureNode node = new FeatureNode(width, height, featureThreshold, leVal, leNode, riVal, riNode);
+					
+					List<FeaturePatch> patches = new LinkedList<FeaturePatch>();
 					
 					// read rectangles of this feature and add:
 					for (Element rectElem : featureElem.getChild("feature").getChild("rects").getChildren("_")) {
 						String s = rectElem.getText().trim();
 						FeaturePatch r = FeaturePatch.fromString(s);
-						node.add(r);
+						//node.add(r);
+						patches.add(r);
 					}
 					
+					FeatureNode node = new FeatureNode(width, height, featureThreshold, valL, childL, valR, childR, 
+														patches.toArray(new FeaturePatch[0]));
 					//tree.addFeature(node);
 					nodes.add(node);
 				}

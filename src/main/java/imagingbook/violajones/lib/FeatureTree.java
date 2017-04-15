@@ -39,8 +39,8 @@ public class FeatureTree {
 
 	public void print() {
 		int featureCnt = 0;
-		for (FeatureNode f : nodes) {
-			f.print(featureCnt);
+		for (FeatureNode node : nodes) {
+			node.print(featureCnt);
 			featureCnt++;
 		}
 	}

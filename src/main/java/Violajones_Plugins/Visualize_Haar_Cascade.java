@@ -80,7 +80,7 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 		for (Stage stage : stages) {
 			for (FeatureTree tree : stage.getTrees()) {
 				for (FeatureNode feature : tree.getFeatures()) {
-					for (FeaturePatch r : feature.getRectangles()) {
+					for (FeaturePatch r : feature.getPatches()) {
 						Color col = (r.weight > 0) ? Color.green : Color.red;
 						Roi box = new Roi(r.x, r.y, r.width, r.height);
 						box.setStrokeColor(col);
@@ -104,7 +104,7 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 	
 	List<Roi> getRectangles(FeatureNode feature) {
 		List<Roi> rectRois = new ArrayList<Roi>();
-		for (FeaturePatch r : feature.getRectangles()) {
+		for (FeaturePatch r : feature.getPatches()) {
 			rectRois.add(new Roi(r.x, r.y, r.width, r.height));
 		}
 		return rectRois;
@@ -112,7 +112,7 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 
 	@SuppressWarnings("unused")
 	private void draw(ImageProcessor sp, FeatureNode feature) {
-		for (FeaturePatch r : feature.getRectangles()) {
+		for (FeaturePatch r : feature.getPatches()) {
 			Color col = (r.weight > 0) ? Color.green : Color.red;
 			sp.setColor(col);
 			for (int u = 0; u < r.width; u++) {

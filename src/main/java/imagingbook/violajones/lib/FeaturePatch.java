@@ -30,4 +30,9 @@ public class FeaturePatch extends Rectangle {
 		}
 		return fp;
 	}
+	
+	public void print(int patchCnt) {
+		System.out.format("           patch %d: x=%d y=%d w=%d h=%d weight=%.2f\n", 
+				patchCnt, this.x, this.y, this.width, this.height, this.weight);
+	}
 }
