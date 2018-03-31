@@ -1,10 +1,6 @@
 package Violajones_Plugins;
 
-import ij.IJ;
 import ij.plugin.PlugIn;
-import imagingbook.lib.util.Enums;
-import imagingbook.lib.util.ResourceUtils;
-import imagingbook.violajones.resources.Data;
 import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
 public class List_Xml_File_Resources implements PlugIn {

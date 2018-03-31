@@ -68,19 +68,19 @@ public class Detector {
 		size = new Point(scanner.nextInt(), scanner.nextInt());
 
 		/* Iterate over the stages nodes to read the stages. */
-		Iterator it = racine.getChild("stages").getChildren("_").iterator();
+		Iterator<Element> it = racine.getChild("stages").getChildren("_").iterator();
 		while (it.hasNext()) {
 			Element stage = (Element) it.next();
 			/* Read the stage threshold. */
 			float thres = Float.parseFloat(stage.getChild("stage_threshold").getText());
 
 			/* Read all trees of the stage. */
-			Iterator it2 = stage.getChild("trees").getChildren("_").iterator();
+			Iterator<Element> it2 = stage.getChild("trees").getChildren("_").iterator();
 			Stage st = new Stage(thres);
 			while (it2.hasNext()) {
 				Element tree = ((Element) it2.next());
 				Tree t = new Tree();
-				Iterator it4 = tree.getChildren("_").iterator();
+				Iterator<Element> it4 = tree.getChildren("_").iterator();
 				while (it4.hasNext()) {
 					Element feature = (Element) it4.next();
 					float thres2 = Float.parseFloat(feature.getChild("threshold").getText());
@@ -108,7 +108,7 @@ public class Detector {
 					}
 					Feature f = new Feature(thres2, left_val, left_node, has_left_val, right_val, right_node,
 							has_right_val, size);
-					Iterator it3 = feature.getChild("feature").getChild("rects").getChildren("_").iterator();
+					Iterator<Element> it3 = feature.getChild("feature").getChild("rects").getChildren("_").iterator();
 					while (it3.hasNext()) {
 						String s = ((Element) it3.next()).getText().trim();
 						Rect r = Rect.fromString(s);
@@ -121,6 +121,7 @@ public class Detector {
 			}
 			stages.add(st);
 		}
+		scanner.close();
 	}
 
 	/**

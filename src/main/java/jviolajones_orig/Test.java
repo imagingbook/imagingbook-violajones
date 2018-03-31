@@ -5,20 +5,19 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.*;
-import java.io.*;
+import java.util.List;
+
 import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Test extends JFrame{
+	private static final long serialVersionUID = -2733314446565688336L;
 	
 	public Test(File img, String XMLFile)
 	{
@@ -56,6 +55,9 @@ public static void main(String[] args) throws IOException
 
 class Dessin extends JPanel
 {
+
+	private static final long serialVersionUID = 1L;
+	
 	protected Image img;
 	int img_width,img_height;
 	List<Rectangle> res;
