@@ -2,7 +2,7 @@
 
 This Java library implements the face detection algorithm proposed by Viola and Jones 
 (partly based on [this implementation](https://code.google.com/archive/p/jviolajones/)).
-Part of the [imagingbook open source project](https://imagingbook.com).
+Part of the [imagingbook project](https://imagingbook.com).
 
 **Author:** Wilhelm Burger
 
