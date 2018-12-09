@@ -16,6 +16,8 @@ import org.jdom2.input.SAXBuilder;
  * from OpenCV's 'opencv_haartraining' application (now obsolete, see 
  * http://docs.opencv.org/doc/user_guide/ug_traincascade.html), available as XML files.
  * Currently only the old-type XML format is supported.
+ * 
+ * TODO: Refactor to use javax.xml... and org.w3c.dom... to eliminate org.jdom2 dependency.
  * TODO: Write a reader for the newer format (produced by 'opencv_traincascade').
  * 
  * @author WB
