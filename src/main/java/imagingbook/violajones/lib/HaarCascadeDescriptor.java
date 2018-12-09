@@ -17,6 +17,7 @@ import org.jdom2.input.SAXBuilder;
  * http://docs.opencv.org/doc/user_guide/ug_traincascade.html), available as XML files.
  * Currently only the old-type XML format is supported.
  * TODO: Write a reader for the newer format (produced by 'opencv_traincascade').
+ * 
  * @author WB
  *
  */
@@ -174,9 +175,9 @@ public class HaarCascadeDescriptor {
 						patches.add(r);
 					}
 					
-					FeatureNode node = new FeatureNode(width, height, featureThreshold, valL, childL, valR, childR, 
+					FeatureNode feature = new FeatureNode(width, height, featureThreshold, valL, childL, valR, childR, 
 														patches.toArray(new FeaturePatch[0]));
-					nodes.add(node);
+					nodes.add(feature);
 				}
 				
 				FeatureTree tree = new FeatureTree(nodes.toArray(new FeatureNode[0]));
@@ -186,7 +187,7 @@ public class HaarCascadeDescriptor {
 		}
 	}
 	
-	
+	@Deprecated
 	public void print() {
 		System.out.println("Listing of " + this.getClass().getSimpleName());
 		System.out.format("Size = %d x %d\n", width, height);

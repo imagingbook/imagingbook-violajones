@@ -6,8 +6,7 @@ import imagingbook.pub.color.edge.CannyEdgeDetector;
 import imagingbook.pub.color.edge.CannyEdgeDetector.Parameters;
 
 /**
- * Used to calculate the gradient magnitude inside a given
- * rectangular region.
+ * Used to calculate the gradient magnitude inside a given rectangular region.
  * TODO: make more efficient
  * 
  * @author W. Burger
@@ -21,7 +20,7 @@ public class Gradient {
 		params.gSigma = sigma;
 		params.normGradMag = false;
 
-		CannyEdgeDetector detector = new CannyEdgeDetector(new FloatProcessor(I), params); 
+		CannyEdgeDetector detector = new CannyEdgeDetector(new FloatProcessor(I), params);
 		FloatProcessor Em = detector.getEdgeMagnitude();
 		
 //		Em.resetMinAndMax();

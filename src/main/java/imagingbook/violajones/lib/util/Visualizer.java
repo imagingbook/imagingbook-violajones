@@ -40,8 +40,7 @@ public class Visualizer {
 			im.updateAndDraw();
 		}
 	}
-	
-	
+		
 	public static Color nextColor() {
 		return rcg.nextColor();
 	}

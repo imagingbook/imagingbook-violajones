@@ -20,22 +20,6 @@ public class FeatureTree {
 	public FeatureNode[] getFeatures() {
 		return nodes;
 	}
-
-//	protected double eval(IntegralImage II, int u, int v, double scale) {
-//		FeatureNode node = nodes[0]; // start at root of this tree
-//		while (true) {
-//			// evaluate the current feature node to decide where to proceed:
-//			int dir = node.eval(II, u, v, scale);
-//			// if the current node has a value for 'dir', return it:
-//			if (node.hasValue(dir)) {
-//				return node.getValue(dir);
-//			}
-//			// otherwise continue with the child node for 'dir'
-//			else {
-//				node = nodes[node.getChild(dir)];
-//			}
-//		}
-//	}
 	
 	// evaluate the feature tree
 	protected double eval(IntegralImage II, int u, int v, double scale) {
@@ -54,6 +38,7 @@ public class FeatureTree {
 		}
 	}
 
+	@Deprecated
 	public void print() {
 		int featureCnt = 0;
 		for (FeatureNode node : nodes) {

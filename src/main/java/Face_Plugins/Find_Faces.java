@@ -1,4 +1,4 @@
-package Violajones_Plugins;
+package Face_Plugins;
 
 import java.awt.Color;
 import java.util.List;
@@ -17,9 +17,13 @@ import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
 
 /**
- * Face detection plugin using the new implementation.
+ * Face detection ImageJ plugin using 'imagingbook.violajones' implementation
+ * of the Viola-Jones face detection algorithm: Paul Viola and Michael Jones, 
+ * "Robust Real-time Face Detection", International Journal of Computer Vision 
+ * 57.2 (2004), pp. 137–154.
+ * 
  * @author W. Burger
- * @version 2017/04/13
+ * @version 2018/12/09
  */
 public class Find_Faces implements PlugInFilter {
 	
@@ -71,7 +75,6 @@ public class Find_Faces implements PlugInFilter {
 				faceCtr++;
 			}
 		}
-
 	}
 	
 	boolean setParameters(Parameters params) {

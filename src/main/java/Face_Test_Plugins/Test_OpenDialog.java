@@ -1,4 +1,4 @@
-package Violajones_Plugins;
+package Face_Test_Plugins;
 
 import ij.IJ;
 import ij.io.OpenDialog;

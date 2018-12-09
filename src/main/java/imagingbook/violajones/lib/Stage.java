@@ -4,9 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import imagingbook.lib.image.IntegralImage;
-//import imagingbook.violajones.lib.integralIB.IntegralImage;
-//import imagingbook.violajones.lib.integral1.IntegralImage;
-//import imagingbook.violajones.lib.integral2.IntegralImage;
 
 /**
  * A single stage of the cascade. Each stage consists of several trees and a
@@ -35,16 +32,6 @@ public class Stage {
 	public double getThreshold() {
 		return threshold;
 	}
-
-	public void print() {
-		System.out.format("   threshold = %.4f\n", threshold);
-		int treeCnt = 0;
-		for (FeatureTree tree : trees) {
-			System.out.format("   tree = %d\n", treeCnt);
-			tree.print();
-			treeCnt++;
-		}
-	}
 	
 	/**
 	 * Sum up the values returned by each tree of this stage.
@@ -62,6 +49,17 @@ public class Stage {
 	 */
 	protected boolean pass(IntegralImage II, int u, int v, double scale) {
 		return sum(II, u, v, scale) > threshold;
+	}
+	
+	@Deprecated
+	public void print() {
+		System.out.format("   threshold = %.4f\n", threshold);
+		int treeCnt = 0;
+		for (FeatureTree tree : trees) {
+			System.out.format("   tree = %d\n", treeCnt);
+			tree.print();
+			treeCnt++;
+		}
 	}
 
 }

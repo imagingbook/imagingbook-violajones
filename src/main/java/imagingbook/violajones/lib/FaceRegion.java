@@ -21,11 +21,14 @@ public class FaceRegion extends Rectangle {
 		if (r2.x <= this.x + distance && r2.x >= this.x - distance
 				&& r2.y <= this.y + distance && r2.y >= this.y - distance
 				&& r2.width <= (int) (this.width * sizeFac1)
-				&& (int) (r2.width * sizeFac1) >= this.width)
+				&& (int) (r2.width * sizeFac1) >= this.width) {
 			return true;
+		}
 		if (this.x >= r2.x && this.x + this.width <= r2.x + r2.width && this.y >= r2.y
-				&& this.y + this.height <= r2.y + r2.height)
+				&& this.y + this.height <= r2.y + r2.height) {
 			return true;
+		}
+			
 		return false;
 	}
 

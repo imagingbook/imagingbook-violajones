@@ -1,4 +1,4 @@
-package Violajones_Plugins;
+package Face_Test_Plugins;
 
 import ij.plugin.PlugIn;
 import imagingbook.violajones.resources.xml.HaarTrainingSet;
