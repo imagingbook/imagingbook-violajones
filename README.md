@@ -7,3 +7,6 @@ Part of the [imagingbook project](https://imagingbook.com).
 **Author:** Wilhelm Burger
 
 **Dependencies:** ``ImageJ``, ``imagingbook-common``, ``jdom2``.
+
+**Documentation:** 
+[JavaDoc](https://imagingbook.github.io/imagingbook-violajones/javadoc/)
