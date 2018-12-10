@@ -23,7 +23,7 @@ import org.jdom2.input.SAXBuilder;
  * @author WB
  *
  */
-public class HaarCascadeDescriptor {
+public class HaarCascadeDescriptor1 {
 	
 	static final String XML_TYPE_ID1 = "opencv-haar-classifier";		// OpenCV "old style"
 	static final String XML_TYPE_ID2 = "opencv-cascade-classifier";		// OpenCV new style?
@@ -35,7 +35,7 @@ public class HaarCascadeDescriptor {
 	// --- constructors ------------------------------
 	
 	// we dont't want to use this from outside:
-	private HaarCascadeDescriptor() {	
+	private HaarCascadeDescriptor1() {	
 	}
 	
 	// --- static factory methods -------------------
@@ -47,11 +47,11 @@ public class HaarCascadeDescriptor {
 	 * @param xmlFilename path to the XML file
 	 * @return a new Haar cascade object
 	 */
-	public static HaarCascadeDescriptor createFrom(String xmlFilename) {
-		HaarCascadeDescriptor hc = null;
+	public static HaarCascadeDescriptor1 createFrom(String xmlFilename) {
+		HaarCascadeDescriptor1 hc = null;
 		try {
 			Document xmlDoc = new SAXBuilder().build(new File(xmlFilename));
-			hc = new HaarCascadeDescriptor();
+			hc = new HaarCascadeDescriptor1();
 			hc.buildFrom(xmlDoc);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,11 +66,11 @@ public class HaarCascadeDescriptor {
 	 * @param xmlStrm input stream providing XML content
 	 * @return a new Haar cascade object
 	 */
-	public static HaarCascadeDescriptor createFrom(InputStream xmlStrm) {
-		HaarCascadeDescriptor hc = null;
+	public static HaarCascadeDescriptor1 createFrom(InputStream xmlStrm) {
+		HaarCascadeDescriptor1 hc = null;
 		try {
 			Document xmlDoc = new SAXBuilder().build(xmlStrm);
-			hc = new HaarCascadeDescriptor();
+			hc = new HaarCascadeDescriptor1();
 			hc.buildFrom(xmlDoc);
 		} catch (Exception e) {
 			e.printStackTrace();

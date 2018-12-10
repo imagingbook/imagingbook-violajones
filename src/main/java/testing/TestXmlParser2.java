@@ -1,43 +1,35 @@
-package Face_Test_Plugins;
+package testing;
 
 import java.io.File;
 import java.io.InputStream;
 
-import ij.IJ;
 import ij.io.OpenDialog;
-import ij.plugin.PlugIn;
-import imagingbook.lib.ij.IjLogStream;
 import imagingbook.lib.util.ResourceUtils;
-import imagingbook.violajones.lib.HaarCascadeDescriptor1;
+import imagingbook.violajones.lib.HaarCascadeDescriptor2;
 import imagingbook.violajones.resources.Data;
 import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
+public class TestXmlParser2 {
 
-/**
- * This ImageJ plugin lists the available OpenCV cascade descriptor files.
- * Currently only "old style" XML files (of type "opencv-haar-classifier")
- * can be read.
- * 
- * @author WB
- */
-public class List_Haar_Cascade implements PlugIn {
-	
-	static {
-		IjLogStream.redirectSystem();
-	}
-
-	public void run(String arg) {
+	public static void main(String[] args) {
 		String xmlRoot = ResourceUtils.getResourcePath(Data.class, "xml").toString();
 		//String xmlRoot = ResourceUtils.getResourcePath(HaarTrainingSet.class, "").toString();
-		OpenDialog od = new OpenDialog("Select XML file", xmlRoot, "");
-		String xmlPath = od.getPath();
+		System.out.println("XML root: " + xmlRoot);
+		
+		
+//		OpenDialog od = new OpenDialog("Select XML file", xmlRoot, "");
+//		String xmlPath = od.getPath();
+		
+		String xmlPath = xmlRoot + "\\haarcascade_frontalface_alt2.xml";
 		if (xmlPath == null) return;
 		if (!xmlPath.endsWith(".xml")) {
-			IJ.error("this is not an XML file!");
+			System.out.println("this is not an XML file!");
 			return;
 		}
 
 		System.out.println("XML path: " + xmlPath);
+		
+		//if(true) return;
 		
 		File file = new File(xmlPath);
 		String name = file.getName();
@@ -48,15 +40,15 @@ public class List_Haar_Cascade implements PlugIn {
 //		
 		InputStream strm = HaarTrainingSet.class.getResourceAsStream(name);
 		if (strm == null) {
-			IJ.log("could not open XML stream for " + xmlPath);
+			System.out.println("could not open XML stream for " + xmlPath);
 			return;
 		}
 
-		IJ.log("Reading XML stream ...");
-		HaarCascadeDescriptor1 hc = HaarCascadeDescriptor1.createFrom(strm);
+		System.out.println("Reading XML stream ...");
+		HaarCascadeDescriptor2 hc = HaarCascadeDescriptor2.createFrom(strm);
 		hc.print();
 
-		IJ.log("done.");
+		System.out.println("done.");
 	}
 
 }

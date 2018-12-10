@@ -12,7 +12,7 @@ import imagingbook.violajones.lib.FaceRegion;
 import imagingbook.violajones.lib.FeatureNode;
 import imagingbook.violajones.lib.FeaturePatch;
 import imagingbook.violajones.lib.FeatureTree;
-import imagingbook.violajones.lib.HaarCascadeDescriptor;
+import imagingbook.violajones.lib.HaarCascadeDescriptor1;
 import imagingbook.violajones.lib.Stage;
 import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
@@ -45,7 +45,7 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 			return;
 		}
 		
-		HaarCascadeDescriptor cascade = HaarCascadeDescriptor.createFrom(strm);
+		HaarCascadeDescriptor1 cascade = HaarCascadeDescriptor1.createFrom(strm);
 		int w = cascade.getWidth();
 		int h = cascade.getHeight();
 		
