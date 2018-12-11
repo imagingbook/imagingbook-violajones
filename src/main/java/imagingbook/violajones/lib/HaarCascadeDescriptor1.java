@@ -11,6 +11,10 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
+import imagingbook.lib.util.ResourceUtils;
+import imagingbook.violajones.resources.Data;
+import imagingbook.violajones.resources.xml.HaarTrainingSet;
+
 /**
  * This class represents a trained Haar cascade classifier. Training results were obtained
  * from OpenCV's 'opencv_haartraining' application (now obsolete, see 
@@ -116,21 +120,29 @@ public class HaarCascadeDescriptor1 {
 		 * representing the object.
 		 */
 		
+		System.out.println("in buildFrom(Document xmlDoc) " + this.getClass().getSimpleName());
+		
 		Element root = xmlDoc.getRootElement().getChildren().get(0);
+		System.out.println("Root node name = " + root.getName());
 		
 		// added by WB, TODO: different readers may be needed for other OpenCV training files
 		String type_id = root.getAttributeValue("type_id");
-		//IJ.log("root attribute =" + type_id);
+		System.out.println("root attribute = " + type_id);
 
 		if (!type_id.equals(XML_TYPE_ID1)) {
 			throw new Exception("XML file of type " + XML_TYPE_ID1 + " expected.");
 		}
 		
 		/* Read the size (in pixels) of the detector. */
-		Scanner scanner = new Scanner(root.getChild("size").getText());
+		String source = root.getChild("size").getText();
+		System.out.println("source = " + source);
+		
+		Scanner scanner = new Scanner(source);
 		width = scanner.nextInt();
 		height = scanner.nextInt();
 		scanner.close();
+		
+		System.out.printf("size: w = %d, h = %d\n", width, height);
 		
 		stages = new LinkedList<Stage>();
 
@@ -200,6 +212,48 @@ public class HaarCascadeDescriptor1 {
 			System.out.format("******* Stage %d *********\n", scnt);
 			stage.print();
 		}
+	}
+	
+	// ----------------------------------------------------------------------------------------------
+	
+	public static void main(String[] args) {
+		String xmlRoot = ResourceUtils.getResourcePath(Data.class, "xml").toString();
+		//String xmlRoot = ResourceUtils.getResourcePath(HaarTrainingSet.class, "").toString();
+		System.out.println("XML root: " + xmlRoot);
+		
+		
+//		OpenDialog od = new OpenDialog("Select XML file", xmlRoot, "");
+//		String xmlPath = od.getPath();
+		
+		String xmlPath = xmlRoot + "\\haarcascade_frontalface_alt2.xml";
+		if (xmlPath == null) return;
+		if (!xmlPath.endsWith(".xml")) {
+			System.out.println("this is not an XML file!");
+			return;
+		}
+
+		System.out.println("XML path: " + xmlPath);
+		
+		//if(true) return;
+		
+		File file = new File(xmlPath);
+		String name = file.getName();
+		System.out.println("XML file: " + name);
+				
+//		InputStream strm = ResourceUtils.getResourceStream(Data.class, "xml/haarcascade_frontalface_alt2.xml");
+//		InputStream strm = Data.class.getResourceAsStream("xml/haarcascade_frontalface_alt2.xml");
+//		
+		InputStream strm = HaarTrainingSet.class.getResourceAsStream(name);
+		if (strm == null) {
+			System.out.println("could not open XML stream for " + xmlPath);
+			return;
+		}
+
+		System.out.println("Reading XML stream ...");
+		HaarCascadeDescriptor1 hc = HaarCascadeDescriptor1.createFrom(strm);
+		hc.print();
+
+		System.out.println("done.");
 	}
 	
 
