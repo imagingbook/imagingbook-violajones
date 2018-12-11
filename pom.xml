@@ -110,13 +110,13 @@
 								</artifactItem> -->
 								
 								<!-- copy jdom2.jar into ImageJ/jars/ -->
-								<artifactItem>
+								<!-- <artifactItem>
 									<groupId>org.jdom</groupId>
 									<artifactId>jdom2</artifactId>
 									<overWrite>false</overWrite>
 									<outputDirectory>${project.basedir}/ImageJ/jars</outputDirectory>
 									<destFileName>jdom2.jar</destFileName>
-								</artifactItem>
+								</artifactItem> -->
 
 							</artifactItems>
 
