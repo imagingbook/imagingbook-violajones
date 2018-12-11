@@ -51,7 +51,7 @@ public class Stage {
 		return sum(II, u, v, scale) > threshold;
 	}
 	
-	@Deprecated
+
 	public void print() {
 		System.out.format("   threshold = %.4f\n", threshold);
 		int treeCnt = 0;

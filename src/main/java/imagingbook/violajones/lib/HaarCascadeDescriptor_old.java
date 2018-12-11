@@ -25,9 +25,9 @@ import imagingbook.violajones.resources.xml.HaarTrainingSet;
  * TODO: Write a reader for the newer format (produced by 'opencv_traincascade').
  * 
  * @author WB
- *
+ * @deprecated
  */
-public class HaarCascadeDescriptor1 {
+public class HaarCascadeDescriptor_old {
 	
 	static final String XML_TYPE_ID1 = "opencv-haar-classifier";		// OpenCV "old style"
 	static final String XML_TYPE_ID2 = "opencv-cascade-classifier";		// OpenCV new style?
@@ -39,7 +39,7 @@ public class HaarCascadeDescriptor1 {
 	// --- constructors ------------------------------
 	
 	// we dont't want to use this from outside:
-	private HaarCascadeDescriptor1() {	
+	private HaarCascadeDescriptor_old() {	
 	}
 	
 	// --- static factory methods -------------------
@@ -51,11 +51,11 @@ public class HaarCascadeDescriptor1 {
 	 * @param xmlFilename path to the XML file
 	 * @return a new Haar cascade object
 	 */
-	public static HaarCascadeDescriptor1 createFrom(String xmlFilename) {
-		HaarCascadeDescriptor1 hc = null;
+	public static HaarCascadeDescriptor_old createFrom(String xmlFilename) {
+		HaarCascadeDescriptor_old hc = null;
 		try {
 			Document xmlDoc = new SAXBuilder().build(new File(xmlFilename));
-			hc = new HaarCascadeDescriptor1();
+			hc = new HaarCascadeDescriptor_old();
 			hc.buildFrom(xmlDoc);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,11 +70,11 @@ public class HaarCascadeDescriptor1 {
 	 * @param xmlStrm input stream providing XML content
 	 * @return a new Haar cascade object
 	 */
-	public static HaarCascadeDescriptor1 createFrom(InputStream xmlStrm) {
-		HaarCascadeDescriptor1 hc = null;
+	public static HaarCascadeDescriptor_old createFrom(InputStream xmlStrm) {
+		HaarCascadeDescriptor_old hc = null;
 		try {
 			Document xmlDoc = new SAXBuilder().build(xmlStrm);
-			hc = new HaarCascadeDescriptor1();
+			hc = new HaarCascadeDescriptor_old();
 			hc.buildFrom(xmlDoc);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,15 +150,19 @@ public class HaarCascadeDescriptor1 {
 		for (Element stageElem : root.getChild("stages").getChildren("_")) {
 			// read the stage threshold:
 			double stageThreshold = Float.parseFloat(stageElem.getChild("stage_threshold").getText());
+//			System.out.println("stage threshold = " + stageThreshold);
 			Stage stage = new Stage(stageThreshold);
 			
 			// read all trees of this stage:
+//			System.out.println("treeList length = " + stageElem.getChild("trees").getChildren("_").size());
 			for (Element treeElem : stageElem.getChild("trees").getChildren("_")) {
 				
 				// collect the features contained in this tree:
 				List<FeatureNode> nodes = new LinkedList<>();
+				
 				for (Element featureElem : treeElem.getChildren("_")) {
 					double featureThreshold = Double.parseDouble(featureElem.getChild("threshold").getText());
+//					System.out.println("    feature threshold = " + featureThreshold);
 					
 					// get the LEFT value OR child (one of them is empty)
 					int childL = FeatureNode.NO_CHILD;
@@ -199,6 +203,7 @@ public class HaarCascadeDescriptor1 {
 			}
 			stages.add(stage);
 		}
+		System.out.println("no of stages = " + stages.size());
 	}
 	
 	@Deprecated
@@ -250,7 +255,7 @@ public class HaarCascadeDescriptor1 {
 		}
 
 		System.out.println("Reading XML stream ...");
-		HaarCascadeDescriptor1 hc = HaarCascadeDescriptor1.createFrom(strm);
+		HaarCascadeDescriptor_old hc = HaarCascadeDescriptor_old.createFrom(strm);
 		hc.print();
 
 		System.out.println("done.");

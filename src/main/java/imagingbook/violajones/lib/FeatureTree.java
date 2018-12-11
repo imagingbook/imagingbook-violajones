@@ -38,7 +38,7 @@ public class FeatureTree {
 		}
 	}
 
-	@Deprecated
+
 	public void print() {
 		int featureCnt = 0;
 		for (FeatureNode node : nodes) {

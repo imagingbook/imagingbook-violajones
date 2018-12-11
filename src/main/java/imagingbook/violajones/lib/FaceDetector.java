@@ -48,7 +48,7 @@ public class FaceDetector {
 	}
 	
 	private final Parameters params;
-	private final HaarCascadeDescriptor1 cascade;
+	private final HaarCascadeDescriptor cascade;
 
 	/**
 	 * Factory method. Builds a detector from an XML file.
@@ -57,11 +57,11 @@ public class FaceDetector {
 	 * @return The corresponding detector.
 	 */
 	public static FaceDetector create(String xmlFileName, Parameters params) {
-		return new FaceDetector(HaarCascadeDescriptor1.createFrom(xmlFileName), params);
+		return new FaceDetector(HaarCascadeDescriptor.fromFileName(xmlFileName), params);
 	}
 	
 	public static FaceDetector create(InputStream xmlStrm, Parameters params) {
-		return new FaceDetector(HaarCascadeDescriptor1.createFrom(xmlStrm), params);
+		return new FaceDetector(HaarCascadeDescriptor.fromInputStream(xmlStrm), params);
 	}
 		
 	
@@ -70,7 +70,7 @@ public class FaceDetector {
 	 * @param classifier
 	 * @param params
 	 */
-	public FaceDetector(HaarCascadeDescriptor1 classifier, Parameters params) {
+	public FaceDetector(HaarCascadeDescriptor classifier, Parameters params) {
 		this.cascade = classifier;
 		this.params = params;
 	}

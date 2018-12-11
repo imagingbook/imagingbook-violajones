@@ -8,7 +8,7 @@ import ij.io.OpenDialog;
 import ij.plugin.PlugIn;
 import imagingbook.lib.ij.IjLogStream;
 import imagingbook.lib.util.ResourceUtils;
-import imagingbook.violajones.lib.HaarCascadeDescriptor1;
+import imagingbook.violajones.lib.HaarCascadeDescriptor;
 import imagingbook.violajones.resources.Data;
 import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
@@ -53,7 +53,7 @@ public class List_Haar_Cascade implements PlugIn {
 		}
 
 		IJ.log("Reading XML stream ...");
-		HaarCascadeDescriptor1 hc = HaarCascadeDescriptor1.createFrom(strm);
+		HaarCascadeDescriptor hc = HaarCascadeDescriptor.fromInputStream(strm);
 		hc.print();
 
 		IJ.log("done.");
