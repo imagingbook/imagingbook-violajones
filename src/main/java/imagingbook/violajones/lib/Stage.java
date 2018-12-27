@@ -33,9 +33,7 @@ public class Stage {
 		return threshold;
 	}
 	
-	/**
-	 * Sum up the values returned by each tree of this stage.
-	 */
+	// Sum up the values returned by each tree of this stage.
 	protected double sum(IntegralImage II, int u, int v, double scale) {
 		double sum = 0;
 		for (FeatureTree tree : trees) {
@@ -44,9 +42,7 @@ public class Stage {
 		return sum;
 	}
 	
-	/**
-	 * Stage succeeds only if the sum exceeds the stage threshold.
-	 */
+	// Stage succeeds only if the sum exceeds the stage threshold.
 	protected boolean pass(IntegralImage II, int u, int v, double scale) {
 		return sum(II, u, v, scale) > threshold;
 	}

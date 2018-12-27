@@ -57,11 +57,13 @@ public class FeatureNode {
 
 	/**
 	 * Evaluates this feature node by applying its rectangular patches.
+	 * Returns the branching direction (LEFT or RIGHT), depending on how the normalized patch 
+	 * sum compares to the threshold.
 	 * @param II input image (as an integral image) 
 	 * @param u left position of the candidate subimage
 	 * @param v top position of the candidate subimage
 	 * @param scale the current scale to be applied
-	 * @return
+	 * @return The branching direction (LEFT or RIGHT).
 	 */
 	public int eval(IntegralImage II, int u, int v, double scale) {
 		// calculate the area of the subimage:	TODO: w,h never change, make more efficient
