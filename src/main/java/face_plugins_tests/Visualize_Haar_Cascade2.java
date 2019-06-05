@@ -26,12 +26,13 @@ import java.util.List;
  * The current image is scaled to the size of the cascade shown in
  * the background. The result is an image stack, with one slice for
  * each decision step.
- * Feature support regions are shown as vector overlays.
+ * Feature support regions are shown as drawn into the image (to 
+ * allow saving as a video).
  * 
  * @author WB
  *
  */
-public class Visualize_Haar_Cascade implements PlugInFilter {
+public class Visualize_Haar_Cascade2 implements PlugInFilter {
 
 	public int setup(String arg0, ImagePlus im) {
 		return DOES_ALL + NO_CHANGES;
@@ -63,10 +64,12 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 				int featureCtr = 0;
 				for (@SuppressWarnings("unused") 
 						FeatureNode feature : tree.getFeatures()) {
-					ImageProcessor sp = sp1; //sp1.duplicate();
-//					sp.setColor(Color.gray);
-//					sp.fill();
-//					draw(sp, feature);
+					ImageProcessor sp = sp1.duplicate();
+					for (FeaturePatch r : feature.getPatches()) {
+						Color col = (r.weight > 0) ? Color.green : Color.red;
+						sp.setColor(col);
+						sp.fillRect(r.x, r.y, r.width, r.height);
+					}
 					stack.addSlice("Stage=" + stageCtr + " Tree=" + treeCtr + " Feat=" + featureCtr, sp);
 					featureCtr++;
 				}
@@ -74,31 +77,8 @@ public class Visualize_Haar_Cascade implements PlugInFilter {
 			}
 			stageCtr++;
 		}
-
-		// add overlay graphics
-		Overlay oly = new Overlay();
-		int sliceNo = 1;
-		for (Stage stage : stages) {
-			for (FeatureTree tree : stage.getTrees()) {
-				for (FeatureNode feature : tree.getFeatures()) {
-					for (FeaturePatch r : feature.getPatches()) {
-						Color col = (r.weight > 0) ? Color.green : Color.red;
-						Roi box = new Roi(r.x, r.y, r.width, r.height);
-						box.setStrokeColor(col);
-						box.setPosition(sliceNo);
-						Roi diag = new Line(r.x, r.y, r.x + r.width, r.y + r.height);
-						diag.setStrokeColor(col);
-						diag.setPosition(sliceNo);
-						oly.add(box);
-						oly.add(diag);
-					}
-					sliceNo++;
-				}
-			}
-		}
 		
 		ImagePlus stackim = new ImagePlus("Cascade", stack);
-		stackim.setOverlay(oly);
 		stackim.show();
 		
 	}
