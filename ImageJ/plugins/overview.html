@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD><TITLE>API Overview</TITLE></HEAD>
+
+<BODY>
+<p>
+Java/ImageJ implementation of the Viola/Jones face detection algorithm.
+</p>
+
+<p>
+This library is a Java implementation of the Viola-Jones face detector 
+[Paul Viola and Michael Jones, "Robust Real-time Face Detection", International Journal 
+of Computer Vision 57.2 (2004), pp 137-154] to be used with ImageJ in conjunction with 
+the 'imagingbook-common' library. It is adapted from the 'JViolaJones' implementation
+(see <a href="https://code.google.com/archive/p/jviolajones/"> here</a>) by unknown authors.
+Note that this software does not implement the learning part of the face detection 
+algorithm but reads pre-learned decision trees (trained with OpenCV) and stored in XML 
+format (in 'resources').
+Also note that this code is experimental and not suitable for production use.
+</p>
+
+<p>
+<strong>Author:</strong> Wilhelm Burger
+</p>
+
+<p>
+<strong>Reporitory:</strong>
+<a href="https://github.com/imagingbook/imagingbook-violajones">https://github.com/imagingbook/imagingbook-violajones</a>
+</p>
+
+<p>
+<strong>Dependencies:</strong> Requires 
+<a href="http://rsb.info.nih.gov/ij/index.html"><strong>ImageJ</strong></a>,
+the <a href="https://bitbucket.org/imagingbook/imagingbook-public"><strong>ImagingBook Common</strong></a> library.
+</p>
+
+<p>
+<strong>Installation:</strong>
+<ol>
+  <li>Place <tt>imagingbook-common.jar</tt> and <tt>imagingbook-violajones.jar</tt> in <tt>ImageJ/jars/</tt>.</li>
+  <li>Place the sample plugins in <tt>ImageJ/plugins/</tt>.</li>
+  <li>Restart ImageJ.</li>
+</ol>
+</p>
+
+</BODY>
+</HTML>
