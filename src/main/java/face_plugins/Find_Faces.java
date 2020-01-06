@@ -6,9 +6,9 @@ import java.util.List;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
+import ij.io.LogStream;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
-import imagingbook.lib.ij.IjLogStream;
 import imagingbook.lib.ij.IjUtils;
 import imagingbook.lib.settings.PrintPrecision;
 import imagingbook.lib.util.Enums;
@@ -33,7 +33,7 @@ public class Find_Faces implements PlugInFilter {
 	static HaarTrainingSet trainingSet = HaarTrainingSet.frontalface_alt2;
 	
 	static {
-		IjLogStream.redirectSystem();
+		LogStream.redirectSystem();
 		PrintPrecision.set(6);
 	}
 	

@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.InputStream;
 
 import ij.IJ;
+import ij.io.LogStream;
 import ij.io.OpenDialog;
 import ij.plugin.PlugIn;
-import imagingbook.lib.ij.IjLogStream;
 import imagingbook.lib.util.ResourceUtils;
 import imagingbook.violajones.lib.HaarCascadeDescriptor;
 import imagingbook.violajones.resources.Data;
@@ -23,7 +23,7 @@ import imagingbook.violajones.resources.xml.HaarTrainingSet;
 public class List_Haar_Cascade implements PlugIn {
 	
 	static {
-		IjLogStream.redirectSystem();
+		LogStream.redirectSystem();
 	}
 
 	public void run(String arg) {
