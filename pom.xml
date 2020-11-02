@@ -187,6 +187,8 @@
 				<version>3.1.1</version>
 				<configuration>
 					<!-- Default configuration for all reports -->
+					<!-- <source>8</source> -->
+					<detectJavaApiLink>false</detectJavaApiLink>
 					<reportOutputDirectory>${webdir}</reportOutputDirectory>
 					<destDir>javadoc</destDir>
 					<doctitle>${javadoc-doctitle}</doctitle>
@@ -208,6 +210,7 @@
 					<verbose>true</verbose>
 					<!-- <detectLinks>true</detectLinks> -->
 					<!-- <detectOfflineLinks>true</detectOfflineLinks> -->
+					<additionalOptions>--frames</additionalOptions> <!-- by default, javadoc does not generate HTML with frames any more! -->
 				</configuration>
 			</plugin>
 
