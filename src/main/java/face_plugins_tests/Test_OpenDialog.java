@@ -4,7 +4,7 @@ import ij.IJ;
 import ij.io.OpenDialog;
 import ij.plugin.PlugIn;
 import imagingbook.lib.util.ResourceUtils;
-import imagingbook.violajones.resources.Data;
+import imagingbook.violajones.data.Data;
 
 public class Test_OpenDialog implements PlugIn {
 	

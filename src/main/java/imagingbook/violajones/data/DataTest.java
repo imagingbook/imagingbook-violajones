@@ -1,4 +1,4 @@
-package imagingbook.violajones.resources;
+package imagingbook.violajones.data;
 
 import java.net.URL;
 

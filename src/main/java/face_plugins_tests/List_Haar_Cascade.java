@@ -8,8 +8,8 @@ import ij.io.LogStream;
 import ij.io.OpenDialog;
 import ij.plugin.PlugIn;
 import imagingbook.lib.util.ResourceUtils;
+import imagingbook.violajones.data.Data;
 import imagingbook.violajones.lib.HaarCascadeDescriptor;
-import imagingbook.violajones.resources.Data;
 import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
 

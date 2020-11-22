@@ -15,7 +15,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import imagingbook.lib.util.ResourceUtils;
-import imagingbook.violajones.resources.Data;
+import imagingbook.violajones.data.Data;
 import imagingbook.violajones.resources.xml.HaarTrainingSet;
 
 /**
