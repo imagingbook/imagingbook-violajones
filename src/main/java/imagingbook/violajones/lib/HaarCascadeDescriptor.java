@@ -297,7 +297,7 @@ public class HaarCascadeDescriptor {
 	
 	public static void main(String[] args) {
 		ResourceLocation loc = new imagingbook.violajones.data.xml.Resources();
-		System.out.println("XML root: " + loc.getResourcePath().toString());
+		System.out.println("XML root: " + loc.getResourcePath("").toString());
 		
 		String[] names = loc.getResourceNames();
 		for (String n : names) {
