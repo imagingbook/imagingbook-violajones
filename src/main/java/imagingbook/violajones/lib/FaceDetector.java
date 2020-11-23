@@ -9,7 +9,8 @@ import imagingbook.lib.image.IntegralImage;
 
 /**
  * The core class.
- * TODO: change constructors to use the source image, precalculate everything.
+ * TODO: change constructors to use the source image, pre-calculate everything.
+ * 
  * @author W. Burger
  *
  */
@@ -34,7 +35,7 @@ public class FaceDetector {
 		/** Flag indicating if Canny pruning should be applied. */
 		public boolean doGradientPruning = false;
 		
-		/** The min. percentage of overlap for merging two regions. */
+		/** The minimum percentage of overlap for merging two regions. */
 		public double minMergeRegionOverlap = 0.2;
 		
 		/** The width of the Gaussian blur applied before gradient calculation. */
@@ -69,7 +70,9 @@ public class FaceDetector {
 	public static FaceDetector create(InputStream xmlStrm, Parameters params) {
 		return new FaceDetector(HaarCascadeDescriptor.fromInputStream(xmlStrm), params);
 	}
-		
+	
+	// --------------------------------------------------------------------------------
+	
 	/**
 	 *  The only constructor.
 	 * @param cascade a Haar cascade descriptor
@@ -79,6 +82,8 @@ public class FaceDetector {
 		this.cascade = cascade;
 		this.params = (params != null) ? params : new Parameters();
 	}
+	
+	// --------------------------------------------------------------------------------
 
 	/**
 	 * Detects faces in the supplied image.

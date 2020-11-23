@@ -1,22 +1,24 @@
 package imagingbook.violajones.lib;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-import imagingbook.lib.util.ResourceUtils;
-import imagingbook.violajones.data.Data;
-import imagingbook.violajones.resources.xml.HaarTrainingSet;
+import imagingbook.lib.util.ResourceLocation;
 
 /**
  * This class represents a trained Haar cascade classifier. Training results were obtained
@@ -25,22 +27,25 @@ import imagingbook.violajones.resources.xml.HaarTrainingSet;
  * Currently only the old-type XML format is supported.
  * 
  * 2018/12/10: Refactored to use javax.xml and org.w3c.dom to eliminate org.jdom2 dependency.
+ * 2020/11/23: Adapted to new resource access scheme.
+ * 
  * TODO: Write a reader for the newer format (produced by 'opencv_traincascade').
  * 
  * @author WB
  */
 public class HaarCascadeDescriptor {
 	
-	static final String XML_TYPE_ID1 = "opencv-haar-classifier";		// OpenCV "old style"
-	static final String XML_TYPE_ID2 = "opencv-cascade-classifier";		// OpenCV new style?
+	private static final String XML_TYPE_ID1 = "opencv-haar-classifier";		// OpenCV "old style"
+	private static final String XML_TYPE_ID2 = "opencv-cascade-classifier";		// OpenCV new style?
 	
 	private int width = 0;
 	private int height = 0;
 	private List<Stage> stages = null;
 	
+	private static ResourceLocation loc = new imagingbook.violajones.data.xml.Resources();
+	
 	// --- constructors ------------------------------
 	
-	// we dont't want to use this from outside:
 	private HaarCascadeDescriptor() {	
 	}
 	
@@ -54,11 +59,10 @@ public class HaarCascadeDescriptor {
 	 * @return a new Haar cascade object
 	 */
 	public static HaarCascadeDescriptor fromFileName(String xmlFilename) {
-		File file = new File(xmlFilename);
-		String name = file.getName();
-		InputStream strm = HaarTrainingSet.class.getResourceAsStream(name);
+		InputStream strm = loc.getResourceAsStream(xmlFilename);
 		if (strm == null) {
-			throw new RuntimeException(HaarCascadeDescriptor.class.getSimpleName() + ": could not find resource " + name);
+			throw new RuntimeException(HaarCascadeDescriptor.class.getSimpleName() + 
+					": could not find resource " + xmlFilename);
 		}
 		return HaarCascadeDescriptor.fromInputStream(strm);
 	}
@@ -67,21 +71,27 @@ public class HaarCascadeDescriptor {
 	 * Creates a Haar cascade from the specification given in a
 	 * XML stream.
 	 * 
-	 * @param xmlStrm input stream providing XML content
+	 * @param strm input stream providing XML content
 	 * @return a new Haar cascade object
 	 */
-	public static HaarCascadeDescriptor fromInputStream(InputStream xmlStrm) {
-		HaarCascadeDescriptor hc = null;
+	public static HaarCascadeDescriptor fromInputStream(InputStream strm) {
+		//HaarCascadeDescriptor hcd = null;
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		Document xmlDoc = null;
 		try {
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document xmlDoc = builder.parse(xmlStrm);
-			hc = new HaarCascadeDescriptor();
-			hc.buildFromXmlDoc(xmlDoc);
-		} catch (Exception e) {
-			e.printStackTrace();
+			xmlDoc = builder.parse(strm);
+		} catch (SAXException | IOException | ParserConfigurationException e) {
+			throw new RuntimeException(HaarCascadeDescriptor.class.getSimpleName() +
+					": could not create descriptor from XML stream");
 		}
-		return hc;
+		return fromXmlDocument(xmlDoc);
+	}
+	
+	public static HaarCascadeDescriptor fromXmlDocument(Document xmlDoc) {
+		HaarCascadeDescriptor hcd = new HaarCascadeDescriptor();
+		hcd.buildFromXmlDoc(xmlDoc);
+		return hcd;
 	}
 
 	// --- getters and setters ------------------------
@@ -123,7 +133,7 @@ public class HaarCascadeDescriptor {
 	 */
 	private void buildFromXmlDoc(Document xmlDoc) {
 		Element root = getFirstChildElement(xmlDoc.getDocumentElement());
-		System.out.println("Root node name = " + root.getNodeName());
+		//System.out.println("Root node name = " + root.getNodeName());
 		
 		//TODO: different readers may be needed for other OpenCV training files
 		String type_id = root.getAttribute("type_id");
@@ -205,7 +215,7 @@ public class HaarCascadeDescriptor {
 	 * @param parent the parent node
 	 * @return the first child node of type {@link Element}.
 	 */
-	Element getFirstChildElement(Node parent) {
+	private Element getFirstChildElement(Node parent) {
 		Node child = parent.getFirstChild();
 		while (!(child instanceof Element)) {
 			child = child.getNextSibling();
@@ -218,7 +228,7 @@ public class HaarCascadeDescriptor {
 	 * @param parent the parent node
 	 * @return a list of child elements, which may be empty
 	 */
-	List<Element> getChildElements(Node parent) {
+	private List<Element> getChildElements(Node parent) {
 		List<Element> elements = new LinkedList<>();
 		NodeList children = parent.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
@@ -236,7 +246,7 @@ public class HaarCascadeDescriptor {
 	 * @param name the name of the child element
 	 * @return a list of child elements, which may be empty
 	 */
-	List<Element> getChildElements(Node parent, String name) {
+	private List<Element> getChildElements(Node parent, String name) {
 		List<Element> elements = new LinkedList<>();
 		NodeList children = parent.getChildNodes();
 		for (int i = 0; i < children.getLength(); i++) {
@@ -254,7 +264,7 @@ public class HaarCascadeDescriptor {
 	 * @param name the name of the child element
 	 * @return the first matching child element or {@code null} if none exists.
 	 */
-	Element getChildElement(Node parent, String name) {
+	private Element getChildElement(Node parent, String name) {
 		for (Node child = parent.getFirstChild(); child != null; child = child.getNextSibling()) {
 			if (child instanceof Element && name.equals(child.getNodeName()))
 				return (Element) child;
@@ -264,14 +274,21 @@ public class HaarCascadeDescriptor {
 	
 	// -------------------------------------------------------------------------------------------------
 	
-	public void print() {
-		System.out.println("Listing of " + this.getClass().getSimpleName());
-		System.out.format("Size = %d x %d\n", width, height);
-		System.out.format("Number of stages = %d\n", stages.size());
+	public String printToString() {
+		ByteArrayOutputStream bas = new ByteArrayOutputStream();
+		PrintStream strm = new PrintStream(bas);
+		printToStream(strm);
+		return bas.toString();
+	}
+	
+	public void printToStream(PrintStream strm) {
+		strm.println("Listing of " + this.getClass().getSimpleName());
+		strm.format("Size = %d x %d\n", width, height);
+		strm.format("Number of stages = %d\n", stages.size());
 		int scnt = 0;
 		for (Stage stage : stages) {
 			scnt++;
-			System.out.format("******* Stage %d *********\n", scnt);
+			strm.format("******* Stage %d *********\n", scnt);
 			stage.print();
 		}
 	}
@@ -279,26 +296,19 @@ public class HaarCascadeDescriptor {
 	// -------------------------------------------------------------------------------------------------
 	
 	public static void main(String[] args) {
-		String xmlRoot = ResourceUtils.getResourcePath(Data.class, "xml").toString();
-		System.out.println("XML root: " + xmlRoot);
+		ResourceLocation loc = new imagingbook.violajones.data.xml.Resources();
+		System.out.println("XML root: " + loc.getResourcePath().toString());
 		
-//		OpenDialog od = new OpenDialog("Select XML file", xmlRoot, "");
-//		String xmlPath = od.getPath();
-		
-		String xmlPath = xmlRoot + "\\haarcascade_frontalface_alt2.xml";
-
-		if (!xmlPath.endsWith(".xml")) {
-			System.out.println("this is not an XML file!");
-			return;
+		String[] names = loc.getResourceNames();
+		for (String n : names) {
+			if (n.endsWith(".xml")) {
+				System.out.println("XML path: " + n);
+			}
 		}
 
-		System.out.println("XML path: " + xmlPath);
-
-//		InputStream strm = ResourceUtils.getResourceStream(Data.class, "xml/haarcascade_frontalface_alt2.xml");
-//		InputStream strm = Data.class.getResourceAsStream("xml/haarcascade_frontalface_alt2.xml");
-		
-		HaarCascadeDescriptor hc = HaarCascadeDescriptor.fromFileName(xmlPath);
-		hc.print();
+		String xmlName = HaarTrainingSets.frontalface_alt2.getXmlFileName(); // "haarcascade_frontalface_alt2.xml";
+		HaarCascadeDescriptor hcd = HaarCascadeDescriptor.fromFileName(xmlName);
+		hcd.printToStream(System.out);
 
 		System.out.println("done.");
 	}

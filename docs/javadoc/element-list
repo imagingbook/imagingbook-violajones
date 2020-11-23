@@ -1,6 +1,5 @@
-face_plugins
-face_plugins_tests
+Face_Plugins
+Face_Plugins_Utils
+imagingbook.violajones.data.images
+imagingbook.violajones.data.xml
 imagingbook.violajones.lib
-imagingbook.violajones.lib.util
-imagingbook.violajones.resources
-imagingbook.violajones.resources.xml
