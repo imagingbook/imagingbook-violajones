@@ -13,7 +13,7 @@ import imagingbook.lib.util.ResourceLocation;
  */
 public class Open_Sample_Image implements PlugIn {
 	
-	static ResourceLocation loc = new imagingbook.violajones.data.images.Resources();
+	static ResourceLocation loc = new imagingbook.violajones.DATA.images.Resources();
 	
 	String imgName = null;
 

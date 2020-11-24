@@ -6,5 +6,8 @@
   <tagletArtifacts>
     <tagletArtifact />
   </tagletArtifacts>
+  <excludePackageNames>
+    <excludePackageName>*.DATA.*</excludePackageName>
+  </excludePackageNames>
   <javadocResourcesDirectory>src/main/javadoc</javadocResourcesDirectory>
 </javadocOptions>

@@ -1,4 +1,4 @@
-package imagingbook.violajones.data;
+package imagingbook.violajones.DATA;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -10,7 +10,7 @@ public class DataTest {
 
 	@Test
 	public void testDataImages() {
-		ResourceLocation rl = new imagingbook.violajones.data.images.Resources();
+		ResourceLocation rl = new imagingbook.violajones.DATA.images.Resources();
 		assertNotNull(rl.getResourcePath("bishops1.jpg"));
 		assertNotNull(rl.getResourcePath("bishops2.jpg"));
 		assertNotNull(rl.getResourcePath("lena.jpg"));
@@ -19,7 +19,7 @@ public class DataTest {
 	
 	@Test
 	public void testDataXml() {
-		ResourceLocation rl = new imagingbook.violajones.data.xml.Resources();
+		ResourceLocation rl = new imagingbook.violajones.DATA.xml.Resources();
 		assertNotNull(rl.getResourcePath("haarcascade_eye.xml"));
 		assertNotNull(rl.getResourcePath("haarcascade_frontalface_alt2.xml"));
 		assertNotNull(rl.getResourcePath("haarcascade_frontalface_default.xml"));

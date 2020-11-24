@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"Face_Plugins"},{"l":"Face_Plugins_Utils"},{"l":"imagingbook.violajones.data.images"},{"l":"imagingbook.violajones.data.xml"},{"l":"imagingbook.violajones.lib"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"Face_Plugins"},{"l":"Face_Plugins_Utils"},{"l":"imagingbook.violajones.lib"}]

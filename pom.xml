@@ -217,6 +217,8 @@
 					<verbose>true</verbose>
 					<!-- <detectLinks>true</detectLinks> -->
 					<!-- <detectOfflineLinks>true</detectOfflineLinks> -->
+					<!-- <excludePackageNames>imagingbook.violajones.DATA.*</excludePackageNames> -->
+					<excludePackageNames>*.DATA.*</excludePackageNames>
 					<additionalOptions>--frames</additionalOptions> <!-- by default, javadoc does not generate HTML with frames any more! -->
 				</configuration>
 			</plugin>
