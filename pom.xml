@@ -50,6 +50,14 @@
 		</repository>
 	</repositories>
 	
+	<distributionManagement>
+		<repository>
+			<id>imagingbook-maven-repository</id>     <!-- used by 'mvn deploy' -->
+			<name>Imagingbook Maven Repository</name>
+			<url>file:///${project.basedir}/../imagingbook-maven-repository</url>
+		</repository>
+	</distributionManagement>
+	
 	<dependencies>
 		<dependency>
 			<groupId>net.imagej</groupId>
