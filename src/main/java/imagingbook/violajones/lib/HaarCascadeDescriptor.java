@@ -18,7 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import imagingbook.lib.util.ResourceLocation;
+import imagingbook.lib.util.resource.ResourceLocation;
 
 /**
  * This class represents a trained Haar cascade classifier. Training results were obtained
@@ -297,7 +297,7 @@ public class HaarCascadeDescriptor {
 	
 	public static void main(String[] args) {
 		ResourceLocation loc = new imagingbook.violajones.DATA.xml.Resources();
-		System.out.println("XML root: " + loc.getResourcePath("").toString());
+		System.out.println("XML root: " + loc.getPath().toString());
 		
 		String[] names = loc.getResourceNames();
 		for (String n : names) {

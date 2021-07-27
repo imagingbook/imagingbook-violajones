@@ -4,7 +4,8 @@ import ij.ImagePlus;
 import ij.gui.GenericDialog;
 import ij.plugin.PlugIn;
 import imagingbook.lib.ij.IjUtils;
-import imagingbook.lib.util.ResourceLocation;
+import imagingbook.lib.util.resource.ResourceLocation;
+
 
 /**
  * ImageJ plugin. 
@@ -21,7 +22,7 @@ public class Open_Sample_Image implements PlugIn {
 	public void run(String arg) {
 		if (!runDialog()) return;
 		
-		ImagePlus im = IjUtils.openImage(loc.getResourcePath(imgName));
+		ImagePlus im = IjUtils.openImage(loc.getPath(imgName));
 		im.show();
 	}
 

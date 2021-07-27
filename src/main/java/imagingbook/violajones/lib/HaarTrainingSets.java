@@ -3,7 +3,7 @@ package imagingbook.violajones.lib;
 import java.io.InputStream;
 import java.nio.file.Path;
 
-import imagingbook.lib.util.ResourceLocation;
+import imagingbook.lib.util.resource.ResourceLocation;
 
 /**
  * This class gives easy access to the Haar training sets, obtained
@@ -32,7 +32,7 @@ public enum HaarTrainingSets {
 	
 	public Path getPath() {
 		//return this.getClass().getResource(filename).getPath();
-		return loc.getResourcePath(xmlFileName);
+		return loc.getPath(xmlFileName);
 	}
 	
 	public InputStream getStream() {
