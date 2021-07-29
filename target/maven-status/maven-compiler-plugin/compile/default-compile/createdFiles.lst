@@ -1,9 +1,9 @@
+imagingbook\violajones\DATA\images\RLOC.class
 Face_Plugins\Find_Faces.class
 imagingbook\violajones\lib\Stage.class
 Face_Plugins\Open_Sample_Image.class
 imagingbook\violajones\lib\FeaturePatch.class
 imagingbook\violajones\lib\HaarCascadeDescriptor.class
-imagingbook\violajones\DATA\xml\Resources.class
 Face_Plugins_Utils\List_Haar_Cascade_Files.class
 imagingbook\violajones\lib\FaceDetector$Parameters.class
 imagingbook\violajones\lib\Gradient.class
@@ -13,5 +13,5 @@ imagingbook\violajones\lib\FeatureTree.class
 Face_Plugins_Utils\Visualize_Haar_Cascade_Paint.class
 imagingbook\violajones\lib\FaceDetector.class
 imagingbook\violajones\lib\FeatureNode.class
-imagingbook\violajones\DATA\images\Resources.class
 imagingbook\violajones\lib\HaarTrainingSets.class
+imagingbook\violajones\DATA\xml\RLOC.class

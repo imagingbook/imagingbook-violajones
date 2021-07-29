@@ -42,7 +42,7 @@ public class HaarCascadeDescriptor {
 	private int height = 0;
 	private List<Stage> stages = null;
 	
-	private static ResourceLocation loc = new imagingbook.violajones.DATA.xml.Resources();
+	private static ResourceLocation loc = new imagingbook.violajones.DATA.xml.RLOC();
 	
 	// --- constructors ------------------------------
 	
@@ -296,7 +296,7 @@ public class HaarCascadeDescriptor {
 	// -------------------------------------------------------------------------------------------------
 	
 	public static void main(String[] args) {
-		ResourceLocation loc = new imagingbook.violajones.DATA.xml.Resources();
+		ResourceLocation loc = new imagingbook.violajones.DATA.xml.RLOC();
 		System.out.println("XML root: " + loc.getPath().toString());
 		
 		String[] names = loc.getResourceNames();

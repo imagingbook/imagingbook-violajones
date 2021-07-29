@@ -19,7 +19,7 @@ public enum HaarTrainingSets {
 	frontalface_alt2("haarcascade_frontalface_alt2.xml")
 	;
 	
-	ResourceLocation loc = new imagingbook.violajones.DATA.xml.Resources();
+	ResourceLocation loc = new imagingbook.violajones.DATA.xml.RLOC();
 	private final String xmlFileName;
 	
 	private HaarTrainingSets(String filename) {
