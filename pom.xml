@@ -199,7 +199,7 @@
 				<!-- Javadoc generation -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.1.1</version>
+				<version>3.3.0</version>
 				<configuration>
 					<!-- Default configuration for all reports -->
 					<!-- <source>8</source> -->

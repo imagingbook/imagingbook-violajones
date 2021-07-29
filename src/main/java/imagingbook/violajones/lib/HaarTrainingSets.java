@@ -32,12 +32,12 @@ public enum HaarTrainingSets {
 	
 	public Path getPath() {
 		//return this.getClass().getResource(filename).getPath();
-		return loc.getPath(xmlFileName);
+		return loc.getResource(xmlFileName).getPath(); //loc.getPath(xmlFileName);
 	}
 	
 	public InputStream getStream() {
 		//return this.getClass().getResourceAsStream(filename);
-		return loc.getResourceAsStream(xmlFileName);
+		return loc.getResource(xmlFileName).getStream(); // loc.getResourceAsStream(xmlFileName);
 	}
 	
 	

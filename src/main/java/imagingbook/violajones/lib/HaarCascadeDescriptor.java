@@ -59,7 +59,7 @@ public class HaarCascadeDescriptor {
 	 * @return a new Haar cascade object
 	 */
 	public static HaarCascadeDescriptor fromFileName(String xmlFilename) {
-		InputStream strm = loc.getResourceAsStream(xmlFilename);
+		InputStream strm = loc.getResource(xmlFilename).getStream(); // loc.getResourceAsStream(xmlFilename);
 		if (strm == null) {
 			throw new RuntimeException(HaarCascadeDescriptor.class.getSimpleName() + 
 					": could not find resource " + xmlFilename);

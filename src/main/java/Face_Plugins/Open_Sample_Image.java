@@ -22,7 +22,7 @@ public class Open_Sample_Image implements PlugIn {
 	public void run(String arg) {
 		if (!runDialog()) return;
 		
-		ImagePlus im = IjUtils.openImage(loc.getPath(imgName));
+		ImagePlus im = loc.getResource(imgName).openAsImage(); // IjUtils.openImage(loc.getPath(imgName));
 		im.show();
 	}
 
