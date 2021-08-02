@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 
 import imagingbook.lib.util.resource.ResourceLocation;
-import imagingbook.violajones.xml.RLOC;
+import imagingbook.violajones.DATA.xml.RLOC;
 
 /**
  * This class gives easy access to the Haar training sets, obtained

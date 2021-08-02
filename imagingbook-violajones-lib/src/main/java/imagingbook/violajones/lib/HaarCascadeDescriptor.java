@@ -19,7 +19,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import imagingbook.lib.util.resource.ResourceLocation;
-import imagingbook.violajones.xml.RLOC;
+import imagingbook.violajones.DATA.xml.RLOC;
 
 /**
  * This class represents a trained Haar cascade classifier. Training results were obtained

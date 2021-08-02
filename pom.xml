@@ -156,7 +156,8 @@
 					<!-- Default configuration for all reports -->
 					<!-- <source>8</source> -->
 					<detectJavaApiLink>false</detectJavaApiLink>
-					<reportOutputDirectory>${webdir}</reportOutputDirectory>
+					<reportOutputDirectory>${project.basedir}/docs</reportOutputDirectory>
+					<!-- <reportOutputDirectory>${webdir}</reportOutputDirectory> -->
 					<destDir>javadoc</destDir>
 					<doctitle>${javadoc-doctitle}</doctitle>
 					<packagesheader>${project.name}</packagesheader>
@@ -175,7 +176,7 @@
 					<!-- <detectLinks>true</detectLinks> -->
 					<!-- <detectOfflineLinks>true</detectOfflineLinks> -->
 					<!-- <excludePackageNames>imagingbook.violajones.DATA.*</excludePackageNames> -->
-					<excludePackageNames>*.DATA</excludePackageNames>
+					<excludePackageNames>*.DATA.*</excludePackageNames>
 					<additionalOptions>--frames</additionalOptions> <!-- by default, javadoc does not generate HTML with frames any more! -->
 				</configuration>
 			</plugin>

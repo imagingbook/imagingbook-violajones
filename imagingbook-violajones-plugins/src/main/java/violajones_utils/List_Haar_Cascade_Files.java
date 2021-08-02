@@ -1,4 +1,4 @@
-package Face_Plugins_Utils;
+package violajones_utils;
 
 import ij.io.LogStream;
 import ij.plugin.PlugIn;

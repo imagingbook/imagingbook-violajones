@@ -1,4 +1,4 @@
-package Face_Plugins;
+package violajones_demos;
 
 import ij.ImagePlus;
 import ij.gui.GenericDialog;

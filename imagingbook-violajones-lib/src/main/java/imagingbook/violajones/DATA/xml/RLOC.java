@@ -1,4 +1,4 @@
-package imagingbook.violajones.xml;
+package imagingbook.violajones.DATA.xml;
 
 import imagingbook.lib.util.resource.ResourceLocation;
 

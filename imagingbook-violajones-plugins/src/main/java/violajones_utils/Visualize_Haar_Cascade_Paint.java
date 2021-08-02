@@ -1,16 +1,12 @@
-package Face_Plugins_Utils;
+package violajones_utils;
 
 import java.awt.Color;
-import java.awt.geom.Path2D;
 import java.io.InputStream;
 import java.util.List;
 
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
-import ij.gui.Overlay;
-import ij.gui.Roi;
-import ij.gui.ShapeRoi;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.violajones.lib.FeatureNode;
@@ -27,12 +23,13 @@ import imagingbook.violajones.lib.Stage;
  * The result is an image stack, with one slice for classifier
  * each decision step.
  * 
- * Feature support regions are shown as vector overlays.
+ * Feature support regions are shown as drawn into the image (to 
+ * allow saving as a video).
  * 
  * @author WB
  *
  */
-public class Visualize_Haar_Cascade_Overlay implements PlugInFilter {
+public class Visualize_Haar_Cascade_Paint implements PlugInFilter {
 	
 	static HaarTrainingSets desc = HaarTrainingSets.frontalface_alt2;
 
@@ -49,6 +46,7 @@ public class Visualize_Haar_Cascade_Overlay implements PlugInFilter {
 		}
 		
 		HaarCascadeDescriptor cascade = HaarCascadeDescriptor.fromInputStream(strm);
+		
 		int w = cascade.getWidth();
 		int h = cascade.getHeight();
 		
@@ -63,9 +61,13 @@ public class Visualize_Haar_Cascade_Overlay implements PlugInFilter {
 			int treeCtr = 0;
 			for (FeatureTree tree : stage.getTrees()) {
 				int featureCtr = 0;
-				for (@SuppressWarnings("unused") 
-						FeatureNode feature : tree.getFeatures()) {
-					ImageProcessor sp = sp1; // duplicate needed?
+				for (FeatureNode feature : tree.getFeatures()) {
+					ImageProcessor sp = sp1.duplicate();
+					for (FeaturePatch r : feature.getPatches()) {
+						Color col = (r.weight > 0) ? Color.green : Color.red;
+						sp.setColor(col);
+						sp.fillRect(r.x, r.y, r.width, r.height);
+					}
 					stack.addSlice("Stage=" + stageCtr + " Tree=" + treeCtr + " Feat=" + featureCtr, sp);
 					featureCtr++;
 				}
@@ -73,42 +75,10 @@ public class Visualize_Haar_Cascade_Overlay implements PlugInFilter {
 			}
 			stageCtr++;
 		}
-
-		// add overlay graphics
-		Overlay oly = new Overlay();
-		int sliceNo = 1;
-		for (Stage stage : stages) {
-			for (FeatureTree tree : stage.getTrees()) {
-				for (FeatureNode feature : tree.getFeatures()) {
-					for (FeaturePatch r : feature.getPatches()) {
-						Color col = (r.weight > 0) ? Color.green : Color.red;
-						Roi box = makeBoxRoi(r.x, r.y, r.width, r.height, col);
-						box.setPosition(sliceNo);
-						oly.add(box);
-					}
-					sliceNo++;
-				}
-			}
-		}
 		
 		ImagePlus stackim = new ImagePlus("Cascade", stack);
-		stackim.setOverlay(oly);
 		stackim.show();
 		
-	}
-	
-	private Roi makeBoxRoi(int u, int v, int width, int height, Color col) {
-		Path2D path = new Path2D.Double();
-		path.moveTo(u, v);
-		path.lineTo(u + width, v);
-		path.lineTo(u + width, v + height);
-		path.lineTo(u, v + height);
-		path.lineTo(u, v);
-		path.lineTo(u + width, v + height);
-		ShapeRoi box = new ShapeRoi(path);
-		box.setStrokeColor(col);
-		//box.setStrokeWidth(0.2);
-		return box;
 	}
 	
 //	private List<Roi> getRectangles(FeatureNode feature) {
@@ -130,9 +100,7 @@ public class Visualize_Haar_Cascade_Overlay implements PlugInFilter {
 //				}
 //			}
 //			//sp.drawRect(r.x, r.y, r.width, r.height);
-//			
 //		}
-//		
 //	}
 
 //	@SuppressWarnings("unused")
