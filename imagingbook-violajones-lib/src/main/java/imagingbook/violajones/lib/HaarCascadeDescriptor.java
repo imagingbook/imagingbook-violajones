@@ -36,8 +36,8 @@ import imagingbook.violajones.DATA.xml.RLOC;
  */
 public class HaarCascadeDescriptor {
 	
-	private static final String XML_TYPE_ID1 = "opencv-haar-classifier";		// OpenCV "old style"
-	private static final String XML_TYPE_ID2 = "opencv-cascade-classifier";		// OpenCV new style?
+	public static final String XML_TYPE_ID1 = "opencv-haar-classifier";		// OpenCV "old style"
+	public static final String XML_TYPE_ID2 = "opencv-cascade-classifier";		// OpenCV new style?
 	
 	private int width = 0;
 	private int height = 0;
@@ -229,6 +229,7 @@ public class HaarCascadeDescriptor {
 	 * @param parent the parent node
 	 * @return a list of child elements, which may be empty
 	 */
+	@SuppressWarnings("unused")
 	private List<Element> getChildElements(Node parent) {
 		List<Element> elements = new LinkedList<>();
 		NodeList children = parent.getChildNodes();
