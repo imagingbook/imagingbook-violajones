@@ -3,10 +3,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.imagingbook</groupId>
+	<!-- <groupId>com.imagingbook</groupId> -->
 	<artifactId>imagingbook-violajones</artifactId>
-	<version>2.0-SNAPSHOT</version>
+	<!-- <version>2.0-SNAPSHOT</version> -->
 	<packaging>pom</packaging>
+	
+	<parent>
+		<groupId>com.imagingbook</groupId>
+		<artifactId>imagingbook-parent-pom</artifactId>
+		<version>2.0-SNAPSHOT</version>
+		<relativePath />		
+	</parent>
+	
+	<repositories>
+		<repository>
+			<id>imagingbook-maven-repository</id>
+			<name>imagingbook-maven-repository on GitHub</name>
+			<url>https://raw.github.com/imagingbook/imagingbook-maven-repository/master</url>
+		</repository>
+	</repositories>
 
 	<modules>
 		<module>imagingbook-violajones-lib</module>
@@ -14,197 +29,43 @@
 		<module>imagingbook-violajones-data</module>
 	</modules>
 
-	<!-- project information -->
-	<description>Java/ImageJ implementation of the Viola-Jones Face Detector</description>
-	<inceptionYear>2015</inceptionYear>
-	<url>http://www.imagingbook.com</url>
-
-	<developers>
-		<developer>
-			<name>Wilhelm Burger</name>
-			<email>wilbur@ieee.org</email>
-		</developer>
-	</developers>
-
-	<licenses>
-		<license>
-			<name>BSD 2-Clause Simplified License</name>
-			<url>http://opensource.org/licenses/BSD-2-Clause</url>
-		</license>
-	</licenses>
-
-	<!-- COMMON to stand-alone projects based on ImageJ and imagingbook libraries -->
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<java.version>1.8</java.version>
-		<imagej.version>1.53j</imagej.version> <!-- see https://mvnrepository.com/artifact/net.imagej/ij -->
-		<imagingbook.version>2.0-SNAPSHOT</imagingbook.version>
-		<commons-math3.version>3.6.1</commons-math3.version>
-		<junit.version>4.13.1</junit.version>
-
-		<imagingbook.deploydir>imagingbook-maven-repository</imagingbook.deploydir>
-		<!-- <webdir>${project.basedir}/docs</webdir> -->
-		<violajones.rootdir>${project.basedir}</violajones.rootdir>		<!-- modified by poms in sub-modules! -->
+<properties>
+		<violajones.rootdir>${maven.multiModuleProjectDirectory}</violajones.rootdir>
 		<violajones.deploydir>${violajones.rootdir}/../${imagingbook.deploydir}</violajones.deploydir>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>imagingbook-maven-repository</id>
-			<name>imagingbook-maven-repository on GitHub</name>
-			<url>https://raw.github.com/imagingbook/imagingbook-maven-repository/master</url>
-			<layout>default</layout>
-		</repository>
-	</repositories>
-
 	<dependencies>
+	
 		<dependency>
 			<groupId>net.imagej</groupId>
 			<artifactId>ij</artifactId>
-			<version>${imagej.version}</version> <!-- see https://mvnrepository.com/artifact/net.imagej/ij -->
 		</dependency>
+		
 		<dependency>
 			<groupId>com.imagingbook</groupId>
 			<artifactId>imagingbook-common</artifactId>
 			<version>${imagingbook.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
-			<version>${commons-math3.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
 	</dependencies>
-
-	<build>
-		<!-- <outputDirectory>${project.basedir}/ImageJ/plugins</outputDirectory> needed?? -->
-	
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.1</version>
-					<configuration>
-						<source>${java.version}</source>
-						<target>${java.version}</target>
-					</configuration>
-				</plugin>
-
-				<!-- Ignore/Execute plugin execution (https://stackoverflow.com/a/8752807) -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<!-- copy-dependency plugin -->
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-dependency-plugin</artifactId>
-										<versionRange>[1.0.0,)</versionRange>
-										<goals>
-											<goal>copy-dependencies</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-
-			</plugins>
-		</pluginManagement>
-
-		<plugins>
-			<plugin>  <!-- generate a separate jar file with source code -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<!-- Javadoc generation -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.3.0</version>
-				<configuration>
-					<!-- https://medium.com/@kankvish/fixing-issue-the-environment-variable-java-home-is-not-correctly-set-b5f0b66a84d0 -->
-					<javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
-					<!-- Default configuration for all reports -->
-					<!-- <source>8</source> -->
-					<detectJavaApiLink>false</detectJavaApiLink>
-					<reportOutputDirectory>${project.basedir}/docs</reportOutputDirectory>
-					<!-- <reportOutputDirectory>${webdir}</reportOutputDirectory> -->
-					<destDir>javadoc</destDir>
-					<doctitle>${javadoc-doctitle}</doctitle>
-					<packagesheader>${project.name}</packagesheader>
-					<!-- <header>The ImagingBook HEADER</header> -->
-					<!-- <footer>The ImagingBook FOOTER</footer> -->
-					<!-- <top>The ImagingBook TOP text</top> -->
-					<!-- <bottom> <![CDATA[Copyright &#169; {inceptionYear}&#x2013;{currentYear}, 
-						<a href="http://www.imagingbook.com" target="new"> Wilhelm Burger</a> <a 
-						href="http://opensource.org/licenses/BSD-2-Clause" target="new"> (BSD 2-Clause 
-						Simplified License)</a>]]> </bottom> -->
-					<show>protected</show>
-					<nohelp>true</nohelp>
-					<linksource>true</linksource>
-					<author>false</author>
-					<verbose>true</verbose>
-					<!-- <detectLinks>true</detectLinks> -->
-					<!-- <detectOfflineLinks>true</detectOfflineLinks> -->
-					<!-- <excludePackageNames>imagingbook.violajones.DATA.*</excludePackageNames> -->
-					<excludePackageNames>*.DATA.*</excludePackageNames>
-					<additionalOptions>--frames</additionalOptions> <!-- by default, javadoc does not generate HTML with frames any more! -->
-				</configuration>
-			</plugin>
-
-		</plugins>
-	</build>
 
 	<distributionManagement>
 		<repository>
 			<id>imagingbook-maven-repository</id>     <!-- used by 'mvn deploy' -->
-			<name>Imagingbook Maven Repository</name>
-			<!-- <url>file:///${project.basedir}/../imagingbook-maven-repository</url> -->
 			<url>file:${violajones.deploydir}</url>
 			<layout>default</layout>
 		</repository>
 	</distributionManagement>
-
-	<reporting>
-		<plugins>
-			<plugin>  <!-- to stop Maven complaining about missing version number -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>3.0.0</version>
-				<reportSets>
-					<reportSet />
-				</reportSets>
-			</plugin>
-		</plugins>
-	</reporting>
 
 </project>
