@@ -8,6 +8,7 @@
 	to be compatible with the standard naming scheme for ImageJ plugins 
 	(see https://imagej.nih.gov/ij/plugins/jar-demo.html). -->
 	<artifactId>imagingbook-violajones_plugins</artifactId>
+	<packaging>jar</packaging>
 	
 	<parent>
 		<groupId>com.imagingbook</groupId>
@@ -18,7 +19,7 @@
 	<properties>
 		<imagingbook.rootdir>${project.basedir}/../..</imagingbook.rootdir>
 		<!-- activates 'ij-plugins-build' profile (defined in 'imagingbook-parent-pom') -->
-		<ij-plugins-profile>true</ij-plugins-profile>
+		<imagingbook.plugins.project>true</imagingbook.plugins.project>
 	</properties>
 
 	<dependencies>
