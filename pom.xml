@@ -14,14 +14,6 @@
 		<version>2.0-SNAPSHOT</version>
 		<relativePath />		
 	</parent>
-	
-	<repositories>
-		<repository>
-			<id>imagingbook-maven-repository</id>
-			<name>imagingbook-maven-repository on GitHub</name>
-			<url>https://raw.github.com/imagingbook/imagingbook-maven-repository/master</url>
-		</repository>
-	</repositories>
 
 	<modules>
 		<module>imagingbook-violajones-lib</module>
@@ -29,38 +21,25 @@
 		<module>imagingbook-violajones-data</module>
 	</modules>
 
-<properties>
-		<violajones.rootdir>${maven.multiModuleProjectDirectory}</violajones.rootdir>
-		<violajones.deploydir>${violajones.rootdir}/../${imagingbook.deploydir}</violajones.deploydir>
+	<properties>
+		<!-- <violajones.rootdir>${maven.multiModuleProjectDirectory}</violajones.rootdir> -->
 	</properties>
 
 	<dependencies>
-	
 		<dependency>
 			<groupId>net.imagej</groupId>
 			<artifactId>ij</artifactId>
 		</dependency>
-		
 		<dependency>
 			<groupId>com.imagingbook</groupId>
 			<artifactId>imagingbook-common</artifactId>
 			<version>${imagingbook.version}</version>
-		</dependency>
-		
+		</dependency>	
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
 	</dependencies>
-
-	<distributionManagement>
-		<repository>
-			<id>imagingbook-maven-repository</id>     <!-- used by 'mvn deploy' -->
-			<url>file:${violajones.deploydir}</url>
-			<layout>default</layout>
-		</repository>
-	</distributionManagement>
 
 </project>

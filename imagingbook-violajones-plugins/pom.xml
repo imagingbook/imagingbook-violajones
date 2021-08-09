@@ -17,9 +17,7 @@
 	</parent>
 	
 	<properties>
-		<imagingbook.rootdir>${project.basedir}/../..</imagingbook.rootdir>
-		<!-- activates 'ij-plugins-build' profile (defined in 'imagingbook-parent-pom') -->
-		<imagingbook.plugins.project>true</imagingbook.plugins.project>
+		<imagingbook.rootdir>${directory-up-2}</imagingbook.rootdir>
 	</properties>
 
 	<dependencies>
