@@ -22,7 +22,6 @@
 	</modules>
 
 	<properties>
-		<!-- <violajones.rootdir>${maven.multiModuleProjectDirectory}</violajones.rootdir> -->
 	</properties>
 
 	<dependencies>
@@ -33,7 +32,6 @@
 		<dependency>
 			<groupId>com.imagingbook</groupId>
 			<artifactId>imagingbook-common</artifactId>
-			<version>${imagingbook.version}</version>
 		</dependency>	
 		<dependency>
 			<groupId>junit</groupId>
