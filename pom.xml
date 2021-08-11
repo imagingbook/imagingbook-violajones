@@ -23,6 +23,13 @@
 
 	<properties>
 	</properties>
+	
+	<repositories>
+		<repository>
+			<id>imagingbook-maven-repository</id>
+			<url>https://raw.github.com/imagingbook/imagingbook-maven-repository/master</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
