@@ -276,7 +276,8 @@ public class HaarCascadeDescriptor {
 	
 	// -------------------------------------------------------------------------------------------------
 	
-	public String printToString() {
+	@Override
+	public String toString() {
 		ByteArrayOutputStream bas = new ByteArrayOutputStream();
 		PrintStream strm = new PrintStream(bas);
 		printToStream(strm);
