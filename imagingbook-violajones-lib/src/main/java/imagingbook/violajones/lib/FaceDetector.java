@@ -6,6 +6,7 @@ import java.util.List;
 
 import ij.process.ByteProcessor;
 import imagingbook.lib.image.IntegralImage;
+import imagingbook.lib.util.SimpleParameters;
 
 /**
  * The core class.
@@ -19,7 +20,7 @@ public class FaceDetector {
 	/**
 	 * Nested class representing parameters and their default values.
 	 */
-	public static class Parameters {
+	public static class Parameters implements SimpleParameters {
 		/** The initial ratio between the window size and the Haar classifier size (default 2). */
 		public double baseScale = 2.00;
 		
