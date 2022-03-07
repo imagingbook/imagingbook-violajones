@@ -286,47 +286,48 @@
 <span class="sourceLineNo">276</span><a id="line.276">        </a>
 <span class="sourceLineNo">277</span><a id="line.277">        // -------------------------------------------------------------------------------------------------</a>
 <span class="sourceLineNo">278</span><a id="line.278">        </a>
-<span class="sourceLineNo">279</span><a id="line.279">        public String printToString() {</a>
-<span class="sourceLineNo">280</span><a id="line.280">                ByteArrayOutputStream bas = new ByteArrayOutputStream();</a>
-<span class="sourceLineNo">281</span><a id="line.281">                PrintStream strm = new PrintStream(bas);</a>
-<span class="sourceLineNo">282</span><a id="line.282">                printToStream(strm);</a>
-<span class="sourceLineNo">283</span><a id="line.283">                return bas.toString();</a>
-<span class="sourceLineNo">284</span><a id="line.284">        }</a>
-<span class="sourceLineNo">285</span><a id="line.285">        </a>
-<span class="sourceLineNo">286</span><a id="line.286">        public void printToStream(PrintStream strm) {</a>
-<span class="sourceLineNo">287</span><a id="line.287">                strm.println("Listing of " + this.getClass().getSimpleName());</a>
-<span class="sourceLineNo">288</span><a id="line.288">                strm.format("Size = %d x %d\n", width, height);</a>
-<span class="sourceLineNo">289</span><a id="line.289">                strm.format("Number of stages = %d\n", stages.size());</a>
-<span class="sourceLineNo">290</span><a id="line.290">                int scnt = 0;</a>
-<span class="sourceLineNo">291</span><a id="line.291">                for (Stage stage : stages) {</a>
-<span class="sourceLineNo">292</span><a id="line.292">                        scnt++;</a>
-<span class="sourceLineNo">293</span><a id="line.293">                        strm.format("******* Stage %d *********\n", scnt);</a>
-<span class="sourceLineNo">294</span><a id="line.294">                        stage.print();</a>
-<span class="sourceLineNo">295</span><a id="line.295">                }</a>
-<span class="sourceLineNo">296</span><a id="line.296">        }</a>
-<span class="sourceLineNo">297</span><a id="line.297">        </a>
-<span class="sourceLineNo">298</span><a id="line.298">        // -------------------------------------------------------------------------------------------------</a>
-<span class="sourceLineNo">299</span><a id="line.299">        </a>
-<span class="sourceLineNo">300</span><a id="line.300">        public static void main(String[] args) {</a>
-<span class="sourceLineNo">301</span><a id="line.301">                //ResourceLocation loc = new imagingbook.violajones.xml.RLOC();</a>
-<span class="sourceLineNo">302</span><a id="line.302">                System.out.println("XML root: " + loc.getPath().toString());</a>
-<span class="sourceLineNo">303</span><a id="line.303">                </a>
-<span class="sourceLineNo">304</span><a id="line.304">                String[] names = loc.getResourceNames();</a>
-<span class="sourceLineNo">305</span><a id="line.305">                for (String n : names) {</a>
-<span class="sourceLineNo">306</span><a id="line.306">                        if (n.endsWith(".xml")) {</a>
-<span class="sourceLineNo">307</span><a id="line.307">                                System.out.println("XML path: " + n);</a>
-<span class="sourceLineNo">308</span><a id="line.308">                        }</a>
-<span class="sourceLineNo">309</span><a id="line.309">                }</a>
-<span class="sourceLineNo">310</span><a id="line.310"></a>
-<span class="sourceLineNo">311</span><a id="line.311">                String xmlName = HaarTrainingSets.frontalface_alt2.getXmlFileName(); // "haarcascade_frontalface_alt2.xml";</a>
-<span class="sourceLineNo">312</span><a id="line.312">                HaarCascadeDescriptor hcd = HaarCascadeDescriptor.fromFileName(xmlName);</a>
-<span class="sourceLineNo">313</span><a id="line.313">                hcd.printToStream(System.out);</a>
-<span class="sourceLineNo">314</span><a id="line.314"></a>
-<span class="sourceLineNo">315</span><a id="line.315">                System.out.println("done.");</a>
-<span class="sourceLineNo">316</span><a id="line.316">        }</a>
-<span class="sourceLineNo">317</span><a id="line.317">        </a>
-<span class="sourceLineNo">318</span><a id="line.318"></a>
-<span class="sourceLineNo">319</span><a id="line.319">}</a>
+<span class="sourceLineNo">279</span><a id="line.279">        @Override</a>
+<span class="sourceLineNo">280</span><a id="line.280">        public String toString() {</a>
+<span class="sourceLineNo">281</span><a id="line.281">                ByteArrayOutputStream bas = new ByteArrayOutputStream();</a>
+<span class="sourceLineNo">282</span><a id="line.282">                PrintStream strm = new PrintStream(bas);</a>
+<span class="sourceLineNo">283</span><a id="line.283">                printToStream(strm);</a>
+<span class="sourceLineNo">284</span><a id="line.284">                return bas.toString();</a>
+<span class="sourceLineNo">285</span><a id="line.285">        }</a>
+<span class="sourceLineNo">286</span><a id="line.286">        </a>
+<span class="sourceLineNo">287</span><a id="line.287">        public void printToStream(PrintStream strm) {</a>
+<span class="sourceLineNo">288</span><a id="line.288">                strm.println("Listing of " + this.getClass().getSimpleName());</a>
+<span class="sourceLineNo">289</span><a id="line.289">                strm.format("Size = %d x %d\n", width, height);</a>
+<span class="sourceLineNo">290</span><a id="line.290">                strm.format("Number of stages = %d\n", stages.size());</a>
+<span class="sourceLineNo">291</span><a id="line.291">                int scnt = 0;</a>
+<span class="sourceLineNo">292</span><a id="line.292">                for (Stage stage : stages) {</a>
+<span class="sourceLineNo">293</span><a id="line.293">                        scnt++;</a>
+<span class="sourceLineNo">294</span><a id="line.294">                        strm.format("******* Stage %d *********\n", scnt);</a>
+<span class="sourceLineNo">295</span><a id="line.295">                        stage.print();</a>
+<span class="sourceLineNo">296</span><a id="line.296">                }</a>
+<span class="sourceLineNo">297</span><a id="line.297">        }</a>
+<span class="sourceLineNo">298</span><a id="line.298">        </a>
+<span class="sourceLineNo">299</span><a id="line.299">        // -------------------------------------------------------------------------------------------------</a>
+<span class="sourceLineNo">300</span><a id="line.300">        </a>
+<span class="sourceLineNo">301</span><a id="line.301">        public static void main(String[] args) {</a>
+<span class="sourceLineNo">302</span><a id="line.302">                //ResourceLocation loc = new imagingbook.violajones.xml.RLOC();</a>
+<span class="sourceLineNo">303</span><a id="line.303">                System.out.println("XML root: " + loc.getPath().toString());</a>
+<span class="sourceLineNo">304</span><a id="line.304">                </a>
+<span class="sourceLineNo">305</span><a id="line.305">                String[] names = loc.getResourceNames();</a>
+<span class="sourceLineNo">306</span><a id="line.306">                for (String n : names) {</a>
+<span class="sourceLineNo">307</span><a id="line.307">                        if (n.endsWith(".xml")) {</a>
+<span class="sourceLineNo">308</span><a id="line.308">                                System.out.println("XML path: " + n);</a>
+<span class="sourceLineNo">309</span><a id="line.309">                        }</a>
+<span class="sourceLineNo">310</span><a id="line.310">                }</a>
+<span class="sourceLineNo">311</span><a id="line.311"></a>
+<span class="sourceLineNo">312</span><a id="line.312">                String xmlName = HaarTrainingSets.frontalface_alt2.getXmlFileName(); // "haarcascade_frontalface_alt2.xml";</a>
+<span class="sourceLineNo">313</span><a id="line.313">                HaarCascadeDescriptor hcd = HaarCascadeDescriptor.fromFileName(xmlName);</a>
+<span class="sourceLineNo">314</span><a id="line.314">                hcd.printToStream(System.out);</a>
+<span class="sourceLineNo">315</span><a id="line.315"></a>
+<span class="sourceLineNo">316</span><a id="line.316">                System.out.println("done.");</a>
+<span class="sourceLineNo">317</span><a id="line.317">        }</a>
+<span class="sourceLineNo">318</span><a id="line.318">        </a>
+<span class="sourceLineNo">319</span><a id="line.319"></a>
+<span class="sourceLineNo">320</span><a id="line.320">}</a>
 
 
 
