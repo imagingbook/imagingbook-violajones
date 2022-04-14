@@ -3,7 +3,7 @@ package violajones_demos;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
 import ij.plugin.PlugIn;
-import imagingbook.lib.util.resource.ResourceLocation;
+import imagingbook.violajones.DATA.ViolaJonesTestImage;
 
 /**
  * ImageJ plugin. 
@@ -12,7 +12,7 @@ import imagingbook.lib.util.resource.ResourceLocation;
  */
 public class Open_Sample_Image implements PlugIn {
 	
-	static ResourceLocation loc = new imagingbook.violajones.DATA.images.RLOC();
+	static ViolaJonesTestImage imgChoice = ViolaJonesTestImage.bishops1_jpg;
 	
 	String imgName = null;
 
@@ -20,21 +20,20 @@ public class Open_Sample_Image implements PlugIn {
 	public void run(String arg) {
 		if (!runDialog()) return;
 		
-		ImagePlus im = loc.getResource(imgName).openAsImage(); // IjUtils.openImage(loc.getPath(imgName));
+		ImagePlus im = imgChoice.getImage();
 		im.show();
 	}
 
 	private boolean runDialog() {
-		GenericDialog gd = new GenericDialog("Set Face Detector Parameters");
-		String[] fileNames = loc.getResourceNames();
-		gd.addChoice("Sample image", fileNames, fileNames[0]);
+		GenericDialog gd = new GenericDialog(this.getClass().getSimpleName());
+		gd.addEnumChoice("Select test image", imgChoice);
 		
 		gd.showDialog();
 		if (gd.wasCanceled()) {
 			return false;
 		}
 		
-		imgName = gd.getNextChoice();
+		imgChoice = gd.getNextEnumChoice(ViolaJonesTestImage.class);
 		return true;
 	}
 }
