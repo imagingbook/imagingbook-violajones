@@ -19,6 +19,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import imagingbook.lib.util.resource.ResourceLocation;
+import imagingbook.violajones.DATA.XmlResource;
 import imagingbook.violajones.DATA.xml.RLOC;
 
 /**
@@ -44,6 +45,7 @@ public class HaarCascadeDescriptor {
 	private List<Stage> stages = null;
 	
 	private static ResourceLocation loc = new RLOC();
+	private static XmlResource resource = XmlResource.haarcascade_frontalface_default;
 	
 	// --- constructors ------------------------------
 	
