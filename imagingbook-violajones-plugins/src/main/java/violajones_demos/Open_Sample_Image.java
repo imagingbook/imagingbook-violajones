@@ -3,7 +3,7 @@ package violajones_demos;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
 import ij.plugin.PlugIn;
-import imagingbook.violajones.DATA.ViolaJonesTestImage;
+import imagingbook.violajones.DATA.SampleFaceImage;
 
 /**
  * ImageJ plugin. 
@@ -12,7 +12,7 @@ import imagingbook.violajones.DATA.ViolaJonesTestImage;
  */
 public class Open_Sample_Image implements PlugIn {
 	
-	static ViolaJonesTestImage imgChoice = ViolaJonesTestImage.bishops1_jpg;
+	static SampleFaceImage imgChoice = SampleFaceImage.Nobelaureates2007;
 	
 	String imgName = null;
 
@@ -33,7 +33,7 @@ public class Open_Sample_Image implements PlugIn {
 			return false;
 		}
 		
-		imgChoice = gd.getNextEnumChoice(ViolaJonesTestImage.class);
+		imgChoice = gd.getNextEnumChoice(SampleFaceImage.class);
 		return true;
 	}
 }

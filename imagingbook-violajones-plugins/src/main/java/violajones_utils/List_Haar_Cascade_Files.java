@@ -1,9 +1,8 @@
 package violajones_utils;
 
-import ij.io.LogStream;
+import ij.IJ;
 import ij.plugin.PlugIn;
-import imagingbook.lib.settings.PrintPrecision;
-import imagingbook.violajones.lib.HaarTrainingSets;
+import imagingbook.violajones.DATA.HaarTrainingSet;
 
 /**
  * ImageJ plugin. 
@@ -11,14 +10,13 @@ import imagingbook.violajones.lib.HaarTrainingSets;
  *
  */
 public class List_Haar_Cascade_Files implements PlugIn {
-	
-	static {
-		LogStream.redirectSystem();
-		PrintPrecision.set(6);
-	}
 
 	public void run(String arg0) {
-		HaarTrainingSets.printAll();
+		for (HaarTrainingSet s : HaarTrainingSet.values()) {
+			IJ.log("Haar set type (enum) = " + s.toString());
+			IJ.log("   full path   = " + s.getURL());
+			IJ.log("");
+		}
 	}
 
 }

@@ -18,9 +18,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import imagingbook.lib.util.resource.ResourceLocation;
-import imagingbook.violajones.DATA.XmlResource;
-import imagingbook.violajones.DATA.xml.RLOC;
+import imagingbook.violajones.DATA.HaarTrainingSet;
 
 /**
  * This class represents a trained Haar cascade classifier. Training results were obtained
@@ -30,6 +28,7 @@ import imagingbook.violajones.DATA.xml.RLOC;
  * 
  * 2018/12/10: Refactored to use javax.xml and org.w3c.dom to eliminate org.jdom2 dependency.
  * 2020/11/23: Adapted to new resource access scheme.
+ * 2022/04/15: Resource access scheme again revised.
  * 
  * TODO: Write a reader for the newer format (produced by 'opencv_traincascade').
  * 
@@ -44,31 +43,12 @@ public class HaarCascadeDescriptor {
 	private int height = 0;
 	private List<Stage> stages = null;
 	
-	private static ResourceLocation loc = new RLOC();
-	private static XmlResource resource = XmlResource.haarcascade_frontalface_default;
-	
 	// --- constructors ------------------------------
 	
 	private HaarCascadeDescriptor() {	
 	}
 	
 	// --- static factory methods -------------------
-	
-	/**
-	 * Creates a Haar cascade from the specification given in a
-	 * XML file.
-	 * 
-	 * @param xmlFilename path to the XML file
-	 * @return a new Haar cascade object
-	 */
-	public static HaarCascadeDescriptor fromFileName(String xmlFilename) {
-		InputStream strm = loc.getResource(xmlFilename).getStream(); // loc.getResourceAsStream(xmlFilename);
-		if (strm == null) {
-			throw new RuntimeException(HaarCascadeDescriptor.class.getSimpleName() + 
-					": could not find resource " + xmlFilename);
-		}
-		return HaarCascadeDescriptor.fromInputStream(strm);
-	}
 	
 	/**
 	 * Creates a Haar cascade from the specification given in a
@@ -301,20 +281,13 @@ public class HaarCascadeDescriptor {
 	// -------------------------------------------------------------------------------------------------
 	
 	public static void main(String[] args) {
-		//ResourceLocation loc = new imagingbook.violajones.xml.RLOC();
-		System.out.println("XML root: " + loc.getPath().toString());
-		
-		String[] names = loc.getResourceNames();
-		for (String n : names) {
-			if (n.endsWith(".xml")) {
-				System.out.println("XML path: " + n);
-			}
+		for (HaarTrainingSet hts : HaarTrainingSet.values()) {
+			System.out.println("*****  Resource = " + hts.toString() + " *********");
+			HaarCascadeDescriptor hcd = HaarCascadeDescriptor.fromInputStream(hts.getStream());
+			hcd.printToStream(System.out);
+			System.out.println();
 		}
-
-		String xmlName = HaarTrainingSets.frontalface_alt2.getXmlFileName(); // "haarcascade_frontalface_alt2.xml";
-		HaarCascadeDescriptor hcd = HaarCascadeDescriptor.fromFileName(xmlName);
-		hcd.printToStream(System.out);
-
+		
 		System.out.println("done.");
 	}
 	

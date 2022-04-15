@@ -12,10 +12,11 @@ import ij.process.ImageProcessor;
 import imagingbook.lib.ij.IjUtils;
 import imagingbook.lib.settings.PrintPrecision;
 import imagingbook.lib.util.Enums;
+import imagingbook.violajones.DATA.HaarTrainingSet;
 import imagingbook.violajones.lib.FaceDetector;
 import imagingbook.violajones.lib.FaceDetector.Parameters;
 import imagingbook.violajones.lib.FaceRegion;
-import imagingbook.violajones.lib.HaarTrainingSets;
+import imagingbook.violajones.lib.HaarCascadeDescriptor;
 
 
 /**
@@ -35,7 +36,7 @@ public class Find_Faces implements PlugInFilter {
 	}
 	
 	static boolean extractFaceImages = false;
-	static HaarTrainingSets trainingSet = HaarTrainingSets.frontalface_alt2;
+	static HaarTrainingSet trainingSet = HaarTrainingSet.FrontalFaceAlt2;
 	
 	ImagePlus im = null;
 
@@ -62,7 +63,9 @@ public class Find_Faces implements PlugInFilter {
 		if (!runDialog(params)) return;
 		
 		IjUtils.setRgbConversionWeights(ip);
-		FaceDetector detector = FaceDetector.create(trainingSet.getStream(), params);
+//		FaceDetector detector = FaceDetector.create(trainingSet.getStream(), params);
+		HaarCascadeDescriptor descriptor = HaarCascadeDescriptor.fromInputStream(trainingSet.getStream());
+		FaceDetector detector = new FaceDetector(descriptor, params);
 		List<FaceRegion> faces = detector.findFaces(ip.convertToByteProcessor());
 		IJ.log(faces.size() + " faces found!");
 		
@@ -85,7 +88,7 @@ public class Find_Faces implements PlugInFilter {
 	
 	private boolean runDialog(Parameters params) {
 		GenericDialog gd = new GenericDialog("Set Face Detector Parameters");
-		gd.addChoice("Haar training set", Enums.getEnumNames(HaarTrainingSets.class), trainingSet.name());
+		gd.addChoice("Haar training set", Enums.getEnumNames(HaarTrainingSet.class), trainingSet.name());
 		gd.addNumericField("baseScale", params.baseScale, 2);
 		gd.addNumericField("scaleStep", params.scaleStep, 2);
 		gd.addNumericField("winShiftFraction", params.winShiftFraction, 2);
@@ -105,7 +108,7 @@ public class Find_Faces implements PlugInFilter {
 			return false;
 		}
 		
-		trainingSet = HaarTrainingSets.valueOf(gd.getNextChoice());
+		trainingSet = HaarTrainingSet.valueOf(gd.getNextChoice());
 		params.baseScale = gd.getNextNumber();
 		params.scaleStep = gd.getNextNumber();
 		params.winShiftFraction = gd.getNextNumber();

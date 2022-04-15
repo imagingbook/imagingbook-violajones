@@ -13,11 +13,12 @@ import ij.gui.Roi;
 import ij.gui.ShapeRoi;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
+import imagingbook.lib.ij.GuiTools;
+import imagingbook.violajones.DATA.HaarTrainingSet;
 import imagingbook.violajones.lib.FeatureNode;
 import imagingbook.violajones.lib.FeaturePatch;
 import imagingbook.violajones.lib.FeatureTree;
 import imagingbook.violajones.lib.HaarCascadeDescriptor;
-import imagingbook.violajones.lib.HaarTrainingSets;
 import imagingbook.violajones.lib.Stage;
 
 /**
@@ -34,7 +35,7 @@ import imagingbook.violajones.lib.Stage;
  */
 public class Visualize_Haar_Cascade_Overlay implements PlugInFilter {
 	
-	static HaarTrainingSets desc = HaarTrainingSets.frontalface_alt2;
+	static HaarTrainingSet desc = HaarTrainingSet.FrontalFaceAlt2;
 
 	public int setup(String arg0, ImagePlus im) {
 		return DOES_ALL + NO_CHANGES;
@@ -94,6 +95,7 @@ public class Visualize_Haar_Cascade_Overlay implements PlugInFilter {
 		ImagePlus stackim = new ImagePlus("Cascade", stack);
 		stackim.setOverlay(oly);
 		stackim.show();
+		GuiTools.zoomExact(stackim, 10);
 		
 	}
 	

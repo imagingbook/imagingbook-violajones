@@ -1,6 +1,5 @@
 package imagingbook.violajones.lib;
 
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,9 +10,10 @@ import imagingbook.lib.util.ParameterBundle;
 /**
  * The core class.
  * TODO: change constructors to use the source image, pre-calculate everything.
+ * TODO: use annotations on Parameters fields
  * 
  * @author W. Burger
- *
+ * @version 2022/04/15
  */
 public class FaceDetector {
 	
@@ -51,26 +51,6 @@ public class FaceDetector {
 	
 	private final Parameters params;
 	private final HaarCascadeDescriptor cascade;
-
-	/**
-	 * Factory method. Builds a detector from an XML file.
-	 * @param xmlFileName a XML file (with data trained with OpenCV) describing the Haar Cascade
-	 * @param params a parameter object (default settings are used if {@code null} is passed)
-	 * @return The corresponding detector.
-	 */
-	public static FaceDetector create(String xmlFileName, Parameters params) {
-		return new FaceDetector(HaarCascadeDescriptor.fromFileName(xmlFileName), params);
-	}
-	
-	/**
-	 * Factory method. Builds a detector from an XML file.
-	 * @param xmlStrm a XML stream (with data trained with OpenCV) describing the Haar Cascade
-	 * @param params a parameter object (default settings are used if {@code null} is passed)
-	 * @return The corresponding detector.
-	 */
-	public static FaceDetector create(InputStream xmlStrm, Parameters params) {
-		return new FaceDetector(HaarCascadeDescriptor.fromInputStream(xmlStrm), params);
-	}
 	
 	// --------------------------------------------------------------------------------
 	
@@ -163,10 +143,7 @@ public class FaceDetector {
 		return merge(facelist.toArray(new FaceRegion[0]),
 				params.minNeighbors, params.minMergeRegionOverlap);
 	}
-	
-	
-
-	
+		
 	/**
 	 * Merge the raw detections resulting from the detection step to avoid
 	 * multiple detections of the same object. A threshold on the minimum
