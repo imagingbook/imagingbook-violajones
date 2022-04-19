@@ -10,7 +10,7 @@ import ij.io.LogStream;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.lib.ij.IjUtils;
-import imagingbook.lib.settings.PrintPrecision;
+import imagingbook.lib.math.PrintPrecision;
 import imagingbook.lib.util.Enums;
 import imagingbook.violajones.DATA.HaarTrainingSet;
 import imagingbook.violajones.lib.FaceDetector;
