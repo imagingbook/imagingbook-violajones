@@ -1,9 +1,9 @@
 package imagingbook.violajones.lib;
 
 import ij.process.FloatProcessor;
-import imagingbook.lib.image.IntegralImage;
-import imagingbook.pub.color.edge.CannyEdgeDetector;
-import imagingbook.pub.color.edge.CannyEdgeDetector.Parameters;
+import imagingbook.common.color.edge.CannyEdgeDetector;
+import imagingbook.common.color.edge.CannyEdgeDetector.Parameters;
+import imagingbook.common.image.IntegralImage;
 
 /**
  * Used to calculate the gradient magnitude inside a given rectangular region.

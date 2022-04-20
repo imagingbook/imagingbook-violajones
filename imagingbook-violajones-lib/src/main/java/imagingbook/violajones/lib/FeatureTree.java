@@ -1,6 +1,6 @@
 package imagingbook.violajones.lib;
 
-import imagingbook.lib.image.IntegralImage;
+import imagingbook.common.image.IntegralImage;
 
 /**
  * A binary tree for detection. At each node of the tree, a test (feature) is

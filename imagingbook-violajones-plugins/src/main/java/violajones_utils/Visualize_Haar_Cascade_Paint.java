@@ -9,7 +9,7 @@ import ij.ImagePlus;
 import ij.ImageStack;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
-import imagingbook.lib.ij.GuiTools;
+import imagingbook.common.ij.GuiTools;
 import imagingbook.violajones.DATA.HaarTrainingSet;
 import imagingbook.violajones.lib.FeatureNode;
 import imagingbook.violajones.lib.FeaturePatch;

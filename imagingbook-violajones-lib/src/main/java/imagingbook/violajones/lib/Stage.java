@@ -3,7 +3,7 @@ package imagingbook.violajones.lib;
 import java.util.LinkedList;
 import java.util.List;
 
-import imagingbook.lib.image.IntegralImage;
+import imagingbook.common.image.IntegralImage;
 
 /**
  * A single stage of the cascade. Each stage consists of several trees and a

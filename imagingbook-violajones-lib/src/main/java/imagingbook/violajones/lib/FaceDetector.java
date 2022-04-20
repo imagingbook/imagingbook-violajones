@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import ij.process.ByteProcessor;
-import imagingbook.lib.image.IntegralImage;
-import imagingbook.lib.util.ParameterBundle;
+import imagingbook.common.image.IntegralImage;
+import imagingbook.common.util.ParameterBundle;
 
 /**
  * The core class.
