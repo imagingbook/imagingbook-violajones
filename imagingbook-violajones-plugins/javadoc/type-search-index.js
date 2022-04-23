@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"violajones_demos","l":"Find_Faces"},{"p":"violajones_utils","l":"List_Haar_Cascade_Files"},{"p":"violajones_demos","l":"Open_Sample_Image"},{"p":"violajones_utils","l":"Visualize_Haar_Cascade_Overlay"},{"p":"violajones_utils","l":"Visualize_Haar_Cascade_Paint"}]
