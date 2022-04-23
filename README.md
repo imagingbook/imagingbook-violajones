@@ -30,36 +30,9 @@ This project consists of two sub-projects (Maven modules):
 * Copy all JAR files from `imagingbook-calibrate-plugins/ImageJ/jars`.
 * Copy the plugin `.class` files from `imagingbook-calibrate-plugins/ImageJ/plugins`.
 
-### Use with Maven
 
-To use the ``imagingbook-violajones-lib`` library and ``imagingbook-violajones-data`` resources in your Maven project, 
-add the following lines to your ``pom.xml`` file:
-````
-<repositories>
-    <repository>
-	<id>imagingbook-maven-repository</id>
-    	<url>https://raw.github.com/imagingbook/imagingbook-maven-repository/master</url>
-    </repository>
-</repositories>
+### Documentation (JavaDoc) ###
 
-<dependencies>
-  <dependency>
-    <groupId>com.imagingbook</groupId>
-    <artifactId>imagingbook-violajones-lib</artifactId>
-    <version>3.0</version>
-  </dependency>
-  <dependency>
-    <groupId>com.imagingbook</groupId>
-    <artifactId>imagingbook-violajones-data</artifactId>
-    <version>3.0</version>
-  </dependency>
-  <!-- other dependencies ... -->
-</dependencies>
-````
-The above setup refers to version `3.0`, check the [ImagingBook Maven Repository](https://github.com/imagingbook/imagingbook-maven-repository/tree/master/com/imagingbook/) for the most recent version.
-See also [this demo project](https://github.com/imagingbook/imagingbook-maven-demo-project) for how to set up a simple ImageJ project with Maven.
-
-### Documentation ###
-
-* **JavaDoc: [imagingbook-violajones](https://imagingbook.github.io/imagingbook-violajones/javadoc/index.html?overview-summary.html)**
+* **[imagingbook-violajones-lib](https://imagingbook.github.io/imagingbook-violajones/imagingbook-violajones-lib/javadoc/index.html?overview-summary.html)**
+* **[imagingbook-violajones-plugins](https://imagingbook.github.io/imagingbook-violajones/imagingbook-violajones-plugins/javadoc/index.html?overview-summary.html)**
 
