@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"imagingbook.violajones.lib"},{"l":"violajones_demos"},{"l":"violajones_utils"}]
