@@ -15,16 +15,21 @@ public enum HaarTrainingSet implements NamedResource {
 	FrontalFaceDefault("haarcascade_frontalface_default.xml"),
 	FrontalFaceAlt2("haarcascade_frontalface_alt2.xml");
 	
-	private static final String BASEDIR = "xml/";
-	private final String relPath;
+	private static final String BASEDIR = "xml";
+	private final String filename;
 	
 	private HaarTrainingSet(String filename) {
-		this.relPath = BASEDIR + filename;
+		this.filename = filename;
 	}
 	
 	@Override
-	public String getRelativePath() {
-		return relPath;
+	public String getFileName() {
+		return filename;
+	}
+	
+	@Override
+	public String getRelativeDirectory() {
+		return BASEDIR;
 	}
 	
 	//--------------------------------------------
@@ -34,5 +39,7 @@ public enum HaarTrainingSet implements NamedResource {
 			System.out.println("resource URL = " + nr.getURL());
 		}
 	}
+
+
 
 }

@@ -9,16 +9,21 @@ public enum SampleFaceImage implements ImageResource {
 		lena("lena.jpg"),
 		Nobelaureates2007("nobelaureates2007.jpg");
 
-	private static final String BASEDIR = "images/";
-	private final String relPath;
+	private static final String BASEDIR = "images";
+	private final String filename;
 	
-	private SampleFaceImage(String name) {
-		this.relPath = BASEDIR + name;
+	private SampleFaceImage(String filename) {
+		this.filename = filename;
 	}
 	
 	@Override
-	public String getRelativePath() {
-		return relPath;
+	public String getFileName() {
+		return filename;
 	}
-
+	
+	@Override
+	public String getRelativeDirectory() {
+		return BASEDIR;
+	}
+	
 }
