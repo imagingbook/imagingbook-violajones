@@ -1,8 +1,8 @@
 package imagingbook.violajones.lib;
 
 import ij.process.FloatProcessor;
-import imagingbook.common.color.edge.CannyEdgeDetector;
-import imagingbook.common.color.edge.CannyEdgeDetector.Parameters;
+import imagingbook.common.edges.CannyEdgeDetector;
+import imagingbook.common.edges.CannyEdgeDetector.Parameters;
 import imagingbook.common.image.IntegralImage;
 
 /**
