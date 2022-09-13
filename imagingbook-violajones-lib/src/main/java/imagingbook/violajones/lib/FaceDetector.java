@@ -5,7 +5,7 @@ import java.util.List;
 
 import ij.process.ByteProcessor;
 import imagingbook.common.image.IntegralImage;
-import imagingbook.common.util.parameters.DialogParameters;
+import imagingbook.common.util.parameters.DialogParameterBundle;
 
 /**
  * The core class.
@@ -20,7 +20,7 @@ public class FaceDetector {
 	/**
 	 * Nested class representing parameters and their default values.
 	 */
-	public static class Parameters implements DialogParameters {
+	public static class Parameters implements DialogParameterBundle {
 		/** The initial ratio between the window size and the Haar classifier size (default 2). */
 		public double baseScale = 2.00;
 		
