@@ -11,7 +11,7 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.common.ij.IjUtils;
 import imagingbook.common.math.PrintPrecision;
-import imagingbook.common.util.Enums;
+import imagingbook.common.util.EnumUtils;
 import imagingbook.violajones.DATA.HaarTrainingSet;
 import imagingbook.violajones.lib.FaceDetector;
 import imagingbook.violajones.lib.FaceDetector.Parameters;
@@ -88,7 +88,7 @@ public class Find_Faces implements PlugInFilter {
 	
 	private boolean runDialog(Parameters params) {
 		GenericDialog gd = new GenericDialog("Set Face Detector Parameters");
-		gd.addChoice("Haar training set", Enums.getEnumNames(HaarTrainingSet.class), trainingSet.name());
+		gd.addChoice("Haar training set", EnumUtils.getEnumNames(HaarTrainingSet.class), trainingSet.name());
 		gd.addNumericField("baseScale", params.baseScale, 2);
 		gd.addNumericField("scaleStep", params.scaleStep, 2);
 		gd.addNumericField("winShiftFraction", params.winShiftFraction, 2);
