@@ -5,7 +5,7 @@ import java.util.List;
 
 import ij.process.ByteProcessor;
 import imagingbook.common.image.IntegralImage;
-import imagingbook.common.util.parameters.DialogParameterBundle;
+import imagingbook.common.util.ParameterBundle;
 
 /**
  * The core class.
