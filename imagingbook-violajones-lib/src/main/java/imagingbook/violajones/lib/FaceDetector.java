@@ -20,7 +20,7 @@ public class FaceDetector {
 	/**
 	 * Nested class representing parameters and their default values.
 	 */
-	public static class Parameters implements DialogParameterBundle {
+	public static class Parameters implements ParameterBundle {
 		/** The initial ratio between the window size and the Haar classifier size (default 2). */
 		public double baseScale = 2.00;
 		
