@@ -21,7 +21,7 @@
 <span class="sourceLineNo">011</span><a id="line.11">import ij.process.ImageProcessor;</a>
 <span class="sourceLineNo">012</span><a id="line.12">import imagingbook.common.ij.IjUtils;</a>
 <span class="sourceLineNo">013</span><a id="line.13">import imagingbook.common.math.PrintPrecision;</a>
-<span class="sourceLineNo">014</span><a id="line.14">import imagingbook.common.util.Enums;</a>
+<span class="sourceLineNo">014</span><a id="line.14">import imagingbook.common.util.EnumUtils;</a>
 <span class="sourceLineNo">015</span><a id="line.15">import imagingbook.violajones.DATA.HaarTrainingSet;</a>
 <span class="sourceLineNo">016</span><a id="line.16">import imagingbook.violajones.lib.FaceDetector;</a>
 <span class="sourceLineNo">017</span><a id="line.17">import imagingbook.violajones.lib.FaceDetector.Parameters;</a>
@@ -98,7 +98,7 @@
 <span class="sourceLineNo">088</span><a id="line.88">        </a>
 <span class="sourceLineNo">089</span><a id="line.89">        private boolean runDialog(Parameters params) {</a>
 <span class="sourceLineNo">090</span><a id="line.90">                GenericDialog gd = new GenericDialog("Set Face Detector Parameters");</a>
-<span class="sourceLineNo">091</span><a id="line.91">                gd.addChoice("Haar training set", Enums.getEnumNames(HaarTrainingSet.class), trainingSet.name());</a>
+<span class="sourceLineNo">091</span><a id="line.91">                gd.addChoice("Haar training set", EnumUtils.getEnumNames(HaarTrainingSet.class), trainingSet.name());</a>
 <span class="sourceLineNo">092</span><a id="line.92">                gd.addNumericField("baseScale", params.baseScale, 2);</a>
 <span class="sourceLineNo">093</span><a id="line.93">                gd.addNumericField("scaleStep", params.scaleStep, 2);</a>
 <span class="sourceLineNo">094</span><a id="line.94">                gd.addNumericField("winShiftFraction", params.winShiftFraction, 2);</a>
