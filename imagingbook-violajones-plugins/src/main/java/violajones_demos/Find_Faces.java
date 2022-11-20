@@ -11,7 +11,6 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.common.ij.IjUtils;
 import imagingbook.common.math.PrintPrecision;
-import imagingbook.common.util.EnumUtils;
 import imagingbook.violajones.DATA.HaarTrainingSet;
 import imagingbook.violajones.lib.FaceDetector;
 import imagingbook.violajones.lib.FaceDetector.Parameters;
@@ -40,11 +39,13 @@ public class Find_Faces implements PlugInFilter {
 	
 	ImagePlus im = null;
 
+	@Override
 	public int setup(String arg0, ImagePlus im) {
 		this.im = im;
 		return DOES_ALL + NO_CHANGES;
 	}
 	
+	@Override
 	public void run(ImageProcessor ip) {
 		
 		Parameters params = new Parameters();
@@ -88,7 +89,7 @@ public class Find_Faces implements PlugInFilter {
 	
 	private boolean runDialog(Parameters params) {
 		GenericDialog gd = new GenericDialog("Set Face Detector Parameters");
-		gd.addChoice("Haar training set", EnumUtils.getEnumNames(HaarTrainingSet.class), trainingSet.name());
+		gd.addChoice("Haar training set", getEnumNames(HaarTrainingSet.class), trainingSet.name());
 		gd.addNumericField("baseScale", params.baseScale, 2);
 		gd.addNumericField("scaleStep", params.scaleStep, 2);
 		gd.addNumericField("winShiftFraction", params.winShiftFraction, 2);
@@ -128,6 +129,15 @@ public class Find_Faces implements PlugInFilter {
 	private void draw(FaceRegion f, ImageProcessor cp) {
 		cp.setColor(Color.green);
 		cp.drawRect(f.x, f.y, f.width, f.height);
+	}
+	
+	private static <E extends Enum<E>> String[] getEnumNames(Class<E> enumclass) {
+		E[] eConstants = enumclass.getEnumConstants();
+		String[] eNames = new String[eConstants.length];
+		for (int i = 0; i < eConstants.length; i++) {
+			eNames[i] = eConstants[i].name();
+		}
+		return eNames;
 	}
 
 }
