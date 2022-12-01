@@ -11,7 +11,7 @@
 		<groupId>com.imagingbook</groupId>
 		<!-- <artifactId>imagingbook-calibrate</artifactId> -->
 		<artifactId>imagingbook-public</artifactId>
-		<version>6.0.0</version>
+		<version>6.0.1-SNAPSHOT</version>
 		<relativePath />
 	</parent>
 	
@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>com.imagingbook</groupId>
 			<artifactId>imagingbook-common</artifactId>
-			<version>6.0.0</version>
+			<version>6.0.1-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
