@@ -1,0 +1,9 @@
+module imagingbook.violajones.lib {
+    requires java.desktop;
+    requires java.xml;
+    requires imagingbook.common;
+    requires imagingbook.core;
+
+    exports imagingbook.violajones.DATA;
+    exports imagingbook.violajones.lib;
+}
