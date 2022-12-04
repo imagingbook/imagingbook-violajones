@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import imagingbook.violajones.DATA.HaarTrainingSet;
+import imagingbook.violajones.images.HaarTrainingSet;
 
 public class HaarCascadeDescriptorTest {
 

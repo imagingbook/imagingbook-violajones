@@ -6,7 +6,7 @@
  * Copyright (c) 2006-2022 Wilhelm Burger, Mark J. Burge.
  * All rights reserved. Visit https://imagingbook.com for additional details.
  */
-package imagingbook.violajones.DATA;
+package imagingbook.violajones.images;
 
 import imagingbook.core.resource.NamedResource;
 

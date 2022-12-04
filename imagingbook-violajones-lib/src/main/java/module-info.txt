@@ -4,6 +4,6 @@ module imagingbook.violajones.lib {
     requires imagingbook.common;
     requires imagingbook.core;
 
-    exports imagingbook.violajones.DATA;
+    exports imagingbook.violajones.images;
     exports imagingbook.violajones.lib;
 }
