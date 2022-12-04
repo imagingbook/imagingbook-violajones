@@ -1,4 +1,7 @@
 module imagingbook.violajones.plugins {
+    exports violajones_demos;
+    exports violajones_utils;
+
     requires java.desktop;
     requires imagingbook.common;
     requires imagingbook.violajones.data;
