@@ -22,7 +22,7 @@ import ij.gui.ShapeRoi;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.common.ij.GuiTools;
-import imagingbook.violajones.images.HaarTrainingSet;
+import imagingbook.violajones.data.HaarTrainingSet;
 import imagingbook.violajones.lib.FeatureNode;
 import imagingbook.violajones.lib.FeaturePatch;
 import imagingbook.violajones.lib.FeatureTree;
