@@ -11,7 +11,7 @@ package violajones_demos;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
 import ij.plugin.PlugIn;
-import imagingbook.violajones.DATA.SampleFaceImage;
+import imagingbook.violajones.images.SampleFaceImage;
 
 /**
  * ImageJ plugin. 
@@ -20,7 +20,7 @@ import imagingbook.violajones.DATA.SampleFaceImage;
  */
 public class Open_Sample_Image implements PlugIn {
 	
-	static SampleFaceImage imgChoice = SampleFaceImage.Nobelaureates2007;
+	static SampleFaceImage imgChoice = SampleFaceImage.Nobelaureates2007_jpg;
 	
 	String imgName = null;
 

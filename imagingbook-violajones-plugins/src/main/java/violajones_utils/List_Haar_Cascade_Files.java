@@ -10,7 +10,7 @@ package violajones_utils;
 
 import ij.IJ;
 import ij.plugin.PlugIn;
-import imagingbook.violajones.DATA.HaarTrainingSet;
+import imagingbook.violajones.images.HaarTrainingSet;
 
 /**
  * ImageJ plugin. 
