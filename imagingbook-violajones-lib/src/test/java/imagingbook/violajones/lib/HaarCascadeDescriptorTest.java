@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import imagingbook.violajones.images.HaarTrainingSet;
+import imagingbook.violajones.data.HaarTrainingSet;
 
 public class HaarCascadeDescriptorTest {
 
@@ -16,7 +16,7 @@ public class HaarCascadeDescriptorTest {
 			assertNotNull("could not find resource " + hts, hts.getURL());
 			
 			InputStream strm = hts.getStream();
-			assertNotNull("could not open stream for resource " + hts, hts.getStream());
+			assertNotNull("could not open stream for resource " + hts, strm);
 			
 			HaarCascadeDescriptor hcd = HaarCascadeDescriptor.fromInputStream(strm);
 			assertNotNull("could not create HaarCascadeDescriptor for resource " + hts, hcd);

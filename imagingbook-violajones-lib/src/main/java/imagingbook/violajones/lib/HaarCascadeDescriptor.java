@@ -26,7 +26,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import imagingbook.violajones.images.HaarTrainingSet;
+import imagingbook.violajones.data.HaarTrainingSet;
 
 /**
  * This class represents a trained Haar cascade classifier. Training results were obtained
