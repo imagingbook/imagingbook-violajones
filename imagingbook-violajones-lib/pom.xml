@@ -9,10 +9,10 @@
 
 	<parent>
 		<groupId>com.imagingbook</groupId>
-		<!-- <artifactId>imagingbook-calibrate</artifactId> -->
-		<artifactId>imagingbook-public</artifactId>
+		<artifactId>imagingbook-violajones</artifactId>
 		<version>6.0.1-SNAPSHOT</version>
-		<relativePath />
+		<!--<relativePath>../pom.xml</relativePath>-->
+		<!--<relativePath></relativePath>-->
 	</parent>
 	
 	<properties>
@@ -36,7 +36,8 @@
     	
 	</dependencies>
 
-	<profiles>	<!-- https://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete -->
+	<!-- https://stackoverflow.com/questions/15886209/maven-is-not-working-in-java-8-when-javadoc-tags-are-incomplete -->
+	<!--<profiles>
 	    <profile>
 	        <id>disable-java8-doclint</id>
 	        <activation>
@@ -46,7 +47,7 @@
 	            <additionalparam>-Xdoclint:none</additionalparam>
 	        </properties>
 	    </profile>
-	</profiles>
+	</profiles>-->
 	
 	<build>
 		<plugins>

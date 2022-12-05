@@ -8,29 +8,53 @@
 	<artifactId>imagingbook-violajones</artifactId>
 	<version>6.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>com.imagingbook</groupId>
+		<artifactId>imagingbook-parent-pom</artifactId>  <!-- interesting, this POM inherits from an inner module! -->
+		<version>6.0.1-SNAPSHOT</version>
+		<relativePath />
+		<!--<relativePath>imagingbook-parent-pom/pom.xml</relativePath>-->
+	</parent>
 	
 	<modules>
 		<module>imagingbook-violajones-lib</module>
-		<module>imagingbook-violajones-plugins</module>
 		<module>imagingbook-violajones-data</module>
+		<module>imagingbook-violajones-plugins</module>
 	</modules>
 
 	<properties>
+		<global.version>6.0.1-SNAPSHOT</global.version>
 	</properties>
-	
+
 	<build>
 		<plugins>
 			<!-- do not deploy this artifact -->
-			<plugin>
+			<!--<plugin>
 			  <groupId>org.apache.maven.plugins</groupId>
 			  <artifactId>maven-deploy-plugin</artifactId>
-			  <version>3.0.0-M2</version>
 			  <configuration>
 			    <skip>true</skip>
 			  </configuration>
+			</plugin>-->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<doctitle>Implementation of Zhang's Camera Calibration</doctitle>
+					<header><![CDATA[<br><font face="verdana"><B>]]>${project.artifactId} ${project.version}<![CDATA[</B></font>]]></header>
+					<links>
+						<link>https://javadoc.io/doc/com.imagingbook/imagingbook-common/latest</link>
+						<link>https://javadoc.io/doc/com.imagingbook/imagingbook-core/latest</link>
+						<!--<link>https://javadoc.io/doc/com.imagingbook/imagingbook-common/6.0.0</link>-->
+						<!--<link>https://javadoc.io/doc/net.imagej/ij/1.53v</link>-->
+						<link>${imagej.apilink}</link>
+						<link>${commons-math3.apilink}</link>
+					</links>
+				</configuration>
 			</plugin>
 		</plugins>
-		
 	</build>
 
 </project>
