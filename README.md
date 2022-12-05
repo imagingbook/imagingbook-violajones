@@ -33,6 +33,5 @@ This project consists of two sub-projects (Maven modules):
 
 ### Documentation (JavaDoc) ###
 
-* **[imagingbook-violajones-lib](https://imagingbook.github.io/imagingbook-violajones/imagingbook-violajones-lib/javadoc/index.html?overview-summary.html)**
-* **[imagingbook-violajones-plugins](https://imagingbook.github.io/imagingbook-violajones/imagingbook-violajones-plugins/javadoc/index.html?overview-summary.html)**
+* **[imagingbook-violajones](https://imagingbook.github.io/imagingbook-violajones/imagingbook-violajones/javadoc/index.html)**
 
