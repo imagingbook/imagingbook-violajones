@@ -14,7 +14,7 @@ public class SampleFaceImageTest {
 //			System.out.println(ir.getRelativePath());
 			assertNotNull("could not find URL for resource " + ir, ir.getURL());
 			assertNotNull("could not open stream for resource " + ir, ir.getStream());
-			assertNotNull("could not open image for resource " + ir, ir.getImage());
+			assertNotNull("could not open image for resource " + ir, ir.getImagePlus());
 		}
 	}
 

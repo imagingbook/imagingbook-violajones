@@ -28,7 +28,7 @@ public class Open_Sample_Image implements PlugIn {
 	public void run(String arg) {
 		if (!runDialog()) return;
 		
-		ImagePlus im = imgChoice.getImage();
+		ImagePlus im = imgChoice.getImagePlus();
 		im.show();
 	}
 
