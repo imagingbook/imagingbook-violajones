@@ -1,12 +1,11 @@
 package imagingbook.violajones.lib;
 
-import static org.junit.Assert.assertNotNull;
+import imagingbook.violajones.data.HaarTrainingSet;
+import org.junit.Test;
 
 import java.io.InputStream;
 
-import org.junit.Test;
-
-import imagingbook.violajones.data.HaarTrainingSet;
+import static org.junit.Assert.assertNotNull;
 
 public class HaarCascadeDescriptorTest {
 

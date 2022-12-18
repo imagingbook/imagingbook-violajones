@@ -12,8 +12,8 @@ import java.awt.Rectangle;
 
 /**
  * Merely a rectangle which can check for overlap with another rectangle.
- * @author WB
  *
+ * @author WB
  */
 public class FaceRegion extends Rectangle {
 	private static final long serialVersionUID = 1L;

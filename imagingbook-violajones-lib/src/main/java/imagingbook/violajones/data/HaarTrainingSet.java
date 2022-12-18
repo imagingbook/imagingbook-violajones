@@ -11,12 +11,10 @@ package imagingbook.violajones.data;
 import imagingbook.core.resource.NamedResource;
 
 /**
- * This class gives easy access to the Haar training sets, obtained
- * from OpenCV. The associated XML files are located in relative 
- * resource directory "./xml".
- * 
- * @author WB
+ * This class gives easy access to the Haar training sets, obtained from OpenCV. The associated XML files are located in
+ * relative resource directory "./xml".
  *
+ * @author WB
  */
 public enum HaarTrainingSet implements NamedResource {
 	HaarCascadeEye("haarcascade_eye.xml"),

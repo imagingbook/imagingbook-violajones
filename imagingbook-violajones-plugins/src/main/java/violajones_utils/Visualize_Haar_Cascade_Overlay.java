@@ -8,11 +8,6 @@
  */
 package violajones_utils;
 
-import java.awt.Color;
-import java.awt.geom.Path2D;
-import java.io.InputStream;
-import java.util.List;
-
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -28,6 +23,11 @@ import imagingbook.violajones.lib.FeaturePatch;
 import imagingbook.violajones.lib.FeatureTree;
 import imagingbook.violajones.lib.HaarCascadeDescriptor;
 import imagingbook.violajones.lib.Stage;
+
+import java.awt.Color;
+import java.awt.geom.Path2D;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * ImageJ plugin. Visualizes the evaluation sequence for the selected Haar cascade.

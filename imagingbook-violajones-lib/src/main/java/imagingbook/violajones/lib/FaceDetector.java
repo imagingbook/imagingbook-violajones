@@ -8,23 +8,22 @@
  */
 package imagingbook.violajones.lib;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import ij.process.ByteProcessor;
 import imagingbook.common.image.IntegralImage;
 import imagingbook.common.util.ParameterBundle;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * The core class.
- * TODO: change constructors to use the source image, pre-calculate everything.
- * TODO: use annotations on Parameters fields
  * 
- * @author W. Burger
+ * @author WB
  * @version 2022/04/15
  */
 public class FaceDetector {
-	
+	// TODO: change constructors to use the source image, pre-calculate everything.
+	// TODO: use annotations on Parameters fields
 	/**
 	 * Nested class representing parameters and their default values.
 	 */

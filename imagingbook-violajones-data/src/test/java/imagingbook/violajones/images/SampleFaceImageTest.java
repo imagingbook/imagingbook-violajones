@@ -1,10 +1,9 @@
 package imagingbook.violajones.images;
 
-import static org.junit.Assert.assertNotNull;
-
+import imagingbook.core.resource.ImageResource;
 import org.junit.Test;
 
-import imagingbook.core.resource.ImageResource;
+import static org.junit.Assert.assertNotNull;
 
 public class SampleFaceImageTest {
 

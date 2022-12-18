@@ -12,12 +12,10 @@ import imagingbook.common.image.IntegralImage;
 
 
 /**
- * Represents a Haar feature, usually composed of multiple rectangular
- * patches (of type {@link FeaturePatch}). Instances of this class make
- * the nodes of a {@link FeatureTree}.
- * 
- * @author WB
+ * Represents a Haar feature, usually composed of multiple rectangular patches (of type {@link FeaturePatch}). Instances
+ * of this class make the nodes of a {@link FeatureTree}.
  *
+ * @author WB
  */
 public class FeatureNode {
 	

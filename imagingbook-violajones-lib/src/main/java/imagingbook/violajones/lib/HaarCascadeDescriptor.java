@@ -8,6 +8,16 @@
  */
 package imagingbook.violajones.lib;
 
+import imagingbook.violajones.data.HaarTrainingSet;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,34 +26,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import imagingbook.violajones.data.HaarTrainingSet;
-
 /**
- * This class represents a trained Haar cascade classifier. Training results were obtained
- * from OpenCV's 'opencv_haartraining' application (now obsolete, see 
- * http://docs.opencv.org/doc/user_guide/ug_traincascade.html), available as XML files.
- * Currently only the old-type XML format is supported.
- * 
- * 2018/12/10: Refactored to use javax.xml and org.w3c.dom to eliminate org.jdom2 dependency.
- * 2020/11/23: Adapted to new resource access scheme.
- * 2022/04/15: Resource access scheme again revised.
- * 
- * TODO: Write a reader for the newer format (produced by 'opencv_traincascade').
- * 
+ * This class represents a trained Haar cascade classifier. Training results were obtained from OpenCV's
+ * 'opencv_haartraining' application (now obsolete, see http://docs.opencv.org/doc/user_guide/ug_traincascade.html),
+ * available as XML files. Currently only the old-type XML format is supported.
+ *
  * @author WB
+ * @version 2022/04/15
  */
 public class HaarCascadeDescriptor {
-	
+	// TODO: Write a reader for the newer format (produced by 'opencv_traincascade').
 	public static final String XML_TYPE_ID1 = "opencv-haar-classifier";		// OpenCV "old style"
 	public static final String XML_TYPE_ID2 = "opencv-cascade-classifier";		// OpenCV new style?
 	

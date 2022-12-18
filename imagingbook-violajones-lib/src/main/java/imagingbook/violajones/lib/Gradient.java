@@ -15,13 +15,11 @@ import imagingbook.common.image.IntegralImage;
 
 /**
  * Used to calculate the gradient magnitude inside a given rectangular region.
- * TODO: make more efficient
- * 
- * @author W. Burger
  *
+ * @author W. Burger
  */
 public class Gradient {
-	
+	// TODO: make more efficient
 	protected static IntegralImage makeGradientIntegral(int[][] I, double sigma) {
 		
 		Parameters params = new Parameters();

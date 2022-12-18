@@ -8,15 +8,14 @@
  */
 package imagingbook.violajones.lib;
 
+import imagingbook.common.image.IntegralImage;
+
 import java.util.LinkedList;
 import java.util.List;
 
-import imagingbook.common.image.IntegralImage;
-
 /**
- * A single stage of the cascade. Each stage consists of several trees and a
- * threshold. When using the detector on a window, each tree returns a value. If
- * the sum of these values exceeds the threshold, the stage succeeds, else it
+ * A single stage of the cascade. Each stage consists of several trees and a threshold. When using the detector on a
+ * window, each tree returns a value. If the sum of these values exceeds the threshold, the stage succeeds, else it
  * fails (and the window is not the object looked for).
  */
 public class Stage {

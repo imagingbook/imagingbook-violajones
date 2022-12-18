@@ -8,9 +8,6 @@
  */
 package violajones_demos;
 
-import java.awt.Color;
-import java.util.List;
-
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
@@ -24,6 +21,9 @@ import imagingbook.violajones.lib.FaceDetector;
 import imagingbook.violajones.lib.FaceDetector.Parameters;
 import imagingbook.violajones.lib.FaceRegion;
 import imagingbook.violajones.lib.HaarCascadeDescriptor;
+
+import java.awt.Color;
+import java.util.List;
 
 
 /**
