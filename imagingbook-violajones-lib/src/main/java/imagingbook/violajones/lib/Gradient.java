@@ -20,7 +20,7 @@ import imagingbook.common.image.IntegralImage;
  */
 public class Gradient {
 	// TODO: make more efficient
-	protected static IntegralImage makeGradientIntegral(int[][] I, double sigma) {
+	static IntegralImage makeGradientIntegral(int[][] I, double sigma) {
 		
 		Parameters params = new Parameters();
 		params.gSigma = sigma;

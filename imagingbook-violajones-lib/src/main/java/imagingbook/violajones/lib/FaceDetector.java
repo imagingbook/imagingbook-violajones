@@ -27,7 +27,7 @@ public class FaceDetector {
 	/**
 	 * Nested class representing parameters and their default values.
 	 */
-	public static class Parameters implements ParameterBundle {
+	public static class Parameters implements ParameterBundle<FaceDetector> {
 		/** The initial ratio between the window size and the Haar classifier size (default 2). */
 		public double baseScale = 2.00;
 		
@@ -150,21 +150,19 @@ public class FaceDetector {
 		return merge(facelist.toArray(new FaceRegion[0]),
 				params.minNeighbors, params.minMergeRegionOverlap);
 	}
-		
+
 	/**
-	 * Merge the raw detections resulting from the detection step to avoid
-	 * multiple detections of the same object. A threshold on the minimum
-	 * numbers of rectangles that need to be merged for the resulting detection
-	 * to be kept can be given, to lower the rate of false detections. Two
-	 * rectangles need to be merged if they overlap enough.
-	 * TODO: CHECK!! Make rectangles immutable!
-	 * 
+	 * Merge the raw detections resulting from the detection step to avoid multiple detections of the same object. A
+	 * threshold on the minimum numbers of rectangles that need to be merged for the resulting detection to be kept can
+	 * be given, to lower the rate of false detections. Two rectangles need to be merged if they overlap enough.
+	 *
 	 * @param facesInit the raw detections returned by the detection algorithm
 	 * @param min_neighbors the minimum number of rectangles needed for the corresponding detection to be kept
 	 * @param minOverlap the minimum overlap required for merging two faces
 	 * @return The merged rectangular detections.
 	 */
-	protected List<FaceRegion> merge(FaceRegion[] facesInit, int min_neighbors, double minOverlap) {
+	List<FaceRegion> merge(FaceRegion[] facesInit, int min_neighbors, double minOverlap) {
+		// TODO: CHECK!! Make rectangles immutable!
 		List<FaceRegion> facesMerged = new LinkedList<FaceRegion>();
 		int[] result = new int[facesInit.length];
 		int nb_classes = 0;

@@ -10,7 +10,6 @@ package imagingbook.violajones.lib;
 
 import imagingbook.common.image.IntegralImage;
 
-
 /**
  * Represents a Haar feature, usually composed of multiple rectangular patches (of type {@link FeaturePatch}). Instances
  * of this class make the nodes of a {@link FeatureTree}.
@@ -18,11 +17,11 @@ import imagingbook.common.image.IntegralImage;
  * @author WB
  */
 public class FeatureNode {
-	
-	protected static final double NO_VALUE = Double.NaN;
-	protected static final int NO_CHILD = -1;
-	protected static final int LEFT = 0;
-	protected static final int RIGHT = 1;
+
+	static final double NO_VALUE = Double.NaN;
+	static final int NO_CHILD = -1;
+	static final int LEFT = 0;
+	static final int RIGHT = 1;
 
 	private final int width, height;
 	private final double threshold;
@@ -31,7 +30,7 @@ public class FeatureNode {
 	private final FeaturePatch[] patches;
 
 
-	public FeatureNode(int width, int height, double threshold, double valL, int childL, double valR, int childR,
+	FeatureNode(int width, int height, double threshold, double valL, int childL, double valR, int childR,
 			FeaturePatch[] patches) {
 		this.width = width;
 		this.height = height;

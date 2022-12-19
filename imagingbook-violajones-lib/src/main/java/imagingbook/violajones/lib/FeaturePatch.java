@@ -18,12 +18,12 @@ public class FeaturePatch extends Rectangle {
 	
 	public final double weight;
 
-	public FeaturePatch(int x, int y, int w, int h, double weight) {
+	FeaturePatch(int x, int y, int w, int h, double weight) {
 		super(x, y, w, h);
 		this.weight = weight;
 	}
 
-	public static FeaturePatch fromString(String text) {
+	static FeaturePatch fromString(String text) {
 		String[] tab = text.split(" ");
 		FeaturePatch fp = null;
 		try {
@@ -38,7 +38,8 @@ public class FeaturePatch extends Rectangle {
 		}
 		return fp;
 	}
-	
+
+	@Override
 	public String toString() {
 		return String.format("x=%d y=%d w=%d h=%d weight=%.2f", 
 				this.x, this.y, this.width, this.height, this.weight);

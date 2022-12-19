@@ -20,7 +20,7 @@ public class FeatureTree {
 	//private final List<FeatureNode> nodes;
 	private final FeatureNode[] nodes;
 
-	protected FeatureTree(FeatureNode[] nodes) {
+	FeatureTree(FeatureNode[] nodes) {
 		this.nodes = nodes;
 	}
 	
@@ -29,7 +29,7 @@ public class FeatureTree {
 	}
 	
 	// evaluate the feature tree
-	protected double eval(IntegralImage II, int u, int v, double scale) {
+	double eval(IntegralImage II, int u, int v, double scale) {
 		FeatureNode feature = nodes[0]; // start at root of this tree
 		while (true) {
 			// evaluate the current feature node to decide where to proceed:

@@ -18,12 +18,12 @@ import java.awt.Rectangle;
 public class FaceRegion extends Rectangle {
 	private static final long serialVersionUID = 1L;
 
-	public FaceRegion(int x, int y, int w, int h) {
+	FaceRegion(int x, int y, int w, int h) {
 		super(x, y, w, h);
 	}
 	
 	// TODO: check!!
-	public boolean overlaps(Rectangle r2, double sizeFac) {
+	boolean overlaps(Rectangle r2, double sizeFac) {
 		final double sizeFac1 = 1 + sizeFac;
 		int distance = (int) (this.width * sizeFac);
 		if (r2.x <= this.x + distance && r2.x >= this.x - distance
