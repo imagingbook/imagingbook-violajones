@@ -11,75 +11,72 @@
 <body class="source-page">
 <main role="main">
 <div class="source-container">
-<pre><span class="source-line-no">001</span><span id="line-1">/*</span>
-<span class="source-line-no">002</span><span id="line-2"> *  This software is provided as a supplement to the authors' textbooks on digital</span>
-<span class="source-line-no">003</span><span id="line-3"> * image processing published by Springer-Verlag in various languages and editions.</span>
-<span class="source-line-no">004</span><span id="line-4"> * Permission to use and distribute this software is granted under the BSD 2-Clause</span>
-<span class="source-line-no">005</span><span id="line-5"> * "Simplified" License (see http://opensource.org/licenses/BSD-2-Clause).</span>
-<span class="source-line-no">006</span><span id="line-6"> * Copyright (c) 2006-2022 Wilhelm Burger, Mark J. Burge.</span>
-<span class="source-line-no">007</span><span id="line-7"> * All rights reserved. Visit https://imagingbook.com for additional details.</span>
-<span class="source-line-no">008</span><span id="line-8"> */</span>
-<span class="source-line-no">009</span><span id="line-9">package imagingbook.violajones.lib;</span>
+<pre><span class="source-line-no">001</span><span id="line-1">/*******************************************************************************</span>
+<span class="source-line-no">002</span><span id="line-2"> * Permission to use and distribute this software is granted under the BSD 2-Clause</span>
+<span class="source-line-no">003</span><span id="line-3"> * "Simplified" License (see http://opensource.org/licenses/BSD-2-Clause).</span>
+<span class="source-line-no">004</span><span id="line-4"> * Copyright (c) 2016-2023 Wilhelm Burger. All rights reserved.</span>
+<span class="source-line-no">005</span><span id="line-5"> * Visit https://imagingbook.com for additional details.</span>
+<span class="source-line-no">006</span><span id="line-6"> ******************************************************************************/</span>
+<span class="source-line-no">007</span><span id="line-7">package imagingbook.violajones.lib;</span>
+<span class="source-line-no">008</span><span id="line-8"></span>
+<span class="source-line-no">009</span><span id="line-9">import imagingbook.common.image.IntegralImage;</span>
 <span class="source-line-no">010</span><span id="line-10"></span>
 <span class="source-line-no">011</span><span id="line-11">import java.util.LinkedList;</span>
 <span class="source-line-no">012</span><span id="line-12">import java.util.List;</span>
 <span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">import imagingbook.common.image.IntegralImage;</span>
-<span class="source-line-no">015</span><span id="line-15"></span>
-<span class="source-line-no">016</span><span id="line-16">/**</span>
-<span class="source-line-no">017</span><span id="line-17"> * A single stage of the cascade. Each stage consists of several trees and a</span>
-<span class="source-line-no">018</span><span id="line-18"> * threshold. When using the detector on a window, each tree returns a value. If</span>
-<span class="source-line-no">019</span><span id="line-19"> * the sum of these values exceeds the threshold, the stage succeeds, else it</span>
-<span class="source-line-no">020</span><span id="line-20"> * fails (and the window is not the object looked for).</span>
-<span class="source-line-no">021</span><span id="line-21"> */</span>
-<span class="source-line-no">022</span><span id="line-22">public class Stage {</span>
-<span class="source-line-no">023</span><span id="line-23">        </span>
-<span class="source-line-no">024</span><span id="line-24">        private final double threshold;</span>
-<span class="source-line-no">025</span><span id="line-25">        private final List&lt;FeatureTree&gt; trees;</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">        public Stage(double threshold) {</span>
-<span class="source-line-no">028</span><span id="line-28">                this.threshold = threshold;</span>
-<span class="source-line-no">029</span><span id="line-29">                trees = new LinkedList&lt;FeatureTree&gt;();</span>
-<span class="source-line-no">030</span><span id="line-30">        }</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">        public void addTree(FeatureTree t) {</span>
-<span class="source-line-no">033</span><span id="line-33">                trees.add(t);</span>
-<span class="source-line-no">034</span><span id="line-34">        }</span>
-<span class="source-line-no">035</span><span id="line-35">        </span>
-<span class="source-line-no">036</span><span id="line-36">        public List&lt;FeatureTree&gt; getTrees() {</span>
-<span class="source-line-no">037</span><span id="line-37">                return trees;</span>
-<span class="source-line-no">038</span><span id="line-38">        }</span>
-<span class="source-line-no">039</span><span id="line-39">        </span>
-<span class="source-line-no">040</span><span id="line-40">        public double getThreshold() {</span>
-<span class="source-line-no">041</span><span id="line-41">                return threshold;</span>
-<span class="source-line-no">042</span><span id="line-42">        }</span>
-<span class="source-line-no">043</span><span id="line-43">        </span>
-<span class="source-line-no">044</span><span id="line-44">        // Sum up the values returned by each tree of this stage.</span>
-<span class="source-line-no">045</span><span id="line-45">        protected double sum(IntegralImage II, int u, int v, double scale) {</span>
-<span class="source-line-no">046</span><span id="line-46">                double sum = 0;</span>
-<span class="source-line-no">047</span><span id="line-47">                for (FeatureTree tree : trees) {</span>
-<span class="source-line-no">048</span><span id="line-48">                        sum = sum + tree.eval(II, u, v, scale);</span>
-<span class="source-line-no">049</span><span id="line-49">                }</span>
-<span class="source-line-no">050</span><span id="line-50">                return sum;</span>
-<span class="source-line-no">051</span><span id="line-51">        }</span>
-<span class="source-line-no">052</span><span id="line-52">        </span>
-<span class="source-line-no">053</span><span id="line-53">        // Stage succeeds only if the sum exceeds the stage threshold.</span>
-<span class="source-line-no">054</span><span id="line-54">        protected boolean pass(IntegralImage II, int u, int v, double scale) {</span>
-<span class="source-line-no">055</span><span id="line-55">                return sum(II, u, v, scale) &gt; threshold;</span>
-<span class="source-line-no">056</span><span id="line-56">        }</span>
-<span class="source-line-no">057</span><span id="line-57">        </span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">        public void print() {</span>
-<span class="source-line-no">060</span><span id="line-60">                System.out.format("   threshold = %.4f\n", threshold);</span>
-<span class="source-line-no">061</span><span id="line-61">                int treeCnt = 0;</span>
-<span class="source-line-no">062</span><span id="line-62">                for (FeatureTree tree : trees) {</span>
-<span class="source-line-no">063</span><span id="line-63">                        System.out.format("   tree = %d\n", treeCnt);</span>
-<span class="source-line-no">064</span><span id="line-64">                        tree.print();</span>
-<span class="source-line-no">065</span><span id="line-65">                        treeCnt++;</span>
-<span class="source-line-no">066</span><span id="line-66">                }</span>
-<span class="source-line-no">067</span><span id="line-67">        }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">}</span>
+<span class="source-line-no">014</span><span id="line-14">/**</span>
+<span class="source-line-no">015</span><span id="line-15"> * A single stage of the cascade. Each stage consists of several trees and a threshold. When using the detector on a</span>
+<span class="source-line-no">016</span><span id="line-16"> * window, each tree returns a value. If the sum of these values exceeds the threshold, the stage succeeds, else it</span>
+<span class="source-line-no">017</span><span id="line-17"> * fails (and the window is not the object looked for).</span>
+<span class="source-line-no">018</span><span id="line-18"> */</span>
+<span class="source-line-no">019</span><span id="line-19">public class Stage {</span>
+<span class="source-line-no">020</span><span id="line-20">        </span>
+<span class="source-line-no">021</span><span id="line-21">        private final double threshold;</span>
+<span class="source-line-no">022</span><span id="line-22">        private final List&lt;FeatureTree&gt; trees;</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24">        public Stage(double threshold) {</span>
+<span class="source-line-no">025</span><span id="line-25">                this.threshold = threshold;</span>
+<span class="source-line-no">026</span><span id="line-26">                trees = new LinkedList&lt;FeatureTree&gt;();</span>
+<span class="source-line-no">027</span><span id="line-27">        }</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">        public void addTree(FeatureTree t) {</span>
+<span class="source-line-no">030</span><span id="line-30">                trees.add(t);</span>
+<span class="source-line-no">031</span><span id="line-31">        }</span>
+<span class="source-line-no">032</span><span id="line-32">        </span>
+<span class="source-line-no">033</span><span id="line-33">        public List&lt;FeatureTree&gt; getTrees() {</span>
+<span class="source-line-no">034</span><span id="line-34">                return trees;</span>
+<span class="source-line-no">035</span><span id="line-35">        }</span>
+<span class="source-line-no">036</span><span id="line-36">        </span>
+<span class="source-line-no">037</span><span id="line-37">        public double getThreshold() {</span>
+<span class="source-line-no">038</span><span id="line-38">                return threshold;</span>
+<span class="source-line-no">039</span><span id="line-39">        }</span>
+<span class="source-line-no">040</span><span id="line-40">        </span>
+<span class="source-line-no">041</span><span id="line-41">        // Sum up the values returned by each tree of this stage.</span>
+<span class="source-line-no">042</span><span id="line-42">        protected double sum(IntegralImage II, int u, int v, double scale) {</span>
+<span class="source-line-no">043</span><span id="line-43">                double sum = 0;</span>
+<span class="source-line-no">044</span><span id="line-44">                for (FeatureTree tree : trees) {</span>
+<span class="source-line-no">045</span><span id="line-45">                        sum = sum + tree.eval(II, u, v, scale);</span>
+<span class="source-line-no">046</span><span id="line-46">                }</span>
+<span class="source-line-no">047</span><span id="line-47">                return sum;</span>
+<span class="source-line-no">048</span><span id="line-48">        }</span>
+<span class="source-line-no">049</span><span id="line-49">        </span>
+<span class="source-line-no">050</span><span id="line-50">        // Stage succeeds only if the sum exceeds the stage threshold.</span>
+<span class="source-line-no">051</span><span id="line-51">        protected boolean pass(IntegralImage II, int u, int v, double scale) {</span>
+<span class="source-line-no">052</span><span id="line-52">                return sum(II, u, v, scale) &gt; threshold;</span>
+<span class="source-line-no">053</span><span id="line-53">        }</span>
+<span class="source-line-no">054</span><span id="line-54">        </span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">        public void print() {</span>
+<span class="source-line-no">057</span><span id="line-57">                System.out.format("   threshold = %.4f\n", threshold);</span>
+<span class="source-line-no">058</span><span id="line-58">                int treeCnt = 0;</span>
+<span class="source-line-no">059</span><span id="line-59">                for (FeatureTree tree : trees) {</span>
+<span class="source-line-no">060</span><span id="line-60">                        System.out.format("   tree = %d\n", treeCnt);</span>
+<span class="source-line-no">061</span><span id="line-61">                        tree.print();</span>
+<span class="source-line-no">062</span><span id="line-62">                        treeCnt++;</span>
+<span class="source-line-no">063</span><span id="line-63">                }</span>
+<span class="source-line-no">064</span><span id="line-64">        }</span>
+<span class="source-line-no">065</span><span id="line-65"></span>
+<span class="source-line-no">066</span><span id="line-66">}</span>
 
 
 

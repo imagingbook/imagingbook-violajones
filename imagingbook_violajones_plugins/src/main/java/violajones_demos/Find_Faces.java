@@ -1,11 +1,9 @@
-/*
- *  This software is provided as a supplement to the authors' textbooks on digital
- * image processing published by Springer-Verlag in various languages and editions.
+/*******************************************************************************
  * Permission to use and distribute this software is granted under the BSD 2-Clause
  * "Simplified" License (see http://opensource.org/licenses/BSD-2-Clause).
- * Copyright (c) 2006-2022 Wilhelm Burger, Mark J. Burge.
- * All rights reserved. Visit https://imagingbook.com for additional details.
- */
+ * Copyright (c) 2016-2023 Wilhelm Burger. All rights reserved.
+ * Visit https://imagingbook.com for additional details.
+ ******************************************************************************/
 package violajones_demos;
 
 import ij.IJ;
@@ -16,6 +14,7 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.common.ij.IjUtils;
 import imagingbook.common.math.PrintPrecision;
+import imagingbook.core.plugin.JavaDocHelp;
 import imagingbook.violajones.data.HaarTrainingSet;
 import imagingbook.violajones.lib.FaceDetector;
 import imagingbook.violajones.lib.FaceDetector.Parameters;
@@ -27,15 +26,14 @@ import java.util.List;
 
 
 /**
- * ImageJ plugin. Face detection ImageJ plugin using 'imagingbook.violajones' implementation
- * of the Viola-Jones face detection algorithm: Paul Viola and Michael Jones, 
- * "Robust Real-time Face Detection", International Journal of Computer Vision 
- * 57.2 (2004), pp. 137–154.
- * 
+ * ImageJ plugin. Face detection ImageJ plugin using 'imagingbook.violajones' implementation of the Viola-Jones face
+ * detection algorithm: Paul Viola and Michael Jones, "Robust Real-time Face Detection", International Journal of
+ * Computer Vision 57.2 (2004), pp. 137–154.
+ *
  * @author W. Burger
  * @version 2018/12/09
  */
-public class Find_Faces implements PlugInFilter {
+public class Find_Faces implements PlugInFilter, JavaDocHelp {
 	
 	static {
 		LogStream.redirectSystem();
@@ -97,6 +95,7 @@ public class Find_Faces implements PlugInFilter {
 	
 	private boolean runDialog(Parameters params) {
 		GenericDialog gd = new GenericDialog("Set Face Detector Parameters");
+		gd.addHelp(getJavaDocUrl());
 		gd.addChoice("Haar training set", getEnumNames(HaarTrainingSet.class), trainingSet.name());
 		gd.addNumericField("baseScale", params.baseScale, 2);
 		gd.addNumericField("scaleStep", params.scaleStep, 2);

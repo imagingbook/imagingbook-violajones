@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"imagingbook.violajones.data"},{"l":"imagingbook.violajones.lib"},{"l":"imagingbook.violajones.plugins"}];updateSearchResults();
+moduleSearchIndex = [{"l":"imagingbook_violajones_plugins"},{"l":"imagingbook.violajones.data"},{"l":"imagingbook.violajones.lib"}];updateSearchResults();

@@ -20,7 +20,7 @@
 	<modules>
 		<module>imagingbook-violajones-lib</module>
 		<module>imagingbook-violajones-data</module>
-		<module>imagingbook-violajones-plugins</module>
+		<module>imagingbook_violajones_plugins</module>
 	</modules>
 
 	<developers>

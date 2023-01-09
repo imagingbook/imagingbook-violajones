@@ -11,160 +11,155 @@
 <body class="source-page">
 <main role="main">
 <div class="source-container">
-<pre><span class="source-line-no">001</span><span id="line-1">/*</span>
-<span class="source-line-no">002</span><span id="line-2"> *  This software is provided as a supplement to the authors' textbooks on digital</span>
-<span class="source-line-no">003</span><span id="line-3"> * image processing published by Springer-Verlag in various languages and editions.</span>
-<span class="source-line-no">004</span><span id="line-4"> * Permission to use and distribute this software is granted under the BSD 2-Clause</span>
-<span class="source-line-no">005</span><span id="line-5"> * "Simplified" License (see http://opensource.org/licenses/BSD-2-Clause).</span>
-<span class="source-line-no">006</span><span id="line-6"> * Copyright (c) 2006-2022 Wilhelm Burger, Mark J. Burge.</span>
-<span class="source-line-no">007</span><span id="line-7"> * All rights reserved. Visit https://imagingbook.com for additional details.</span>
-<span class="source-line-no">008</span><span id="line-8"> */</span>
-<span class="source-line-no">009</span><span id="line-9">package violajones_utils;</span>
-<span class="source-line-no">010</span><span id="line-10"></span>
-<span class="source-line-no">011</span><span id="line-11">import java.awt.Color;</span>
-<span class="source-line-no">012</span><span id="line-12">import java.awt.geom.Path2D;</span>
-<span class="source-line-no">013</span><span id="line-13">import java.io.InputStream;</span>
-<span class="source-line-no">014</span><span id="line-14">import java.util.List;</span>
-<span class="source-line-no">015</span><span id="line-15"></span>
-<span class="source-line-no">016</span><span id="line-16">import ij.IJ;</span>
-<span class="source-line-no">017</span><span id="line-17">import ij.ImagePlus;</span>
-<span class="source-line-no">018</span><span id="line-18">import ij.ImageStack;</span>
-<span class="source-line-no">019</span><span id="line-19">import ij.gui.Overlay;</span>
-<span class="source-line-no">020</span><span id="line-20">import ij.gui.Roi;</span>
-<span class="source-line-no">021</span><span id="line-21">import ij.gui.ShapeRoi;</span>
-<span class="source-line-no">022</span><span id="line-22">import ij.plugin.filter.PlugInFilter;</span>
-<span class="source-line-no">023</span><span id="line-23">import ij.process.ImageProcessor;</span>
-<span class="source-line-no">024</span><span id="line-24">import imagingbook.common.ij.GuiTools;</span>
-<span class="source-line-no">025</span><span id="line-25">import imagingbook.violajones.data.HaarTrainingSet;</span>
-<span class="source-line-no">026</span><span id="line-26">import imagingbook.violajones.lib.FeatureNode;</span>
-<span class="source-line-no">027</span><span id="line-27">import imagingbook.violajones.lib.FeaturePatch;</span>
-<span class="source-line-no">028</span><span id="line-28">import imagingbook.violajones.lib.FeatureTree;</span>
-<span class="source-line-no">029</span><span id="line-29">import imagingbook.violajones.lib.HaarCascadeDescriptor;</span>
-<span class="source-line-no">030</span><span id="line-30">import imagingbook.violajones.lib.Stage;</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">/**</span>
-<span class="source-line-no">033</span><span id="line-33"> * ImageJ plugin. Visualizes the evaluation sequence for the selected Haar cascade.</span>
-<span class="source-line-no">034</span><span id="line-34"> * The current image is scaled to the size of the cascade (typ. 32x32)</span>
-<span class="source-line-no">035</span><span id="line-35"> * and shown in the background. </span>
-<span class="source-line-no">036</span><span id="line-36"> * The result is an image stack, with one slice for classifier</span>
-<span class="source-line-no">037</span><span id="line-37"> * each decision step.</span>
-<span class="source-line-no">038</span><span id="line-38"> * </span>
-<span class="source-line-no">039</span><span id="line-39"> * Feature support regions are shown as vector overlays.</span>
-<span class="source-line-no">040</span><span id="line-40"> * </span>
-<span class="source-line-no">041</span><span id="line-41"> * @author WB</span>
-<span class="source-line-no">042</span><span id="line-42"> *</span>
-<span class="source-line-no">043</span><span id="line-43"> */</span>
-<span class="source-line-no">044</span><span id="line-44">public class Visualize_Haar_Cascade_Overlay implements PlugInFilter {</span>
-<span class="source-line-no">045</span><span id="line-45">        </span>
-<span class="source-line-no">046</span><span id="line-46">        static HaarTrainingSet desc = HaarTrainingSet.FrontalFaceAlt2;</span>
-<span class="source-line-no">047</span><span id="line-47"></span>
-<span class="source-line-no">048</span><span id="line-48">        public int setup(String arg0, ImagePlus im) {</span>
-<span class="source-line-no">049</span><span id="line-49">                return DOES_ALL + NO_CHANGES;</span>
-<span class="source-line-no">050</span><span id="line-50">        }</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">        public void run(ImageProcessor ip) {</span>
-<span class="source-line-no">053</span><span id="line-53">        </span>
-<span class="source-line-no">054</span><span id="line-54">                InputStream strm = desc.getStream();</span>
-<span class="source-line-no">055</span><span id="line-55">                if (strm == null) {</span>
-<span class="source-line-no">056</span><span id="line-56">                        IJ.log("could not open training set");</span>
-<span class="source-line-no">057</span><span id="line-57">                        return;</span>
-<span class="source-line-no">058</span><span id="line-58">                }</span>
-<span class="source-line-no">059</span><span id="line-59">                </span>
-<span class="source-line-no">060</span><span id="line-60">                HaarCascadeDescriptor cascade = HaarCascadeDescriptor.fromInputStream(strm);</span>
-<span class="source-line-no">061</span><span id="line-61">                int w = cascade.getWidth();</span>
-<span class="source-line-no">062</span><span id="line-62">                int h = cascade.getHeight();</span>
-<span class="source-line-no">063</span><span id="line-63">                </span>
-<span class="source-line-no">064</span><span id="line-64">                List&lt;Stage&gt; stages = cascade.getStages();</span>
-<span class="source-line-no">065</span><span id="line-65">                </span>
-<span class="source-line-no">066</span><span id="line-66">                // create and populate the stack</span>
-<span class="source-line-no">067</span><span id="line-67">                ImageStack stack = new ImageStack(w, h);</span>
-<span class="source-line-no">068</span><span id="line-68">                ImageProcessor sp1 = ip.resize(w, h);</span>
-<span class="source-line-no">069</span><span id="line-69">                </span>
-<span class="source-line-no">070</span><span id="line-70">                int stageCtr = 0;</span>
-<span class="source-line-no">071</span><span id="line-71">                for (Stage stage : stages) {</span>
-<span class="source-line-no">072</span><span id="line-72">                        int treeCtr = 0;</span>
-<span class="source-line-no">073</span><span id="line-73">                        for (FeatureTree tree : stage.getTrees()) {</span>
-<span class="source-line-no">074</span><span id="line-74">                                int featureCtr = 0;</span>
-<span class="source-line-no">075</span><span id="line-75">                                for (@SuppressWarnings("unused") </span>
-<span class="source-line-no">076</span><span id="line-76">                                                FeatureNode feature : tree.getFeatures()) {</span>
-<span class="source-line-no">077</span><span id="line-77">                                        ImageProcessor sp = sp1; // duplicate needed?</span>
-<span class="source-line-no">078</span><span id="line-78">                                        stack.addSlice("Stage=" + stageCtr + " Tree=" + treeCtr + " Feat=" + featureCtr, sp);</span>
-<span class="source-line-no">079</span><span id="line-79">                                        featureCtr++;</span>
-<span class="source-line-no">080</span><span id="line-80">                                }</span>
-<span class="source-line-no">081</span><span id="line-81">                                treeCtr++;</span>
-<span class="source-line-no">082</span><span id="line-82">                        }</span>
-<span class="source-line-no">083</span><span id="line-83">                        stageCtr++;</span>
-<span class="source-line-no">084</span><span id="line-84">                }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">                // add overlay graphics</span>
-<span class="source-line-no">087</span><span id="line-87">                Overlay oly = new Overlay();</span>
-<span class="source-line-no">088</span><span id="line-88">                int sliceNo = 1;</span>
-<span class="source-line-no">089</span><span id="line-89">                for (Stage stage : stages) {</span>
-<span class="source-line-no">090</span><span id="line-90">                        for (FeatureTree tree : stage.getTrees()) {</span>
-<span class="source-line-no">091</span><span id="line-91">                                for (FeatureNode feature : tree.getFeatures()) {</span>
-<span class="source-line-no">092</span><span id="line-92">                                        for (FeaturePatch r : feature.getPatches()) {</span>
-<span class="source-line-no">093</span><span id="line-93">                                                Color col = (r.weight &gt; 0) ? Color.green : Color.red;</span>
-<span class="source-line-no">094</span><span id="line-94">                                                Roi box = makeBoxRoi(r.x, r.y, r.width, r.height, col);</span>
-<span class="source-line-no">095</span><span id="line-95">                                                box.setPosition(sliceNo);</span>
-<span class="source-line-no">096</span><span id="line-96">                                                oly.add(box);</span>
-<span class="source-line-no">097</span><span id="line-97">                                        }</span>
-<span class="source-line-no">098</span><span id="line-98">                                        sliceNo++;</span>
-<span class="source-line-no">099</span><span id="line-99">                                }</span>
-<span class="source-line-no">100</span><span id="line-100">                        }</span>
-<span class="source-line-no">101</span><span id="line-101">                }</span>
+<pre><span class="source-line-no">001</span><span id="line-1">/*******************************************************************************</span>
+<span class="source-line-no">002</span><span id="line-2"> * Permission to use and distribute this software is granted under the BSD 2-Clause</span>
+<span class="source-line-no">003</span><span id="line-3"> * "Simplified" License (see http://opensource.org/licenses/BSD-2-Clause).</span>
+<span class="source-line-no">004</span><span id="line-4"> * Copyright (c) 2016-2023 Wilhelm Burger. All rights reserved.</span>
+<span class="source-line-no">005</span><span id="line-5"> * Visit https://imagingbook.com for additional details.</span>
+<span class="source-line-no">006</span><span id="line-6"> ******************************************************************************/</span>
+<span class="source-line-no">007</span><span id="line-7">package violajones_utils;</span>
+<span class="source-line-no">008</span><span id="line-8"></span>
+<span class="source-line-no">009</span><span id="line-9">import ij.IJ;</span>
+<span class="source-line-no">010</span><span id="line-10">import ij.ImagePlus;</span>
+<span class="source-line-no">011</span><span id="line-11">import ij.ImageStack;</span>
+<span class="source-line-no">012</span><span id="line-12">import ij.gui.Overlay;</span>
+<span class="source-line-no">013</span><span id="line-13">import ij.gui.Roi;</span>
+<span class="source-line-no">014</span><span id="line-14">import ij.gui.ShapeRoi;</span>
+<span class="source-line-no">015</span><span id="line-15">import ij.plugin.filter.PlugInFilter;</span>
+<span class="source-line-no">016</span><span id="line-16">import ij.process.ImageProcessor;</span>
+<span class="source-line-no">017</span><span id="line-17">import imagingbook.common.ij.GuiTools;</span>
+<span class="source-line-no">018</span><span id="line-18">import imagingbook.core.plugin.JavaDocHelp;</span>
+<span class="source-line-no">019</span><span id="line-19">import imagingbook.violajones.data.HaarTrainingSet;</span>
+<span class="source-line-no">020</span><span id="line-20">import imagingbook.violajones.lib.FeatureNode;</span>
+<span class="source-line-no">021</span><span id="line-21">import imagingbook.violajones.lib.FeaturePatch;</span>
+<span class="source-line-no">022</span><span id="line-22">import imagingbook.violajones.lib.FeatureTree;</span>
+<span class="source-line-no">023</span><span id="line-23">import imagingbook.violajones.lib.HaarCascadeDescriptor;</span>
+<span class="source-line-no">024</span><span id="line-24">import imagingbook.violajones.lib.Stage;</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26">import java.awt.Color;</span>
+<span class="source-line-no">027</span><span id="line-27">import java.awt.geom.Path2D;</span>
+<span class="source-line-no">028</span><span id="line-28">import java.io.InputStream;</span>
+<span class="source-line-no">029</span><span id="line-29">import java.util.List;</span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">/**</span>
+<span class="source-line-no">032</span><span id="line-32"> * ImageJ plugin. Visualizes the evaluation sequence for the selected Haar cascade. The current image is scaled to the</span>
+<span class="source-line-no">033</span><span id="line-33"> * size of the cascade (typ. 32x32) and shown in the background. The result is an image stack, with one slice for</span>
+<span class="source-line-no">034</span><span id="line-34"> * classifier each decision step.</span>
+<span class="source-line-no">035</span><span id="line-35"> * Feature support regions are shown as vector overlays.</span>
+<span class="source-line-no">036</span><span id="line-36"> *</span>
+<span class="source-line-no">037</span><span id="line-37"> * @author WB</span>
+<span class="source-line-no">038</span><span id="line-38"> */</span>
+<span class="source-line-no">039</span><span id="line-39">public class Visualize_Haar_Cascade_Overlay implements PlugInFilter, JavaDocHelp {</span>
+<span class="source-line-no">040</span><span id="line-40">        </span>
+<span class="source-line-no">041</span><span id="line-41">        static HaarTrainingSet desc = HaarTrainingSet.FrontalFaceAlt2;</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">        public int setup(String arg0, ImagePlus im) {</span>
+<span class="source-line-no">044</span><span id="line-44">                return DOES_ALL + NO_CHANGES;</span>
+<span class="source-line-no">045</span><span id="line-45">        }</span>
+<span class="source-line-no">046</span><span id="line-46"></span>
+<span class="source-line-no">047</span><span id="line-47">        public void run(ImageProcessor ip) {</span>
+<span class="source-line-no">048</span><span id="line-48">        </span>
+<span class="source-line-no">049</span><span id="line-49">                InputStream strm = desc.getStream();</span>
+<span class="source-line-no">050</span><span id="line-50">                if (strm == null) {</span>
+<span class="source-line-no">051</span><span id="line-51">                        IJ.log("could not open training set");</span>
+<span class="source-line-no">052</span><span id="line-52">                        return;</span>
+<span class="source-line-no">053</span><span id="line-53">                }</span>
+<span class="source-line-no">054</span><span id="line-54">                </span>
+<span class="source-line-no">055</span><span id="line-55">                HaarCascadeDescriptor cascade = HaarCascadeDescriptor.fromInputStream(strm);</span>
+<span class="source-line-no">056</span><span id="line-56">                int w = cascade.getWidth();</span>
+<span class="source-line-no">057</span><span id="line-57">                int h = cascade.getHeight();</span>
+<span class="source-line-no">058</span><span id="line-58">                </span>
+<span class="source-line-no">059</span><span id="line-59">                List&lt;Stage&gt; stages = cascade.getStages();</span>
+<span class="source-line-no">060</span><span id="line-60">                </span>
+<span class="source-line-no">061</span><span id="line-61">                // create and populate the stack</span>
+<span class="source-line-no">062</span><span id="line-62">                ImageStack stack = new ImageStack(w, h);</span>
+<span class="source-line-no">063</span><span id="line-63">                ImageProcessor sp1 = ip.resize(w, h);</span>
+<span class="source-line-no">064</span><span id="line-64">                </span>
+<span class="source-line-no">065</span><span id="line-65">                int stageCtr = 0;</span>
+<span class="source-line-no">066</span><span id="line-66">                for (Stage stage : stages) {</span>
+<span class="source-line-no">067</span><span id="line-67">                        int treeCtr = 0;</span>
+<span class="source-line-no">068</span><span id="line-68">                        for (FeatureTree tree : stage.getTrees()) {</span>
+<span class="source-line-no">069</span><span id="line-69">                                int featureCtr = 0;</span>
+<span class="source-line-no">070</span><span id="line-70">                                for (@SuppressWarnings("unused") </span>
+<span class="source-line-no">071</span><span id="line-71">                                                FeatureNode feature : tree.getFeatures()) {</span>
+<span class="source-line-no">072</span><span id="line-72">                                        ImageProcessor sp = sp1; // duplicate needed?</span>
+<span class="source-line-no">073</span><span id="line-73">                                        stack.addSlice("Stage=" + stageCtr + " Tree=" + treeCtr + " Feat=" + featureCtr, sp);</span>
+<span class="source-line-no">074</span><span id="line-74">                                        featureCtr++;</span>
+<span class="source-line-no">075</span><span id="line-75">                                }</span>
+<span class="source-line-no">076</span><span id="line-76">                                treeCtr++;</span>
+<span class="source-line-no">077</span><span id="line-77">                        }</span>
+<span class="source-line-no">078</span><span id="line-78">                        stageCtr++;</span>
+<span class="source-line-no">079</span><span id="line-79">                }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">                // add overlay graphics</span>
+<span class="source-line-no">082</span><span id="line-82">                Overlay oly = new Overlay();</span>
+<span class="source-line-no">083</span><span id="line-83">                int sliceNo = 1;</span>
+<span class="source-line-no">084</span><span id="line-84">                for (Stage stage : stages) {</span>
+<span class="source-line-no">085</span><span id="line-85">                        for (FeatureTree tree : stage.getTrees()) {</span>
+<span class="source-line-no">086</span><span id="line-86">                                for (FeatureNode feature : tree.getFeatures()) {</span>
+<span class="source-line-no">087</span><span id="line-87">                                        for (FeaturePatch r : feature.getPatches()) {</span>
+<span class="source-line-no">088</span><span id="line-88">                                                Color col = (r.weight &gt; 0) ? Color.green : Color.red;</span>
+<span class="source-line-no">089</span><span id="line-89">                                                Roi box = makeBoxRoi(r.x, r.y, r.width, r.height, col);</span>
+<span class="source-line-no">090</span><span id="line-90">                                                box.setPosition(sliceNo);</span>
+<span class="source-line-no">091</span><span id="line-91">                                                oly.add(box);</span>
+<span class="source-line-no">092</span><span id="line-92">                                        }</span>
+<span class="source-line-no">093</span><span id="line-93">                                        sliceNo++;</span>
+<span class="source-line-no">094</span><span id="line-94">                                }</span>
+<span class="source-line-no">095</span><span id="line-95">                        }</span>
+<span class="source-line-no">096</span><span id="line-96">                }</span>
+<span class="source-line-no">097</span><span id="line-97">                </span>
+<span class="source-line-no">098</span><span id="line-98">                ImagePlus stackim = new ImagePlus("Cascade", stack);</span>
+<span class="source-line-no">099</span><span id="line-99">                stackim.setOverlay(oly);</span>
+<span class="source-line-no">100</span><span id="line-100">                stackim.show();</span>
+<span class="source-line-no">101</span><span id="line-101">                GuiTools.zoomExact(stackim, 10);</span>
 <span class="source-line-no">102</span><span id="line-102">                </span>
-<span class="source-line-no">103</span><span id="line-103">                ImagePlus stackim = new ImagePlus("Cascade", stack);</span>
-<span class="source-line-no">104</span><span id="line-104">                stackim.setOverlay(oly);</span>
-<span class="source-line-no">105</span><span id="line-105">                stackim.show();</span>
-<span class="source-line-no">106</span><span id="line-106">                GuiTools.zoomExact(stackim, 10);</span>
-<span class="source-line-no">107</span><span id="line-107">                </span>
-<span class="source-line-no">108</span><span id="line-108">        }</span>
-<span class="source-line-no">109</span><span id="line-109">        </span>
-<span class="source-line-no">110</span><span id="line-110">        private Roi makeBoxRoi(int u, int v, int width, int height, Color col) {</span>
-<span class="source-line-no">111</span><span id="line-111">                Path2D path = new Path2D.Double();</span>
-<span class="source-line-no">112</span><span id="line-112">                path.moveTo(u, v);</span>
-<span class="source-line-no">113</span><span id="line-113">                path.lineTo(u + width, v);</span>
-<span class="source-line-no">114</span><span id="line-114">                path.lineTo(u + width, v + height);</span>
-<span class="source-line-no">115</span><span id="line-115">                path.lineTo(u, v + height);</span>
-<span class="source-line-no">116</span><span id="line-116">                path.lineTo(u, v);</span>
-<span class="source-line-no">117</span><span id="line-117">                path.lineTo(u + width, v + height);</span>
-<span class="source-line-no">118</span><span id="line-118">                ShapeRoi box = new ShapeRoi(path);</span>
-<span class="source-line-no">119</span><span id="line-119">                box.setStrokeColor(col);</span>
-<span class="source-line-no">120</span><span id="line-120">                //box.setStrokeWidth(0.2);</span>
-<span class="source-line-no">121</span><span id="line-121">                return box;</span>
-<span class="source-line-no">122</span><span id="line-122">        }</span>
-<span class="source-line-no">123</span><span id="line-123">        </span>
-<span class="source-line-no">124</span><span id="line-124">//      private List&lt;Roi&gt; getRectangles(FeatureNode feature) {</span>
-<span class="source-line-no">125</span><span id="line-125">//              List&lt;Roi&gt; rectRois = new ArrayList&lt;Roi&gt;();</span>
-<span class="source-line-no">126</span><span id="line-126">//              for (FeaturePatch r : feature.getPatches()) {</span>
-<span class="source-line-no">127</span><span id="line-127">//                      rectRois.add(new Roi(r.x, r.y, r.width, r.height));</span>
-<span class="source-line-no">128</span><span id="line-128">//              }</span>
-<span class="source-line-no">129</span><span id="line-129">//              return rectRois;</span>
-<span class="source-line-no">130</span><span id="line-130">//      }</span>
-<span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">//      @SuppressWarnings("unused")</span>
-<span class="source-line-no">133</span><span id="line-133">//      private void draw(ImageProcessor sp, FeatureNode feature) {</span>
-<span class="source-line-no">134</span><span id="line-134">//              for (FeaturePatch r : feature.getPatches()) {</span>
-<span class="source-line-no">135</span><span id="line-135">//                      Color col = (r.weight &gt; 0) ? Color.green : Color.red;</span>
-<span class="source-line-no">136</span><span id="line-136">//                      sp.setColor(col);</span>
-<span class="source-line-no">137</span><span id="line-137">//                      for (int u = 0; u &lt; r.width; u++) {</span>
-<span class="source-line-no">138</span><span id="line-138">//                              for (int v = 0; v &lt; r.height; v++) {</span>
-<span class="source-line-no">139</span><span id="line-139">//                                      sp.drawPixel(u + r.x, v + r.y);</span>
-<span class="source-line-no">140</span><span id="line-140">//                              }</span>
-<span class="source-line-no">141</span><span id="line-141">//                      }</span>
-<span class="source-line-no">142</span><span id="line-142">//                      //sp.drawRect(r.x, r.y, r.width, r.height);</span>
-<span class="source-line-no">143</span><span id="line-143">//                      </span>
-<span class="source-line-no">144</span><span id="line-144">//              }</span>
-<span class="source-line-no">145</span><span id="line-145">//              </span>
-<span class="source-line-no">146</span><span id="line-146">//      }</span>
-<span class="source-line-no">147</span><span id="line-147"></span>
-<span class="source-line-no">148</span><span id="line-148">//      @SuppressWarnings("unused")</span>
-<span class="source-line-no">149</span><span id="line-149">//      private void draw(FaceRegion f, ImageProcessor cp) {</span>
-<span class="source-line-no">150</span><span id="line-150">//              cp.setColor(Color.green);</span>
-<span class="source-line-no">151</span><span id="line-151">//              cp.drawRect(f.x, f.y, f.width, f.height);</span>
-<span class="source-line-no">152</span><span id="line-152">//      }</span>
-<span class="source-line-no">153</span><span id="line-153"></span>
-<span class="source-line-no">154</span><span id="line-154">}</span>
+<span class="source-line-no">103</span><span id="line-103">        }</span>
+<span class="source-line-no">104</span><span id="line-104">        </span>
+<span class="source-line-no">105</span><span id="line-105">        private Roi makeBoxRoi(int u, int v, int width, int height, Color col) {</span>
+<span class="source-line-no">106</span><span id="line-106">                Path2D path = new Path2D.Double();</span>
+<span class="source-line-no">107</span><span id="line-107">                path.moveTo(u, v);</span>
+<span class="source-line-no">108</span><span id="line-108">                path.lineTo(u + width, v);</span>
+<span class="source-line-no">109</span><span id="line-109">                path.lineTo(u + width, v + height);</span>
+<span class="source-line-no">110</span><span id="line-110">                path.lineTo(u, v + height);</span>
+<span class="source-line-no">111</span><span id="line-111">                path.lineTo(u, v);</span>
+<span class="source-line-no">112</span><span id="line-112">                path.lineTo(u + width, v + height);</span>
+<span class="source-line-no">113</span><span id="line-113">                ShapeRoi box = new ShapeRoi(path);</span>
+<span class="source-line-no">114</span><span id="line-114">                box.setStrokeColor(col);</span>
+<span class="source-line-no">115</span><span id="line-115">                //box.setStrokeWidth(0.2);</span>
+<span class="source-line-no">116</span><span id="line-116">                return box;</span>
+<span class="source-line-no">117</span><span id="line-117">        }</span>
+<span class="source-line-no">118</span><span id="line-118">        </span>
+<span class="source-line-no">119</span><span id="line-119">//      private List&lt;Roi&gt; getRectangles(FeatureNode feature) {</span>
+<span class="source-line-no">120</span><span id="line-120">//              List&lt;Roi&gt; rectRois = new ArrayList&lt;Roi&gt;();</span>
+<span class="source-line-no">121</span><span id="line-121">//              for (FeaturePatch r : feature.getPatches()) {</span>
+<span class="source-line-no">122</span><span id="line-122">//                      rectRois.add(new Roi(r.x, r.y, r.width, r.height));</span>
+<span class="source-line-no">123</span><span id="line-123">//              }</span>
+<span class="source-line-no">124</span><span id="line-124">//              return rectRois;</span>
+<span class="source-line-no">125</span><span id="line-125">//      }</span>
+<span class="source-line-no">126</span><span id="line-126"></span>
+<span class="source-line-no">127</span><span id="line-127">//      @SuppressWarnings("unused")</span>
+<span class="source-line-no">128</span><span id="line-128">//      private void draw(ImageProcessor sp, FeatureNode feature) {</span>
+<span class="source-line-no">129</span><span id="line-129">//              for (FeaturePatch r : feature.getPatches()) {</span>
+<span class="source-line-no">130</span><span id="line-130">//                      Color col = (r.weight &gt; 0) ? Color.green : Color.red;</span>
+<span class="source-line-no">131</span><span id="line-131">//                      sp.setColor(col);</span>
+<span class="source-line-no">132</span><span id="line-132">//                      for (int u = 0; u &lt; r.width; u++) {</span>
+<span class="source-line-no">133</span><span id="line-133">//                              for (int v = 0; v &lt; r.height; v++) {</span>
+<span class="source-line-no">134</span><span id="line-134">//                                      sp.drawPixel(u + r.x, v + r.y);</span>
+<span class="source-line-no">135</span><span id="line-135">//                              }</span>
+<span class="source-line-no">136</span><span id="line-136">//                      }</span>
+<span class="source-line-no">137</span><span id="line-137">//                      //sp.drawRect(r.x, r.y, r.width, r.height);</span>
+<span class="source-line-no">138</span><span id="line-138">//                      </span>
+<span class="source-line-no">139</span><span id="line-139">//              }</span>
+<span class="source-line-no">140</span><span id="line-140">//              </span>
+<span class="source-line-no">141</span><span id="line-141">//      }</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">//      @SuppressWarnings("unused")</span>
+<span class="source-line-no">144</span><span id="line-144">//      private void draw(FaceRegion f, ImageProcessor cp) {</span>
+<span class="source-line-no">145</span><span id="line-145">//              cp.setColor(Color.green);</span>
+<span class="source-line-no">146</span><span id="line-146">//              cp.drawRect(f.x, f.y, f.width, f.height);</span>
+<span class="source-line-no">147</span><span id="line-147">//      }</span>
+<span class="source-line-no">148</span><span id="line-148"></span>
+<span class="source-line-no">149</span><span id="line-149">}</span>
 
 
 
