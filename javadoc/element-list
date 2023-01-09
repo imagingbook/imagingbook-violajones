@@ -1,8 +1,8 @@
+module:imagingbook_violajones_plugins
+violajones_demos
+violajones_utils
 module:imagingbook.violajones.data
 imagingbook.violajones.images
 module:imagingbook.violajones.lib
 imagingbook.violajones.data
 imagingbook.violajones.lib
-module:imagingbook.violajones.plugins
-violajones_demos
-violajones_utils

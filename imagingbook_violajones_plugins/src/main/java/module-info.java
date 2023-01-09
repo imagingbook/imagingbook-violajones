@@ -1,4 +1,4 @@
-module imagingbook.violajones.plugins {
+module imagingbook_violajones_plugins {
     exports violajones_demos;
     exports violajones_utils;
 

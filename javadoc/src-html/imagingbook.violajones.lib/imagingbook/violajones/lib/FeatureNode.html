@@ -11,121 +11,116 @@
 <body class="source-page">
 <main role="main">
 <div class="source-container">
-<pre><span class="source-line-no">001</span><span id="line-1">/*</span>
-<span class="source-line-no">002</span><span id="line-2"> *  This software is provided as a supplement to the authors' textbooks on digital</span>
-<span class="source-line-no">003</span><span id="line-3"> * image processing published by Springer-Verlag in various languages and editions.</span>
-<span class="source-line-no">004</span><span id="line-4"> * Permission to use and distribute this software is granted under the BSD 2-Clause</span>
-<span class="source-line-no">005</span><span id="line-5"> * "Simplified" License (see http://opensource.org/licenses/BSD-2-Clause).</span>
-<span class="source-line-no">006</span><span id="line-6"> * Copyright (c) 2006-2022 Wilhelm Burger, Mark J. Burge.</span>
-<span class="source-line-no">007</span><span id="line-7"> * All rights reserved. Visit https://imagingbook.com for additional details.</span>
-<span class="source-line-no">008</span><span id="line-8"> */</span>
-<span class="source-line-no">009</span><span id="line-9">package imagingbook.violajones.lib;</span>
+<pre><span class="source-line-no">001</span><span id="line-1">/*******************************************************************************</span>
+<span class="source-line-no">002</span><span id="line-2"> * Permission to use and distribute this software is granted under the BSD 2-Clause</span>
+<span class="source-line-no">003</span><span id="line-3"> * "Simplified" License (see http://opensource.org/licenses/BSD-2-Clause).</span>
+<span class="source-line-no">004</span><span id="line-4"> * Copyright (c) 2016-2023 Wilhelm Burger. All rights reserved.</span>
+<span class="source-line-no">005</span><span id="line-5"> * Visit https://imagingbook.com for additional details.</span>
+<span class="source-line-no">006</span><span id="line-6"> ******************************************************************************/</span>
+<span class="source-line-no">007</span><span id="line-7">package imagingbook.violajones.lib;</span>
+<span class="source-line-no">008</span><span id="line-8"></span>
+<span class="source-line-no">009</span><span id="line-9">import imagingbook.common.image.IntegralImage;</span>
 <span class="source-line-no">010</span><span id="line-10"></span>
-<span class="source-line-no">011</span><span id="line-11">import imagingbook.common.image.IntegralImage;</span>
-<span class="source-line-no">012</span><span id="line-12"></span>
-<span class="source-line-no">013</span><span id="line-13"></span>
-<span class="source-line-no">014</span><span id="line-14">/**</span>
-<span class="source-line-no">015</span><span id="line-15"> * Represents a Haar feature, usually composed of multiple rectangular</span>
-<span class="source-line-no">016</span><span id="line-16"> * patches (of type {@link FeaturePatch}). Instances of this class make</span>
-<span class="source-line-no">017</span><span id="line-17"> * the nodes of a {@link FeatureTree}.</span>
-<span class="source-line-no">018</span><span id="line-18"> * </span>
-<span class="source-line-no">019</span><span id="line-19"> * @author WB</span>
-<span class="source-line-no">020</span><span id="line-20"> *</span>
-<span class="source-line-no">021</span><span id="line-21"> */</span>
-<span class="source-line-no">022</span><span id="line-22">public class FeatureNode {</span>
-<span class="source-line-no">023</span><span id="line-23">        </span>
-<span class="source-line-no">024</span><span id="line-24">        protected static final double NO_VALUE = Double.NaN;</span>
-<span class="source-line-no">025</span><span id="line-25">        protected static final int NO_CHILD = -1;</span>
-<span class="source-line-no">026</span><span id="line-26">        protected static final int LEFT = 0;</span>
-<span class="source-line-no">027</span><span id="line-27">        protected static final int RIGHT = 1;</span>
-<span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">        private final int width, height;</span>
-<span class="source-line-no">030</span><span id="line-30">        private final double threshold;</span>
-<span class="source-line-no">031</span><span id="line-31">        private final double[] values;  // terminal values</span>
-<span class="source-line-no">032</span><span id="line-32">        private final int[] children;   // indexes of child nodes</span>
-<span class="source-line-no">033</span><span id="line-33">        private final FeaturePatch[] patches;</span>
-<span class="source-line-no">034</span><span id="line-34"></span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">        public FeatureNode(int width, int height, double threshold, double valL, int childL, double valR, int childR,</span>
-<span class="source-line-no">037</span><span id="line-37">                        FeaturePatch[] patches) {</span>
-<span class="source-line-no">038</span><span id="line-38">                this.width = width;</span>
-<span class="source-line-no">039</span><span id="line-39">                this.height = height;</span>
-<span class="source-line-no">040</span><span id="line-40">                this.threshold = threshold;</span>
-<span class="source-line-no">041</span><span id="line-41">                this.values = new double[] {valL, valR};</span>
-<span class="source-line-no">042</span><span id="line-42">                this.children = new int[] {childL, childR};</span>
-<span class="source-line-no">043</span><span id="line-43">                this.patches = patches;</span>
-<span class="source-line-no">044</span><span id="line-44">        }</span>
-<span class="source-line-no">045</span><span id="line-45">        </span>
-<span class="source-line-no">046</span><span id="line-46">        public double getValue(int dir) {</span>
-<span class="source-line-no">047</span><span id="line-47">                return values[dir];</span>
-<span class="source-line-no">048</span><span id="line-48">        }</span>
-<span class="source-line-no">049</span><span id="line-49">        </span>
-<span class="source-line-no">050</span><span id="line-50">        public boolean hasValue(int dir) {</span>
-<span class="source-line-no">051</span><span id="line-51">                return !Double.isNaN(values[dir]);</span>
-<span class="source-line-no">052</span><span id="line-52">        }</span>
-<span class="source-line-no">053</span><span id="line-53">        </span>
-<span class="source-line-no">054</span><span id="line-54">        public int getChild(int dir) {</span>
-<span class="source-line-no">055</span><span id="line-55">                return children[dir];</span>
-<span class="source-line-no">056</span><span id="line-56">        }</span>
-<span class="source-line-no">057</span><span id="line-57">        </span>
-<span class="source-line-no">058</span><span id="line-58">        public boolean hasChild(int dir) {</span>
-<span class="source-line-no">059</span><span id="line-59">                return children[dir] != NO_CHILD;</span>
-<span class="source-line-no">060</span><span id="line-60">        }</span>
-<span class="source-line-no">061</span><span id="line-61">        </span>
-<span class="source-line-no">062</span><span id="line-62">        public FeaturePatch[] getPatches() {</span>
-<span class="source-line-no">063</span><span id="line-63">                return patches;</span>
-<span class="source-line-no">064</span><span id="line-64">        }</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">        /**</span>
-<span class="source-line-no">067</span><span id="line-67">         * Evaluates this feature node by applying its rectangular patches.</span>
-<span class="source-line-no">068</span><span id="line-68">         * Returns the branching direction (LEFT or RIGHT), depending on how the normalized patch </span>
-<span class="source-line-no">069</span><span id="line-69">         * sum compares to the threshold.</span>
-<span class="source-line-no">070</span><span id="line-70">         * @param II input image (as an integral image) </span>
-<span class="source-line-no">071</span><span id="line-71">         * @param u left position of the candidate subimage</span>
-<span class="source-line-no">072</span><span id="line-72">         * @param v top position of the candidate subimage</span>
-<span class="source-line-no">073</span><span id="line-73">         * @param scale the current scale to be applied</span>
-<span class="source-line-no">074</span><span id="line-74">         * @return The branching direction (LEFT or RIGHT).</span>
-<span class="source-line-no">075</span><span id="line-75">         */</span>
-<span class="source-line-no">076</span><span id="line-76">        public int eval(IntegralImage II, int u, int v, double scale) {</span>
-<span class="source-line-no">077</span><span id="line-77">                // calculate the area of the subimage:  TODO: w,h never change, make more efficient</span>
-<span class="source-line-no">078</span><span id="line-78">                final int w = (int) Math.round(scale * width);</span>
-<span class="source-line-no">079</span><span id="line-79">                final int h = (int) Math.round(scale * height);</span>
-<span class="source-line-no">080</span><span id="line-80">                </span>
-<span class="source-line-no">081</span><span id="line-81">                // calculate variance (std. deviation) for the complete subimage: TODO: do only once for the subimage?</span>
-<span class="source-line-no">082</span><span id="line-82">                double variance = II.getVariance(u, v, u + w - 1, v + h - 1);</span>
-<span class="source-line-no">083</span><span id="line-83">                double stdDev = (variance &gt; 1) ? Math.sqrt(variance) : 1.0;</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">                // calculate weighted sum over all patches (rectangles) of this feature</span>
-<span class="source-line-no">086</span><span id="line-86">                double patchSum = 0.0;</span>
-<span class="source-line-no">087</span><span id="line-87">                for (FeaturePatch patch : patches) {</span>
-<span class="source-line-no">088</span><span id="line-88">                        // scale the patch's relative position and size</span>
-<span class="source-line-no">089</span><span id="line-89">                        final int ua = u + (int) Math.round(scale *  patch.x);</span>
-<span class="source-line-no">090</span><span id="line-90">                        final int va = v + (int) Math.round(scale *  patch.y);</span>
-<span class="source-line-no">091</span><span id="line-91">                        final int ub = u + (int) Math.round(scale * (patch.x + patch.width) - 1);</span>
-<span class="source-line-no">092</span><span id="line-92">                        final int vb = v + (int) Math.round(scale * (patch.y + patch.height) - 1);</span>
-<span class="source-line-no">093</span><span id="line-93">                        </span>
-<span class="source-line-no">094</span><span id="line-94">                        // add the patch's block sum and apply the assigned weight (pos/neg)</span>
-<span class="source-line-no">095</span><span id="line-95">                        patchSum = patchSum + II.getBlockSum1(ua, va, ub, vb) * patch.weight;</span>
-<span class="source-line-no">096</span><span id="line-96">                }</span>
-<span class="source-line-no">097</span><span id="line-97">                // normalize the sum of all patches by the effective window area:</span>
-<span class="source-line-no">098</span><span id="line-98">                double patchSumNorm = patchSum / (w * h);</span>
-<span class="source-line-no">099</span><span id="line-99">                        </span>
-<span class="source-line-no">100</span><span id="line-100">                // return direction depending on how the normalized patch sum compares to the threshold</span>
-<span class="source-line-no">101</span><span id="line-101">                return (patchSumNorm &lt; threshold * stdDev) ? LEFT : RIGHT;</span>
-<span class="source-line-no">102</span><span id="line-102">        }</span>
-<span class="source-line-no">103</span><span id="line-103"></span>
-<span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105">        public void print(int featureCnt) {</span>
-<span class="source-line-no">106</span><span id="line-106">                System.out.format("     feature %d: w=%d h=%d valL=%.4f valR=%.4f childL=%d childR=%d th=%.4f patches=%d\n", </span>
-<span class="source-line-no">107</span><span id="line-107">                                featureCnt, width, height, getValue(LEFT), getValue(RIGHT), getChild(LEFT), getChild(RIGHT), </span>
-<span class="source-line-no">108</span><span id="line-108">                                threshold, patches.length);</span>
-<span class="source-line-no">109</span><span id="line-109">                int patchCnt = 0;</span>
-<span class="source-line-no">110</span><span id="line-110">                for (FeaturePatch patch : patches) {</span>
-<span class="source-line-no">111</span><span id="line-111">                        System.out.println("           patch " + patchCnt + " " + patch.toString());</span>
-<span class="source-line-no">112</span><span id="line-112">                        patchCnt++;</span>
-<span class="source-line-no">113</span><span id="line-113">                }</span>
-<span class="source-line-no">114</span><span id="line-114">        }</span>
-<span class="source-line-no">115</span><span id="line-115">}</span>
+<span class="source-line-no">011</span><span id="line-11">/**</span>
+<span class="source-line-no">012</span><span id="line-12"> * Represents a Haar feature, usually composed of multiple rectangular patches (of type {@link FeaturePatch}). Instances</span>
+<span class="source-line-no">013</span><span id="line-13"> * of this class make the nodes of a {@link FeatureTree}.</span>
+<span class="source-line-no">014</span><span id="line-14"> *</span>
+<span class="source-line-no">015</span><span id="line-15"> * @author WB</span>
+<span class="source-line-no">016</span><span id="line-16"> */</span>
+<span class="source-line-no">017</span><span id="line-17">public class FeatureNode {</span>
+<span class="source-line-no">018</span><span id="line-18"></span>
+<span class="source-line-no">019</span><span id="line-19">        static final double NO_VALUE = Double.NaN;</span>
+<span class="source-line-no">020</span><span id="line-20">        static final int NO_CHILD = -1;</span>
+<span class="source-line-no">021</span><span id="line-21">        static final int LEFT = 0;</span>
+<span class="source-line-no">022</span><span id="line-22">        static final int RIGHT = 1;</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24">        private final int width, height;</span>
+<span class="source-line-no">025</span><span id="line-25">        private final double threshold;</span>
+<span class="source-line-no">026</span><span id="line-26">        private final double[] values;  // terminal values</span>
+<span class="source-line-no">027</span><span id="line-27">        private final int[] children;   // indexes of child nodes</span>
+<span class="source-line-no">028</span><span id="line-28">        private final FeaturePatch[] patches;</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">        FeatureNode(int width, int height, double threshold, double valL, int childL, double valR, int childR,</span>
+<span class="source-line-no">032</span><span id="line-32">                        FeaturePatch[] patches) {</span>
+<span class="source-line-no">033</span><span id="line-33">                this.width = width;</span>
+<span class="source-line-no">034</span><span id="line-34">                this.height = height;</span>
+<span class="source-line-no">035</span><span id="line-35">                this.threshold = threshold;</span>
+<span class="source-line-no">036</span><span id="line-36">                this.values = new double[] {valL, valR};</span>
+<span class="source-line-no">037</span><span id="line-37">                this.children = new int[] {childL, childR};</span>
+<span class="source-line-no">038</span><span id="line-38">                this.patches = patches;</span>
+<span class="source-line-no">039</span><span id="line-39">        }</span>
+<span class="source-line-no">040</span><span id="line-40">        </span>
+<span class="source-line-no">041</span><span id="line-41">        public double getValue(int dir) {</span>
+<span class="source-line-no">042</span><span id="line-42">                return values[dir];</span>
+<span class="source-line-no">043</span><span id="line-43">        }</span>
+<span class="source-line-no">044</span><span id="line-44">        </span>
+<span class="source-line-no">045</span><span id="line-45">        public boolean hasValue(int dir) {</span>
+<span class="source-line-no">046</span><span id="line-46">                return !Double.isNaN(values[dir]);</span>
+<span class="source-line-no">047</span><span id="line-47">        }</span>
+<span class="source-line-no">048</span><span id="line-48">        </span>
+<span class="source-line-no">049</span><span id="line-49">        public int getChild(int dir) {</span>
+<span class="source-line-no">050</span><span id="line-50">                return children[dir];</span>
+<span class="source-line-no">051</span><span id="line-51">        }</span>
+<span class="source-line-no">052</span><span id="line-52">        </span>
+<span class="source-line-no">053</span><span id="line-53">        public boolean hasChild(int dir) {</span>
+<span class="source-line-no">054</span><span id="line-54">                return children[dir] != NO_CHILD;</span>
+<span class="source-line-no">055</span><span id="line-55">        }</span>
+<span class="source-line-no">056</span><span id="line-56">        </span>
+<span class="source-line-no">057</span><span id="line-57">        public FeaturePatch[] getPatches() {</span>
+<span class="source-line-no">058</span><span id="line-58">                return patches;</span>
+<span class="source-line-no">059</span><span id="line-59">        }</span>
+<span class="source-line-no">060</span><span id="line-60"></span>
+<span class="source-line-no">061</span><span id="line-61">        /**</span>
+<span class="source-line-no">062</span><span id="line-62">         * Evaluates this feature node by applying its rectangular patches.</span>
+<span class="source-line-no">063</span><span id="line-63">         * Returns the branching direction (LEFT or RIGHT), depending on how the normalized patch </span>
+<span class="source-line-no">064</span><span id="line-64">         * sum compares to the threshold.</span>
+<span class="source-line-no">065</span><span id="line-65">         * @param II input image (as an integral image) </span>
+<span class="source-line-no">066</span><span id="line-66">         * @param u left position of the candidate subimage</span>
+<span class="source-line-no">067</span><span id="line-67">         * @param v top position of the candidate subimage</span>
+<span class="source-line-no">068</span><span id="line-68">         * @param scale the current scale to be applied</span>
+<span class="source-line-no">069</span><span id="line-69">         * @return The branching direction (LEFT or RIGHT).</span>
+<span class="source-line-no">070</span><span id="line-70">         */</span>
+<span class="source-line-no">071</span><span id="line-71">        public int eval(IntegralImage II, int u, int v, double scale) {</span>
+<span class="source-line-no">072</span><span id="line-72">                // calculate the area of the subimage:  TODO: w,h never change, make more efficient</span>
+<span class="source-line-no">073</span><span id="line-73">                final int w = (int) Math.round(scale * width);</span>
+<span class="source-line-no">074</span><span id="line-74">                final int h = (int) Math.round(scale * height);</span>
+<span class="source-line-no">075</span><span id="line-75">                </span>
+<span class="source-line-no">076</span><span id="line-76">                // calculate variance (std. deviation) for the complete subimage: TODO: do only once for the subimage?</span>
+<span class="source-line-no">077</span><span id="line-77">                double variance = II.getVariance(u, v, u + w - 1, v + h - 1);</span>
+<span class="source-line-no">078</span><span id="line-78">                double stdDev = (variance &gt; 1) ? Math.sqrt(variance) : 1.0;</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">                // calculate weighted sum over all patches (rectangles) of this feature</span>
+<span class="source-line-no">081</span><span id="line-81">                double patchSum = 0.0;</span>
+<span class="source-line-no">082</span><span id="line-82">                for (FeaturePatch patch : patches) {</span>
+<span class="source-line-no">083</span><span id="line-83">                        // scale the patch's relative position and size</span>
+<span class="source-line-no">084</span><span id="line-84">                        final int ua = u + (int) Math.round(scale *  patch.x);</span>
+<span class="source-line-no">085</span><span id="line-85">                        final int va = v + (int) Math.round(scale *  patch.y);</span>
+<span class="source-line-no">086</span><span id="line-86">                        final int ub = u + (int) Math.round(scale * (patch.x + patch.width) - 1);</span>
+<span class="source-line-no">087</span><span id="line-87">                        final int vb = v + (int) Math.round(scale * (patch.y + patch.height) - 1);</span>
+<span class="source-line-no">088</span><span id="line-88">                        </span>
+<span class="source-line-no">089</span><span id="line-89">                        // add the patch's block sum and apply the assigned weight (pos/neg)</span>
+<span class="source-line-no">090</span><span id="line-90">                        patchSum = patchSum + II.getBlockSum1(ua, va, ub, vb) * patch.weight;</span>
+<span class="source-line-no">091</span><span id="line-91">                }</span>
+<span class="source-line-no">092</span><span id="line-92">                // normalize the sum of all patches by the effective window area:</span>
+<span class="source-line-no">093</span><span id="line-93">                double patchSumNorm = patchSum / (w * h);</span>
+<span class="source-line-no">094</span><span id="line-94">                        </span>
+<span class="source-line-no">095</span><span id="line-95">                // return direction depending on how the normalized patch sum compares to the threshold</span>
+<span class="source-line-no">096</span><span id="line-96">                return (patchSumNorm &lt; threshold * stdDev) ? LEFT : RIGHT;</span>
+<span class="source-line-no">097</span><span id="line-97">        }</span>
+<span class="source-line-no">098</span><span id="line-98"></span>
+<span class="source-line-no">099</span><span id="line-99"></span>
+<span class="source-line-no">100</span><span id="line-100">        public void print(int featureCnt) {</span>
+<span class="source-line-no">101</span><span id="line-101">                System.out.format("     feature %d: w=%d h=%d valL=%.4f valR=%.4f childL=%d childR=%d th=%.4f patches=%d\n", </span>
+<span class="source-line-no">102</span><span id="line-102">                                featureCnt, width, height, getValue(LEFT), getValue(RIGHT), getChild(LEFT), getChild(RIGHT), </span>
+<span class="source-line-no">103</span><span id="line-103">                                threshold, patches.length);</span>
+<span class="source-line-no">104</span><span id="line-104">                int patchCnt = 0;</span>
+<span class="source-line-no">105</span><span id="line-105">                for (FeaturePatch patch : patches) {</span>
+<span class="source-line-no">106</span><span id="line-106">                        System.out.println("           patch " + patchCnt + " " + patch.toString());</span>
+<span class="source-line-no">107</span><span id="line-107">                        patchCnt++;</span>
+<span class="source-line-no">108</span><span id="line-108">                }</span>
+<span class="source-line-no">109</span><span id="line-109">        }</span>
+<span class="source-line-no">110</span><span id="line-110">}</span>
 
 
 
