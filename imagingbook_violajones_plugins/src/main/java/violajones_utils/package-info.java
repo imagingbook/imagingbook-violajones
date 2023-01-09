@@ -4,25 +4,8 @@
  * Copyright (c) 2016-2023 Wilhelm Burger. All rights reserved.
  * Visit https://imagingbook.com for additional details.
  ******************************************************************************/
+
+@JavaDocBaseUrl("https://imagingbook.github.io/imagingbook-violajones/javadoc/imagingbook_violajones_plugins")
 package violajones_utils;
 
-import ij.IJ;
-import ij.plugin.PlugIn;
-import imagingbook.violajones.data.HaarTrainingSet;
-
-/**
- * ImageJ plugin. 
- * @author WB
- *
- */
-public class List_Haar_Cascade_Files implements PlugIn {
-
-	public void run(String arg0) {
-		for (HaarTrainingSet s : HaarTrainingSet.values()) {
-			IJ.log("Haar set type (enum) = " + s.toString());
-			IJ.log("   full path   = " + s.getURL());
-			IJ.log("");
-		}
-	}
-
-}
+import imagingbook.core.jdoc.JavaDocBaseUrl;

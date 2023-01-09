@@ -12,6 +12,7 @@ import ij.ImageStack;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.common.ij.GuiTools;
+import imagingbook.core.plugin.JavaDocHelp;
 import imagingbook.violajones.data.HaarTrainingSet;
 import imagingbook.violajones.lib.FeatureNode;
 import imagingbook.violajones.lib.FeaturePatch;
@@ -24,19 +25,13 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * ImageJ plugin. Visualizes the evaluation sequence for the selected Haar cascade.
- * The current image is scaled to the size of the cascade (typ. 32x32)
- * and shown in the background. 
- * The result is an image stack, with one slice for classifier
- * each decision step.
- * 
- * Feature support regions are shown as drawn into the image (to 
- * allow saving as a video).
- * 
- * @author WB
+ * ImageJ plugin. Visualizes the evaluation sequence for the selected Haar cascade. The current image is scaled to the
+ * size of the cascade (typ. 32x32) and shown in the background. The result is an image stack, with one slice for
+ * classifier each decision step. Feature support regions are shown as drawn into the image (to allow saving as a video).
  *
+ * @author WB
  */
-public class Visualize_Haar_Cascade_Paint implements PlugInFilter {
+public class Visualize_Haar_Cascade_Paint implements PlugInFilter, JavaDocHelp {
 	
 	static HaarTrainingSet desc = HaarTrainingSet.FrontalFaceAlt2;
 

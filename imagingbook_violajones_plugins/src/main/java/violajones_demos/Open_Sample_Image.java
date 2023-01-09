@@ -9,14 +9,15 @@ package violajones_demos;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
 import ij.plugin.PlugIn;
+import imagingbook.core.plugin.JavaDocHelp;
 import imagingbook.violajones.images.SampleFaceImage;
 
 /**
- * ImageJ plugin. 
- * @author WB
+ * ImageJ plugin.
  *
+ * @author WB
  */
-public class Open_Sample_Image implements PlugIn {
+public class Open_Sample_Image implements PlugIn, JavaDocHelp {
 	
 	static SampleFaceImage imgChoice = SampleFaceImage.Nobelaureates2007_jpg;
 	
@@ -32,6 +33,7 @@ public class Open_Sample_Image implements PlugIn {
 
 	private boolean runDialog() {
 		GenericDialog gd = new GenericDialog(this.getClass().getSimpleName());
+		gd.addHelp(getJavaDocUrl());
 		gd.addEnumChoice("Select test image", imgChoice);
 		
 		gd.showDialog();
