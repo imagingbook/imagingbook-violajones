@@ -4,6 +4,7 @@ module imagingbook.violajones.plugins {
 
     requires java.desktop;
     requires imagingbook.common;
+    requires imagingbook.core;
     requires imagingbook.violajones.data;
     requires imagingbook.violajones.lib;
 }
