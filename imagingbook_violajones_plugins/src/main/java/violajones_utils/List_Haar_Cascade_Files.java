@@ -8,7 +8,7 @@ package violajones_utils;
 
 import ij.IJ;
 import ij.plugin.PlugIn;
-import imagingbook.core.plugin.JavaDocHelp;
+import imagingbook.core.jdoc.JavaDocHelp;
 import imagingbook.violajones.data.HaarTrainingSet;
 
 /**

@@ -14,7 +14,7 @@ import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
 import imagingbook.common.ij.IjUtils;
 import imagingbook.common.math.PrintPrecision;
-import imagingbook.core.plugin.JavaDocHelp;
+import imagingbook.core.jdoc.JavaDocHelp;
 import imagingbook.violajones.data.HaarTrainingSet;
 import imagingbook.violajones.lib.FaceDetector;
 import imagingbook.violajones.lib.FaceDetector.Parameters;
