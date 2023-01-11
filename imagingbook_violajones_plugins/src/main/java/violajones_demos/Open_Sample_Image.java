@@ -9,7 +9,7 @@ package violajones_demos;
 import ij.ImagePlus;
 import ij.gui.GenericDialog;
 import ij.plugin.PlugIn;
-import imagingbook.core.plugin.JavaDocHelp;
+import imagingbook.core.jdoc.JavaDocHelp;
 import imagingbook.violajones.images.SampleFaceImage;
 
 /**

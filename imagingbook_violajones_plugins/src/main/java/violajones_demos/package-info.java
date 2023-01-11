@@ -5,7 +5,7 @@
  * Visit https://imagingbook.com for additional details.
  ******************************************************************************/
 
-@JavaDocBaseUrl("https://imagingbook.github.io/imagingbook-violajones/javadoc/imagingbook_violajones_plugins")
+@JavaDocBaseUrl("https://imagingbook.github.io/imagingbook-violajones/javadoc/imagingbook_violajones_plugins/")
 package violajones_demos;
 
 import imagingbook.core.jdoc.JavaDocBaseUrl;
