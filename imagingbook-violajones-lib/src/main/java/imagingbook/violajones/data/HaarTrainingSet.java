@@ -38,12 +38,10 @@ public enum HaarTrainingSet implements NamedResource {
 	
 	//--------------------------------------------
 
-	public static void main(String[] args) {
-		for (NamedResource nr : HaarTrainingSet.values()) {
-			System.out.println("resource URL = " + nr.getURL());
-		}
-	}
-
-
+	// public static void main(String[] args) {
+	// 	for (NamedResource nr : HaarTrainingSet.values()) {
+	// 		System.out.println("resource URL = " + nr.getURL());
+	// 	}
+	// }
 
 }

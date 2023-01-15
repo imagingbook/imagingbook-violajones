@@ -15,16 +15,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * The core class.
- * 
+ * <p>
+ * Implementation of the Viola-Jones face detector as described in [1].
+ * </p>
+ * <p>
+ * [1] P. Viola and M. Jones. "Robust real-time face detection", International Journal of Computer Vision 57(2), 137–154
+ * (2004).
+ *
  * @author WB
- * @version 2022/04/15
+ * @version 2023/01/15
  */
 public class FaceDetector {
 	// TODO: change constructors to use the source image, pre-calculate everything.
-	// TODO: use annotations on Parameters fields
 	/**
-	 * Nested class representing parameters and their default values.
+	 * Nested class defining parameters and their default values.
 	 */
 	public static class Parameters implements ParameterBundle<FaceDetector> {
 		/** The initial ratio between the window size and the Haar classifier size (default 2). */
@@ -171,7 +175,7 @@ public class FaceDetector {
 	 * @param minOverlap the minimum overlap required for merging two faces
 	 * @return The merged rectangular detections.
 	 */
-	List<FaceRegion> merge(FaceRegion[] facesInit, int min_neighbors, double minOverlap) {
+	private List<FaceRegion> merge(FaceRegion[] facesInit, int min_neighbors, double minOverlap) {
 		// TODO: CHECK!! Make rectangles immutable!
 		List<FaceRegion> facesMerged = new LinkedList<FaceRegion>();
 		int[] result = new int[facesInit.length];

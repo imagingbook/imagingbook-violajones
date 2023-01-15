@@ -14,6 +14,7 @@ import java.awt.Rectangle;
  * @author WB
  */
 public class FaceRegion extends Rectangle {
+
 	private static final long serialVersionUID = 1L;
 
 	FaceRegion(int x, int y, int w, int h) {
@@ -34,7 +35,6 @@ public class FaceRegion extends Rectangle {
 				&& this.y + this.height <= r2.y + r2.height) {
 			return true;
 		}
-			
 		return false;
 	}
 

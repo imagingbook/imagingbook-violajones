@@ -47,11 +47,10 @@ public class HaarCascadeDescriptor {
 	}
 	
 	// --- static factory methods -------------------
-	
+
 	/**
-	 * Creates a Haar cascade from the specification given in a
-	 * XML stream.
-	 * 
+	 * Creates a Haar cascade from the specification given in a XML stream.
+	 *
 	 * @param strm input stream providing XML content
 	 * @return a new Haar cascade object
 	 */
@@ -102,13 +101,11 @@ public class HaarCascadeDescriptor {
 	}
 
 	// ------------------------------------------------
-	
+
 	/**
-	 * The detector consists of stages, each of them telling whether
-	 * the considered zone represents the object with probability a bit
-	 * greater than 0.5. If a zone passes all stages, it is considered as
-	 * representing the object.
-	 * 
+	 * The detector consists of stages, each of them telling whether the considered zone represents the object with
+	 * probability a bit greater than 0.5. If a zone passes all stages, it is considered as representing the object.
+	 *
 	 * @param xmlDoc the XML document object
 	 * @throws Exception
 	 */
@@ -278,16 +275,15 @@ public class HaarCascadeDescriptor {
 	
 	// -------------------------------------------------------------------------------------------------
 	
-	public static void main(String[] args) {
-		for (HaarTrainingSet hts : HaarTrainingSet.values()) {
-			System.out.println("*****  Resource = " + hts.toString() + " *********");
-			HaarCascadeDescriptor hcd = HaarCascadeDescriptor.fromInputStream(hts.getStream());
-			hcd.printToStream(System.out);
-			System.out.println();
-		}
-		
-		System.out.println("done.");
-	}
-	
+	// public static void main(String[] args) {
+	// 	for (HaarTrainingSet hts : HaarTrainingSet.values()) {
+	// 		System.out.println("*****  Resource = " + hts.toString() + " *********");
+	// 		HaarCascadeDescriptor hcd = HaarCascadeDescriptor.fromInputStream(hts.getStream());
+	// 		hcd.printToStream(System.out);
+	// 		System.out.println();
+	// 	}
+	//
+	// 	System.out.println("done.");
+	// }
 
 }

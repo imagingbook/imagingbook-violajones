@@ -43,7 +43,6 @@ public class FeatureTree {
 		}
 	}
 
-
 	public void print() {
 		int featureCnt = 0;
 		for (FeatureNode node : nodes) {

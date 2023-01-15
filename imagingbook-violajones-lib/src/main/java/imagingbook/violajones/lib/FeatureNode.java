@@ -96,7 +96,6 @@ public class FeatureNode {
 		return (patchSumNorm < threshold * stdDev) ? LEFT : RIGHT;
 	}
 
-
 	public void print(int featureCnt) {
 		System.out.format("     feature %d: w=%d h=%d valL=%.4f valR=%.4f childL=%d childR=%d th=%.4f patches=%d\n", 
 				featureCnt, width, height, getValue(LEFT), getValue(RIGHT), getChild(LEFT), getChild(RIGHT), 
