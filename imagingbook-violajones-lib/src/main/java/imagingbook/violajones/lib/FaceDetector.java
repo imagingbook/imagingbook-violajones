@@ -7,6 +7,7 @@
 package imagingbook.violajones.lib;
 
 import ij.process.ByteProcessor;
+import imagingbook.common.ij.DialogUtils;
 import imagingbook.common.image.IntegralImage;
 import imagingbook.common.util.ParameterBundle;
 
@@ -27,30 +28,41 @@ public class FaceDetector {
 	 */
 	public static class Parameters implements ParameterBundle<FaceDetector> {
 		/** The initial ratio between the window size and the Haar classifier size (default 2). */
+		@DialogUtils.DialogLabel("Base scale")
 		public double baseScale = 2.00;
 		
 		/** The scale increment of the window size, at each step (default 1.25). */
+		@DialogUtils.DialogLabel("Scale step")
 		public double scaleStep = 1.25;
 		
 		/** The shift of the window at each sub-step, in terms of percentage of the window size. */
+		@DialogUtils.DialogLabel("Window shift in each sub-step (%)")
 		public double winShiftFraction = 0.1;
-		
-		/** The minimum number of rectangles needed for the corresponding detection to be kept */
-		public int minNeighbors = 1;
-		
-		/** Flag indicating if Canny pruning should be applied. */
-		public boolean doGradientPruning = false;
-		
+
 		/** The minimum percentage of overlap for merging two regions. */
+		@DialogUtils.DialogLabel("Min. overlap for merging regions (%)")
 		public double minMergeRegionOverlap = 0.2;
-		
+
+		/** The minimum number of rectangles needed for the corresponding detection to be kept */
+		@DialogUtils.DialogLabel("Min. number of rectangles")
+		public int minNeighbors = 1;
+
 		/** The width of the Gaussian blur applied before gradient calculation. */
+		@DialogUtils.DialogLabel("Width of Gaussian blur")
 		public double gradientSigma = 2.0;
 		
+		/** Flag indicating if Canny pruning should be applied. */
+		@DialogUtils.DialogLabel("Do gradient pruning")
+		public boolean doGradientPruning = false;
+
 		/** The minimum (normalized) gradient magnitude if pruning is on. */
+		@DialogUtils.DialogLabel("Min. gradient magnitude for pruning (%)")
+		@DialogUtils.DialogDigits(0)
 		public double minGradientMagnitude = 20;
 		
 		/** The maximum (normalized) gradient magnitude if pruning is on. */
+		@DialogUtils.DialogLabel("Max. gradient magnitude for pruning (%)")
+		@DialogUtils.DialogDigits(0)
 		public double maxGradientMagnitude = 100;
 	}
 	
