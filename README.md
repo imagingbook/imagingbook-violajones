@@ -1,5 +1,7 @@
 # Java/ImageJ Implementation of Viola-Jones Face Detection #
 
+## Note: This project has been retired and is not actively maintained any longer!
+
 This Java library implements the face detection algorithm proposed by Viola and Jones 
 (partly based on [this implementation](https://code.google.com/archive/p/jviolajones/)).
 Part of the [imagingbook project](https://imagingbook.com).
